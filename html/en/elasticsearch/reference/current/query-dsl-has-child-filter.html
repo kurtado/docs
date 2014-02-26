@@ -52,9 +52,9 @@ matched.</p><p>The <code class="literal">has_child</code> filter also accepts a 
             }
         }
     }
-}</pre><h4><a id="_memory_considerations_8"></a>Memory Considerations</h4><p>With the current implementation, all <code class="literal">_id</code> values are loaded to memory
-(heap) in order to support fast lookups, so make sure there is enough
-memory for it.</p><h4><a id="_caching_8"></a>Caching</h4><p>The <code class="literal">has_child</code> filter cannot be cached in the filter cache. The <code class="literal">_cache</code>
+}</pre><h4><a id="_memory_considerations_8"></a>Memory Considerations</h4><p>With the current implementation, all <code class="literal">_parent</code> field values and all <code class="literal">_id</code>
+field values of parent documents are loaded into memory (heap) via field data
+in order to support fast lookups, so make sure there is enough memory for it.</p><h4><a id="_caching_8"></a>Caching</h4><p>The <code class="literal">has_child</code> filter cannot be cached in the filter cache. The <code class="literal">_cache</code>
 and <code class="literal">_cache_key</code> options are a no-op in this filter. Also any filter that
 wraps the <code class="literal">has_child</code> filter either directly or indirectly will not be cached.</p></div><div class="navfooter"><span class="prev"><a href="query-dsl-geohash-cell-filter.html">
               « 

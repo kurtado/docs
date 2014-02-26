@@ -62,9 +62,9 @@ inside the <code class="literal">has_child</code> query:</p><pre class="programl
             }
         }
     }
-}</pre><h4><a id="_memory_considerations_5"></a>Memory Considerations</h4><p>With the current implementation, all <code class="literal">_id</code> values are loaded to memory
-(heap) in order to support fast lookups, so make sure there is enough
-memory for it.</p></div><div class="navfooter"><span class="prev"><a href="query-dsl-geo-shape-query.html">
+}</pre><h4><a id="_memory_considerations_5"></a>Memory Considerations</h4><p>With the current implementation, all <code class="literal">_parent</code> field values and all <code class="literal">_id</code>
+field values of parent documents are loaded into memory (heap) via field data
+in order to support fast lookups, so make sure there is enough memory for it.</p></div><div class="navfooter"><span class="prev"><a href="query-dsl-geo-shape-query.html">
               « 
               GeoShape Query</a>
            
