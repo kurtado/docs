@@ -57,7 +57,8 @@ commands has been applied, the cluster will aim to be re-balance its
 state.</p><p>Another option is to run the commands in <code class="literal">dry_run</code> (as a URI flag, or in
 the request body). This will cause the commands to apply to the current
 cluster state, and return the resulting cluster after the commands (and
-re-balancing) has been applied.</p><p>The commands supported are:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+re-balancing) has been applied.</p><p>If the <code class="literal">explain</code> parameter is specified, a detailed explanation of why the
+commands could or could not be executed is returned.</p><p>The commands supported are:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 <code class="literal">move</code>
 </span></dt><dd>
     Move a started shard from one node to another node. Accepts
