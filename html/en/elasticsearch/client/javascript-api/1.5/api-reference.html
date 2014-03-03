@@ -615,10 +615,12 @@ Options
   // ...
 });</pre><p>
 </p><p><strong>Deleting documents using the Query DSL. </strong>
-</p><pre class="programlisting prettyprint lang-js">client.delete_by_query({
+</p><pre class="programlisting prettyprint lang-js">client.deleteByQuery({
   index: 'posts',
   body: {
-    term: { published: false }
+    query: {
+      term: { published: false }
+    }
   }
 }, function (error, response) {
   // ...
