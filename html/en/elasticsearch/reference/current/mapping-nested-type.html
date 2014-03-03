@@ -64,7 +64,12 @@ included in the root object by setting <code class="literal">include_in_root</co
 since they can be guaranteed to be indexed within the same "block", it
 allows for extremely fast joining with parent docs.</p><p>Those internal nested documents are automatically masked away when doing
 operations against the index (like searching with a match_all query),
-and they bubble out when using the nested query.</p></div><div class="navfooter"><span class="prev"><a href="mapping-root-object-type.html">
+and they bubble out when using the nested query.</p><p>Because nested docs are always masked to the parent doc, the nested docs
+can never be accessed outside the scope of the <code class="literal">nested</code> query. For example
+stored fields can be enabled on fields inside nested objects, but there is
+no way of retrieving them, since stored fields are fetched outside of
+the <code class="literal">nested</code> query scope.</p><p>The <code class="literal">_source</code> field is always associated with the parent document and
+because of that field values via the source can be fetched for nested object.</p></div><div class="navfooter"><span class="prev"><a href="mapping-root-object-type.html">
               « 
               Root Object Type</a>
            
