@@ -48,7 +48,7 @@ dates regarding to the
 <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/0.90/mapping-date-format.html" target="_top">Date Format</a>.</p><pre class="programlisting prettyprint lang-java">String json = "{" +
         "\"user\":\"kimchy\"," +
         "\"postDate\":\"2013-01-30\"," +
-        "\"message\":\"trying out Elastic Search\"," +
+        "\"message\":\"trying out Elasticsearch\"" +
     "}";</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="using-map"></a>Using Map</h3></div></div></div><p>Map is a key:values pair collection. It represents very well a JSON
 structure:</p><pre class="programlisting prettyprint lang-java">Map&lt;String, Object&gt; json = new HashMap&lt;String, Object&gt;();
 json.put("user","kimchy");
@@ -94,7 +94,7 @@ IndexResponse response = client.prepareIndex("twitter", "tweet", "1")
 don’t have to give an ID:</p><pre class="programlisting prettyprint lang-java">String json = "{" +
         "\"user\":\"kimchy\"," +
         "\"postDate\":\"2013-01-30\"," +
-        "\"message\":\"trying out Elastic Search\"," +
+        "\"message\":\"trying out Elasticsearch\"" +
     "}";
 
 IndexResponse response = client.prepareIndex("twitter", "tweet")
