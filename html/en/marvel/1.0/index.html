@@ -138,6 +138,10 @@ Controls the time component in the index name to  which data is exported.
 Defaults to <code class="literal">"YYYY.MM.dd"</code>, which produces index names like:
 <code class="literal">.marvel-2014.01.28</code>. Supports date formats as explained
 <a class="ulink" href="http://joda-time.sourceforge.net/api-release/org/joda/time/format/DateTimeFormat.html" target="_top">here</a>.
+</dd><dt><span class="term">
+<code class="literal">marvel.agent.exporter.es.timeout</code>
+</span></dt><dd>
+Sets the connection timeout for sending data. Defaults to <code class="literal">6s</code>.
 </dd></dl></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="marvel-indices"></a>Marvel indices</h2></div></div></div><p>Marvel stores it’s data using time based indices. By default, Marvel generates
 an index per day, with one shard and one replica. We expect this to be a good
 default which will fit most use cases. You may need to change it for very big
