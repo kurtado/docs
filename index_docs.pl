@@ -52,7 +52,8 @@ sub index_docs {
     my @docs;
     for my $book ( books( @{ $Conf->{contents} } ) ) {
         say "Indexing book: $book->{title}";
-        my @docs = load_docs( $dir, $book->{prefix}, $book->{abbr} );
+        my @docs = load_docs( $dir, $book->{prefix}, $book->{abbr},
+            $book->{single} );
         my $b = Elasticsearch::Bulk->new(
             es        => $e,
             index     => $index,
@@ -85,7 +86,7 @@ sub index_docs {
 #===================================
 sub load_docs {
 #===================================
-    my ( $dir, $prefix, $abbr ) = @_;
+    my ( $dir, $prefix, $abbr, $single ) = @_;
     my $length_dir = length($dir);
     my $book_dir = $dir->subdir( $prefix, 'current' );
 
@@ -94,7 +95,9 @@ sub load_docs {
         next if $file->is_dir;
 
         my $name = $file->basename;
-        next if $name eq 'index.html' or $name !~ s/\.html$//;
+        next
+            if ( $name eq 'index.html' and !$single )
+            || $name !~ s/\.html$//;
 
         my $url = $URL_Base . substr( $file, $length_dir );
 
