@@ -13,6 +13,16 @@
     <xsl:value-of select="normalize-space(.)" />
   </xsl:template>
 
+  <xsl:template match="text()" mode="guide">
+    <xsl:value-of select="normalize-space(.)" />
+  </xsl:template>
+
+  <xsl:template match="code|b|strong|em|span|i" mode="guide">
+    <xsl:text> </xsl:text>
+    <xsl:apply-templates mode="guide" />
+    <xsl:text> </xsl:text>
+  </xsl:template>
+
   <xsl:template match="article[@class='guide_content']" mode="not-guide">
     <xsl:apply-templates mode="guide" />
   </xsl:template>
