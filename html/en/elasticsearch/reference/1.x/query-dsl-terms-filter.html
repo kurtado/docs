@@ -184,8 +184,11 @@ This cache has the following options:</p><div class="variablelist"><dl class="va
 <code class="literal">indices.cache.filter.terms.expire_after_access</code>
 </span></dt><dd>
     The time after the last read an entry should expire. Disabled by default.
-</dd></dl></div><p><code class="literal">indices.cache.filter.terms.expire_after_write</code>:
-    The time after the last write an entry should expire. Disabled by default.</p><p>All options for the lookup of the documents cache can only be configured
+</dd><dt><span class="term">
+<code class="literal">indices.cache.filter.terms.expire_after_write</code>
+</span></dt><dd>
+    The time after the last write an entry should expire. Disabled by default.
+</dd></dl></div><p>All options for the lookup of the documents cache can only be configured
 via the <code class="literal">elasticsearch.yml</code> file.</p><p>When using the terms lookup the <code class="literal">execution</code> option isn’t taken into
 account and behaves as if the execution mode was set to <code class="literal">plain</code>.</p><h4><a id="_terms_lookup_twitter_example"></a>Terms lookup twitter example</h4><pre class="programlisting prettyprint lang-js"># index the information for user with id 2, specifically, its followers
 curl -XPUT localhost:9200/users/user/2 -d '{
