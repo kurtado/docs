@@ -111,7 +111,32 @@ their <code class="literal">doc_count</code> descending. It is also possible to 
             }
         }
     }
-}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_minimum_document_count"></a>Minimum document count</h3></div></div></div><p>It is possible to only return terms that match more than a configured number of hits using the <code class="literal">min_doc_count</code> option:</p><pre class="programlisting prettyprint lang-js">{
+}</pre><p>It is also possible to order the buckets based on a "deeper" aggregation in the hierarchy. This is supported as long
+as the aggregations path are of a single-bucket type, where the last aggregation in the path may either by a single-bucket
+one or a metrics one. If it’s a single-bucket type, the order will be defined by the number of docs in the bucket (i.e. <code class="literal">doc_count</code>),
+in case it’s a metrics one, the same rules as above apply (where the path must indicate the metric name to sort by in case of
+a multi-value metrics aggregation, and in case of a single-value metrics aggregation the sort will be applied on that value).</p><p>The path must be defined in the following form:</p><pre class="screen">AGG_SEPARATOR       :=  '&gt;'
+METRIC_SEPARATOR    :=  '.'
+AGG_NAME            :=  &lt;the name of the aggregation&gt;
+METRIC              :=  &lt;the name of the metric (in case of multi-value metrics aggregation)&gt;
+PATH                :=  &lt;AGG_NAME&gt;[&lt;AGG_SEPARATOR&gt;&lt;AGG_NAME&gt;]*[&lt;METRIC_SEPARATOR&gt;&lt;METRIC&gt;]</pre><pre class="programlisting prettyprint lang-js">{
+    "aggs" : {
+        "countries" : {
+            "terms" : {
+                "field" : "address.country",
+                "order" : { "females&gt;height_stats.avg" : "desc" }
+            },
+            "aggs" : {
+                "females" : {
+                    "filter" : { "term" : { "gender" : { "female" }}},
+                    "aggs" : {
+                        "height_stats" : { "stats" : { "field" : "height" }}
+                    }
+                }
+            }
+        }
+    }
+}</pre><p>The above will sort the countries buckets based on the average height among the female population.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_minimum_document_count"></a>Minimum document count</h3></div></div></div><p>It is possible to only return terms that match more than a configured number of hits using the <code class="literal">min_doc_count</code> option:</p><pre class="programlisting prettyprint lang-js">{
     "aggs" : {
         "tags" : {
             "terms" : {

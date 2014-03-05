@@ -143,7 +143,33 @@ using the <code class="literal">order</code> setting.</p><p>Ordering the buckets
 The <code class="literal">{ "price_stats.min" : asc" }</code> will sort the buckets based on <code class="literal">min</code> value of their their <code class="literal">price_stats</code> sub-aggregation.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO13-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 There is no need to configure the <code class="literal">price</code> field for the <code class="literal">price_stats</code> aggregation as it will inherit it by default from its parent histogram aggregation.
-</p></td></tr></table></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_minimum_document_count_2"></a>Minimum document count</h3></div></div></div><p>It is possible to only return buckets that have a document count that is greater than or equal to a configured
+</p></td></tr></table></div><p>It is also possible to order the buckets based on a "deeper" aggregation in the hierarchy. This is supported as long
+as the aggregations path are of a single-bucket type, where the last aggregation in the path may either by a single-bucket
+one or a metrics one. If it’s a single-bucket type, the order will be defined by the number of docs in the bucket (i.e. <code class="literal">doc_count</code>),
+in case it’s a metrics one, the same rules as above apply (where the path must indicate the metric name to sort by in case of
+a multi-value metrics aggregation, and in case of a single-value metrics aggregation the sort will be applied on that value).</p><p>The path must be defined in the following form:</p><pre class="screen">AGG_SEPARATOR       :=  '&gt;'
+METRIC_SEPARATOR    :=  '.'
+AGG_NAME            :=  &lt;the name of the aggregation&gt;
+METRIC              :=  &lt;the name of the metric (in case of multi-value metrics aggregation)&gt;
+PATH                :=  &lt;AGG_NAME&gt;[&lt;AGG_SEPARATOR&gt;&lt;AGG_NAME&gt;]*[&lt;METRIC_SEPARATOR&gt;&lt;METRIC&gt;]</pre><pre class="programlisting prettyprint lang-js">{
+    "aggs" : {
+        "prices" : {
+            "histogram" : {
+                "field" : "price",
+                "interval" : 50,
+                "order" : { "promoted_products&gt;rating_stats.avg" : "desc" } <a id="CO14-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+            },
+            "aggs" : {
+                "promoted_products" : {
+                    "filter" : { "term" : { "promoted" : true }},
+                    "aggs" : {
+                        "rating_stats" : { "stats" : { "field" : "rating" }}
+                    }
+                }
+            }
+        }
+    }
+}</pre><p>The above will sort the buckets based on the avg rating among the promoted products</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_minimum_document_count_2"></a>Minimum document count</h3></div></div></div><p>It is possible to only return buckets that have a document count that is greater than or equal to a configured
 limit through the <code class="literal">min_doc_count</code> option.</p><pre class="programlisting prettyprint lang-js">{
     "aggs" : {
         "prices" : {
