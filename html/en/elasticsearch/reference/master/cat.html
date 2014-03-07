@@ -33,7 +33,7 @@
 to find relationships in the data is tedious.  Human eyes, especially
 when looking at an ssh terminal, need compact and aligned text.  The
 cat API aims to meet this need.</p><p>All the cat commands accept a query string parameter <code class="literal">help</code> to see all
-the headers and info they provide, and the <code class="literal">/_cat?help</code> command lists all
+the headers and info they provide, and the <code class="literal">/_cat</code> command alone lists all
 the available commands.</p><h2><a id="common-parameters"></a>Common parameters</h2><h3><a id="verbose"></a>Verbose</h3><p>Each of the commands accepts a query string parameter <code class="literal">v</code> to turn on
 verbose output.</p><pre class="programlisting prettyprint lang-shell">% curl 'localhost:9200/_cat/master?v'
 id                     ip        node
