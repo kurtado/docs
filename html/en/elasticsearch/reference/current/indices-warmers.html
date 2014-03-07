@@ -37,7 +37,7 @@ data, such as faceting or sorting on specific fields. The warmup APIs
 allows to register warmup (search) under specific names, remove them,
 and get them.</p><p>Index warmup can be disabled by setting <code class="literal">index.warmer.enabled</code> to
 <code class="literal">false</code>. It is supported as a realtime setting using update settings
-API. This can be handy when doing initial bulk indexing, disabling pre
+API. This can be handy when doing initial bulk indexing: disable pre
 registered warmers to make indexing faster and less expensive and then
 enable it.</p><h3><a id="creation"></a>Index Creation / Templates</h3><p>Warmers can be registered when an index gets created, for example:</p><pre class="programlisting prettyprint lang-js">curl -XPUT localhost:9200/test -d '{
     "warmers" : {

@@ -82,8 +82,8 @@ configured it may return some false positives or false negatives for
 certain queries. To mitigate this, it is important to select an
 appropriate value for the tree_levels parameter and to adjust
 expectations accordingly. For example, a point may be near the border of
-a particular grid cell. And may not match a query that only matches the
-cell right next to it even though the shape is very close to the point.</p><h5><a id="_example_4"></a>Example</h5><pre class="programlisting prettyprint lang-js">{
+a particular grid cell and may thus not match a query that only matches the
+cell right next to it — even though the shape is very close to the point.</p><h5><a id="_example_4"></a>Example</h5><pre class="programlisting prettyprint lang-js">{
     "properties": {
         "location": {
             "type": "geo_shape",
@@ -95,8 +95,8 @@ cell right next to it even though the shape is very close to the point.</p><h5><
 quad_tree implementation and a precision of 1m. Elasticsearch translates
 this into a tree_levels setting of 26.</p><h5><a id="_performance_considerations"></a>Performance considerations</h5><p>Elasticsearch uses the paths in the prefix tree as terms in the index
 and in queries. The higher the levels is (and thus the precision), the
-more terms are generated. Both calculating the terms, keeping them in
-memory, and storing them has a price of course. Especially with higher
+more terms are generated. Of course, calculating the terms, keeping them in
+memory, and storing them on disk all have a price. Especially with higher
 tree levels, indices can become extremely large even with a modest
 amount of data. Additionally, the size of the features also matters.
 Big, complex polygons can take up a lot of space at higher tree levels.
@@ -120,7 +120,7 @@ for upper left and lower right points of the shape:</p><pre class="programlistin
         "coordinates" : [[-45.0, 45.0], [45.0, -45.0]]
     }
 }</pre><h5><a id="_ulink_url_http_www_geojson_org_geojson_spec_html_id4_polygon_ulink"></a><a class="ulink" href="http://www.geojson.org/geojson-spec.html#id4" target="_top">Polygon</a></h5><p>A polygon is defined by a list of a list of points. The first and last
-points in each list must be the same (the polygon must be closed).</p><pre class="programlisting prettyprint lang-js">{
+points in each (outer) list must be the same (the polygon must be closed).</p><pre class="programlisting prettyprint lang-js">{
     "location" : {
         "type" : "polygon",
         "coordinates" : [

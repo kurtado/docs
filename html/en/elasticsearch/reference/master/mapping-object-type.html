@@ -115,7 +115,7 @@ against can be configured using the <code class="literal">dynamic_date_formats</
 which is explained later.</p><p>Note, once a field has been added, <span class="strong"><strong>its type can not change</strong></span>. For
 example, if we added age and its value is a number, then it can’t be
 treated as a string.</p><p>The <code class="literal">dynamic</code> parameter can also be set to <code class="literal">strict</code>, meaning that not
-only new fields will not be introduced into the mapping, parsing
+only will new fields not be introduced into the mapping, but also that parsing
 (indexing) docs with such new fields will fail.</p><h4><a id="_enabled_3"></a>enabled</h4><p>The <code class="literal">enabled</code> flag allows to disable parsing and indexing a named object
 completely. This is handy when a portion of the JSON document contains
 arbitrary JSON which should not be indexed, nor added to the mapping.
@@ -136,7 +136,7 @@ For example:</p><pre class="programlisting prettyprint lang-js">{
         }
     }
 }</pre><p>In the above, <code class="literal">name</code> and its content will not be indexed at all.</p><h4><a id="_include_in_all_2"></a>include_in_all</h4><p><code class="literal">include_in_all</code> can be set on the <code class="literal">object</code> type level. When set, it
-propagates down to all the inner mapping defined within the <code class="literal">object</code>
+propagates down to all the inner mappings defined within the <code class="literal">object</code>
 that do no explicitly set it.</p></div><div class="navfooter"><span class="prev"><a href="mapping-array-type.html">
               « 
               Array Type</a>

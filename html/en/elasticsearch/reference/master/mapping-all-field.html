@@ -33,8 +33,8 @@
 other fields within the document indexed. It can come very handy
 especially for search requests, where we want to execute a search query
 against the content of a document, without knowing which fields to
-search on. This comes at the expense of CPU cycles and index size.</p><p>The <code class="literal">_all</code> fields can be completely disabled. Explicit field mapping and
-object mapping can be excluded / included in the <code class="literal">_all</code> field. By
+search on. This comes at the expense of CPU cycles and index size.</p><p>The <code class="literal">_all</code> fields can be completely disabled. Explicit field mappings and
+object mappings can be excluded / included in the <code class="literal">_all</code> field. By
 default, it is enabled and all fields are included in it for ease of
 use.</p><p>When disabling the <code class="literal">_all</code> field, it is a good practice to set
 <code class="literal">index.query.default_field</code> to a different value (for example, if you
@@ -76,7 +76,7 @@ mean more than the content (part) in the <code class="literal">_all</code> field
 }</pre><p>The <code class="literal">_all</code> fields allows for <code class="literal">store</code>, <code class="literal">term_vector</code> and <code class="literal">analyzer</code> (with
 specific <code class="literal">index_analyzer</code> and <code class="literal">search_analyzer</code>) to be set.</p><h4><a id="highlighting"></a>Highlighting</h4><p>For any field to allow
 <a class="link" href="search-request-highlighting.html" title="Highlighting">highlighting</a> it has
-to be either stored or part of the <code class="literal">_source</code> field. By default <code class="literal">_all</code>
+to be either stored or part of the <code class="literal">_source</code> field. By default the <code class="literal">_all</code>
 field does not qualify for either, so highlighting for it does not yield
 any data.</p><p>Although it is possible to <code class="literal">store</code> the <code class="literal">_all</code> field, it is basically an
 aggregation of all fields, which means more data will be stored, and

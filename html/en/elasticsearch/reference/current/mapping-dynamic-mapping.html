@@ -29,19 +29,19 @@
            
           <a href="mapping-conf-mappings.html">Config Mappings
                »
-            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="mapping-dynamic-mapping"></a>Dynamic Mapping</h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="mapping-fields.html">Fields</a></span></dt><dt><span class="chapter"><a href="mapping-types.html">Types</a></span></dt><dt><span class="chapter"><a href="mapping-date-format.html">Date Format</a></span></dt><dt><span class="chapter"><a href="mapping-dynamic-mapping.html">Dynamic Mapping</a></span></dt><dt><span class="chapter"><a href="mapping-conf-mappings.html">Config Mappings</a></span></dt><dt><span class="chapter"><a href="mapping-meta.html">Meta</a></span></dt></dl></div><p>Default mappings allow to automatically apply generic mapping definition
-to types that do not have mapping pre defined. This is mainly done
+            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="mapping-dynamic-mapping"></a>Dynamic Mapping</h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="mapping-fields.html">Fields</a></span></dt><dt><span class="chapter"><a href="mapping-types.html">Types</a></span></dt><dt><span class="chapter"><a href="mapping-date-format.html">Date Format</a></span></dt><dt><span class="chapter"><a href="mapping-dynamic-mapping.html">Dynamic Mapping</a></span></dt><dt><span class="chapter"><a href="mapping-conf-mappings.html">Config Mappings</a></span></dt><dt><span class="chapter"><a href="mapping-meta.html">Meta</a></span></dt></dl></div><p>Default mappings allow to automatically apply generic mapping definitions
+to types that do not have mappings predefined. This is mainly done
 thanks to the fact that the
 <a class="link" href="mapping-object-type.html" title="Object Type">object mapping</a> and
 namely the <a class="link" href="mapping-root-object-type.html" title="Root Object Type">root object mapping</a> allow for schema-less dynamic addition of unmapped
-fields.</p><p>The default mapping definition is plain mapping definition that is
+fields.</p><p>The default mapping definition is a plain mapping definition that is
 embedded within the distribution:</p><pre class="programlisting prettyprint lang-js">{
     "_default_" : {
     }
-}</pre><p>Pretty short, no? Basically, everything is defaulted, especially the
+}</pre><p>Pretty short, isn’t it? Basically, everything is defaulted, especially the
 dynamic nature of the root object mapping. The default mapping
 definition can be overridden in several manners. The simplest manner is
-to simply define a file called <code class="literal">default-mapping.json</code> and placed it
+to simply define a file called <code class="literal">default-mapping.json</code> and to place it
 under the <code class="literal">config</code> directory (which can be configured to exist in a
 different location). It can also be explicitly set using the
 <code class="literal">index.mapper.default_mapping_location</code> setting.</p><p>The dynamic creation of mappings for unmapped types can be completely
