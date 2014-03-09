@@ -38,6 +38,7 @@ sub build_chunked {
         'a2x', '-v', '--icons',
         '-d'              => 'book',
         '-f'              => 'chunked',
+        '-a'              => 'showcomments=1',
         '--xsl-file'      => 'resources/website_chunked.xsl',
         '--asciidoc-opts' => '-fresources/es-asciidoc.conf',
         '--xsltproc-opts' => "--stringparam chunk.section.depth $chunk",
@@ -67,6 +68,8 @@ sub build_chunked {
     rename $chunk_dir, $dest
         or die "Couldn't move <$chunk_dir> to <$dest>: $!";
 
+    sense_widget( $index->parent, $dest );
+
 }
 
 #===================================
@@ -89,6 +92,7 @@ sub build_single {
         '--xsl-file'      => 'resources/website.xsl',
         '-d'              => $type,
         '--asciidoc-opts' => '-fresources/es-asciidoc.conf',
+        '-a'              => 'showcomments=1',
         '--xsltproc-opts',
         "--stringparam generate.toc '$toc'",
         '--xsltproc-opts' => "--stringparam local.book.version '$version'",
@@ -109,6 +113,23 @@ sub build_single {
     }
 
     to_html5($dest);
+    sense_widget( $index->parent, $dest );
+}
+
+#===================================
+sub sense_widget {
+#===================================
+    my ( $source, $dest ) = @_;
+    my $snippets = $source->subdir('snippets');
+    return unless -e $snippets;
+
+    fcopy( 'resources/sense_widget.html', $dest )
+        or die "Couldn't copy <sense_widget.html> to <$dest>: $!";
+
+    $dest = $dest->subdir('snippets');
+    rcopy( $snippets, $dest )
+        or die "Couldn't copy <$snippets> to <$dest>: $!";
+
 }
 
 #===================================
