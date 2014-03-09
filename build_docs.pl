@@ -25,7 +25,8 @@ our $Conf = LoadFile('conf.yaml');
 GetOptions(
     $Opts,    #
     'all', 'push',    #
-    'single',  'doc=s', 'out=s', 'toc', 'open', 'chunk=i',
+    'single',  'doc=s', 'out=s', 'toc', 'chunk=i',
+    'open',    'web',
     'lenient', 'verbose'
 );
 
@@ -60,7 +61,31 @@ sub build_local {
     $html = $dir->file($html);
 
     say "Done";
-    if ( $Opts->{open} ) {
+    if ( $Opts->{web} ) {
+        if ( my $pid = fork ) {
+
+            # parent
+            $SIG{CHLD} = sub {
+                kill -9, $pid;
+            };
+            if ( $Opts->{open} ) {
+                sleep 1;
+                open_browser('http://localhost:8000/'.$html->basename);
+            }
+
+            wait;
+            print "\nExiting\n";
+            exit;
+        }
+        else {
+            my $http = dir( 'resources', 'http.py' )->absolute;
+            close STDIN;
+            open( STDIN,  "</dev/null" );
+            chdir $dir;
+            exec( $http '8000' );
+        }
+    }
+    elsif ( $Opts->{open} ) {
         say "Opening: $html";
         open_browser($html);
     }
@@ -258,7 +283,9 @@ sub usage {
           --toc             Include a TOC at the beginning of the page.
           --out dest/dir/   Defaults to ./html_docs.
           --chunk 1         Also chunk sections into separate files
+
           --open            Open the docs in a browser once built.
+          --web             Serve the docs via a webserver once built.
           --lenient         Ignore linking errors
           --verbose
 
