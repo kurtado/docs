@@ -196,8 +196,6 @@ document.</p><div class="itemizedlist"><p class="title"><strong>Supported option
 <code class="literal">percolate_preference</code> - Which shard to prefer when executing the percolate request.
 </li><li class="listitem">
 <code class="literal">version</code> - Enables a version check. If the fetched document’s version isn’t equal to the specified version then the request fails with a version conflict and the percolation request is aborted.
-</li><li class="listitem">
-<code class="literal">version_type</code> - Whether internal or external versioning is used. Defaults to internal versioning.
 </li></ul></div><p>Internally the percolate api will issue a get request for fetching the`_source` of the document to percolate.
 For this feature to work the <code class="literal">_source</code> for documents to be percolated need to be stored.</p><h4><a id="_example_2"></a>Example</h4><p>Index response:</p><pre class="programlisting prettyprint lang-js">{
         "_index" : "my-index",
