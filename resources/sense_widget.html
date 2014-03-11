@@ -39,7 +39,7 @@
 
     function change_url() {
         sense_url = jQuery('#sense_url').val();
-        jQuery.cookie('sense_url',sense_url);
+        jQuery.cookie('sense_url',sense_url, {path: "/", expires: 365 });
         load_sense();
     }
 
