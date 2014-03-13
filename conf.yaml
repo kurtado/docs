@@ -34,8 +34,8 @@ repos:
 
     marvel:
         url:        https://github.com/elasticsearch/elasticsearch-marvel.git
-        current:    1.0
-        branches:   [1.0]
+        current:    1.1
+        branches:   [1.1]
 
 contents_title:     Guide
 
