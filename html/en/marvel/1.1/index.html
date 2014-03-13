@@ -58,7 +58,7 @@ Browser
 </td><td valign="top">
 <p>
 The latest version of Chrome, Firefox or Safari is
-                recommended. Internet Explorer 9 and above is also supported.
+                recommended. Internet Explorer 10 and above is also supported.
 </p>
 </td></tr></tbody></table></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="_installation"></a>Installation</h1></div></div></div><p>Marvel is installed as an Elasticsearch plugin. The plugin must be installed
 on <span class="strong"><strong>every node in the cluster</strong></span>. By default, the plugin will store data in the
@@ -102,16 +102,16 @@ Restart Elasticsearch
 </li></ol></div><p>Once the plugin is installed on all nodes, you can access the Marvel UI by
 opening this link with any modern browser.</p><pre class="literallayout">http://any-server-in-monitoring-cluster:9200/_plugin/marvel/</pre><p>It may take a minute or two for data to appear.</p><div class="tip admon"><div class="icon"><img alt="Tip" src="images/icons/tip.png" /></div><div class="admon_content"><p>You may want to temporarily <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-cluster.html" target="_top">disable shard
 allocation</a> before you restart your nodes to avoid unnecessary shard
-reallocation during the install process.</p></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="manual_download"></a>Manual download</h3></div></div></div><p>Elasticsearch’s <code class="literal">bin/plugin</code> script requires direct internet access for downloading
+reallocation during the install process.</p></div></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="previous_versions"></a>Installing previous versions</h2></div></div></div><p>Previously released versions of Marvel are available by specifying an exact version. For example:</p><pre class="programlisting prettyprint lang-sh">bin/plugin -i elasticsearch/marvel/1.0.2</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="manual_download"></a>Manual download</h2></div></div></div><p>Elasticsearch’s <code class="literal">bin/plugin</code> script requires direct internet access for downloading
 and installing Marvel. If your server doesn’t have internet access, you can download
 the Marvel binaries from the following link: <a class="ulink" href="https://download.elasticsearch.org/elasticsearch/marvel/marvel-latest.zip" target="_top">https://download.elasticsearch.org/elasticsearch/marvel/marvel-latest.zip</a></p><p>Once you have transferred the zip file to your server, you can use the <code class="literal">bin/plugin</code>
-script to install it:</p><pre class="programlisting prettyprint lang-sh">bin/plugin -i marvel -u file://PATH_TO_MARVEL_ZIP_FILE</pre><p>After the script has finish, continue according to the standard installation procedure.</p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="configuration"></a>Configuration Options</h1></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="stats-export"></a>Statistics exporting</h2></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+script to install it:</p><pre class="programlisting prettyprint lang-sh">bin/plugin -i marvel -u file://PATH_TO_MARVEL_ZIP_FILE</pre><p>After the script has finish, continue according to the standard installation procedure.</p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="configuration"></a>Configuration Options</h1></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="stats-export"></a>Statistics exporting</h2></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 <code class="literal">marvel.agent.exporter.es.hosts</code>
 </span></dt><dd><p class="simpara">
 A list of hosts in <code class="literal">hostname:port</code> format to which statistics  and events will
 be sent. Data will be sent to the first host, but will failover to the next
 host(s) if the first is not reachable. Defaults to <code class="literal">["localhost:9200"]</code>.
-</p><p class="simpara"><span class="added">
+</p><p class="simpara">This setting is update-able via the Cluster Update Settings API.</p><p class="simpara"><span class="added">
       [<span class="version">1.0.2</span>]
       <span class="detail">Added in 1.0.2.</span></span> - HTTP Basic authentication credentials can be specified as part of the host name,
  i.e., ["user:pwd@host:9200"]</p></dd><dt><span class="term">
@@ -122,16 +122,16 @@ monitoring cluster, which is used to receive and analyze data from production,
 to avoid collecting data from the monitoring cluster itself.
 </dd><dt><span class="term">
 <code class="literal">marvel.agent.indices</code>
-</span></dt><dd>
+</span></dt><dd><p class="simpara">
 Controls which indices to export data for.  Uses simple <code class="literal">test1,test2,test3</code>
 notation (or <code class="literal">_all</code> for all indices). It also supports  wildcards, for
 example: <code class="literal">test*</code>, and the ability to "add" (<code class="literal">+</code>) and "remove" (<code class="literal">-</code>),  for
-example: <code class="literal">+test*,-test3</code>. Defaults to <code class="literal">*</code>
-</dd><dt><span class="term">
+example: <code class="literal">+test*,-test3</code>. Defaults to <code class="literal">*</code>.
+</p><p class="simpara">This setting is update-able via the Cluster Update Settings API.</p></dd><dt><span class="term">
 <code class="literal">marvel.agent.interval</code>
-</span></dt><dd>
-Controls the interval between data samples. Defaults to <code class="literal">5s</code>.
-</dd><dt><span class="term">
+</span></dt><dd><p class="simpara">
+Controls the interval between data samples. Defaults to <code class="literal">5s</code>. Set to <code class="literal">-1</code> to temporarily disable exporting.
+</p><p class="simpara">This setting is update-able via the Cluster Update Settings API.</p></dd><dt><span class="term">
 <code class="literal">marvel.agent.exporter.es.index.timeformat</code>
 </span></dt><dd>
 Controls the time component in the index name to  which data is exported.
@@ -140,9 +140,13 @@ Defaults to <code class="literal">"YYYY.MM.dd"</code>, which produces index name
 <a class="ulink" href="http://joda-time.sourceforge.net/api-release/org/joda/time/format/DateTimeFormat.html" target="_top">here</a>.
 </dd><dt><span class="term">
 <code class="literal">marvel.agent.exporter.es.timeout</code>
-</span></dt><dd>
+</span></dt><dd><p class="simpara">
 Sets the connection timeout for sending data. Defaults to <code class="literal">6s</code>.
-</dd></dl></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="marvel-indices"></a>Marvel indices</h2></div></div></div><p>Marvel stores it’s data using time based indices. By default, Marvel generates
+</p><p class="simpara">This setting is update-able via the Cluster Update Settings API.</p></dd><dt><span class="term">
+<code class="literal">marvel.agent.shard_stats.enabled</code>
+</span></dt><dd><p class="simpara">
+Enables or disable exporting of shard level statistics. Defaults to <code class="literal">false</code>.
+</p><p class="simpara">This setting is update-able via the Cluster Update Settings API.</p></dd></dl></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="marvel-indices"></a>Marvel indices</h2></div></div></div><p>Marvel stores it’s data using time based indices. By default, Marvel generates
 an index per day, with one shard and one replica. We expect this to be a good
 default which will fit most use cases. You may need to change it for very big
 installations.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="config-marvel-indices"></a>Configuring Marvel’s indices</h3></div></div></div><p>Marvel uses an <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html" target="_top">index template</a> to preconfigure newly created indices. You can retrieve it with:</p><pre class="programlisting prettyprint lang-sh">GET /_template/marvel</pre><p>To change the default settings, you may add your own template to override it. Make sure your template uses
@@ -175,7 +179,48 @@ important for the correct operation of the dashboards.</p></div></div><p>For ref
 }</pre></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="relevant-settings"></a>Other relevant Elasticsearch settings</h2></div></div></div><p>Marvel relies on Elasticsearch’s capability to automatically create new indices
 when indexing documents. Some people like to disable this feature to better
 protect against mistakes in production clusters. To do so but still allow the
-creation of Marvel indices you need to set the following:</p><pre class="programlisting prettyprint lang-yaml">action.auto_create_index: .marvel-*</pre><p>More information is available <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html#index-creation" target="_top">here</a></p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="change_list"></a>Change list</h1></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_1_0_2"></a>1.0.2</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+creation of Marvel indices you need to set the following:</p><pre class="programlisting prettyprint lang-yaml">action.auto_create_index: .marvel-*</pre><p>More information is available <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html#index-creation" target="_top">here</a></p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="change_list"></a>Change list</h1></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_1_1_0"></a>1.1.0</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Improved Sense’s autocomplete suggestions:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Added Snapshot &amp; Restore
+</li><li class="listitem">
+Added Aggregations
+</li><li class="listitem">
+Added support for url query string parameters
+</li><li class="listitem">
+Updated for breaking changes in Elasticsearch 1.0
+</li></ul></div></li><li class="listitem">
+Updated welcome splash screen.
+</li><li class="listitem">
+Sense now uses the last used server when opened (previously used the hostname used to access it).
+</li><li class="listitem">
+The agent’s keep-alive thread is now stopped upon errors to reduce log noise. It will be restarted
+    upon successful connection.
+</li><li class="listitem">
+Improved error reporting for failures of items in the agent’s bulk requests.
+</li><li class="listitem">
+Index Statistics Dashboard: Indexing Rate Primaries chart was based on the wrong field.
+</li><li class="listitem">
+Introduced <code class="literal">marvel.agent.shard_stats.enabled</code> to control exporting of shard level statistics. Defaults to <code class="literal">false</code>.
+</li><li class="listitem">
+Changed agent’s default sampling rate to 10s (was 5s)
+</li><li class="listitem">
+Added a visual indication for the master node at the Nodes section of the Overview Dashboard
+</li><li class="listitem">
+Node and Indices tables visually indicate stale data
+</li><li class="listitem">
+Added error reporting to nodes and indices tables
+</li><li class="listitem"><p class="simpara">
+Made the following agent settings changeable via the Cluster Update Settings API:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+marvel.agent.interval  (also supports setting to -1 to disable exporting)
+</li><li class="listitem">
+marvel.agent.exporter.es.hosts
+</li><li class="listitem">
+marvel.agent.exporter.es.timeout
+</li><li class="listitem">
+marvel.agent.shard_stats.enabled
+</li></ul></div></li></ul></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_1_0_2"></a>1.0.2</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Kibana uses <code class="literal">window.location.protocol</code> (http or https) to make ES calls.
 </li><li class="listitem">
 Added support for basic authentication when sending data from agent. See <a class="xref" href="#configuration" title="Configuration Options"><em>Configuration Options</em></a>.
