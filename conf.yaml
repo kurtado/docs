@@ -37,6 +37,11 @@ repos:
         current:    1.1
         branches:   [1.1]
 
+    kibana:
+        url:        https://github.com/elasticsearch/kibana.git
+        current:    3.0.0
+        branches:   [3.0.0]
+
 contents_title:     Guide
 
 contents:
@@ -56,6 +61,12 @@ contents:
         abbr:       marvel
         single:     1
 
+    -
+        title:      Kibana
+        prefix:     en/kibana
+        repo:       kibana
+        index:      docs/index.asciidoc
+        abbr:       kibana
 
     -
         title:      Elasticsearch for Apache Hadoop
