@@ -500,6 +500,27 @@ p.simpara+div.itemizedlist {
     color: #555;
 }
 
+a.sense_widget {
+    display: block;
+    margin: -17px 0 15px auto;
+    text-align: right;
+    border-radius: 0 0 3px 0;
+    border-top: 1px solid #e8e8e8;
+    background: #f8f8f8;
+    background: linear-gradient(#f8f8f8,#f0f0f0);
+    text-transform: uppercase;
+    font-family: helvetica, arial;
+    font-size: 13px;
+    font-weight: bold;
+    border-left: 3px solid #74b73f;
+    padding: 5px 15px 5px 0;
+}
+
+a.sense_widget:hover {
+    background: linear-gradient(white,#f0f0f0);
+    color: #5D8F35;
+}
+
 /* prevent the list from rendering at the top of the content */
 #js-api-method-index + .itemizedlist,
 #js-api-method-index-0-90 + .itemizedlist {
