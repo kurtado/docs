@@ -1,0 +1,89 @@
+<html>
+<head>
+    <title>View code in Sense</title>
+    <script type='text/javascript' src='http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3'></script>
+    <script type='text/javascript' src='http://www.elasticsearch.org/content/themes/elasticsearch-org/js/plugins.min.js?ver=1386264369'></script>
+    <script type="text/javascript">
+
+    jQuery(init);
+
+    var snippet_url;
+    function init() {
+        foo = window.location;
+        jQuery('#change_url').click(change_url);
+        jQuery('#reset_url').click(reset_url);
+        if (jQuery.cookie('sense_url')) {
+            jQuery('#sense_url').val(jQuery.cookie('sense_url'));
+        }
+        snippet_url = window.location.search.substr(1);
+        if (/^https?:\/\//.test(snippet_url) === false) {
+            var href = window.location.href;
+            snippet_url = href.replace(/\/[^/?]+(?:\?.*)?$/, '/' + snippet_url);
+        }
+        load_sense();
+    }
+
+    function load_sense() {
+        var body = jQuery('body');
+        body.hide();
+        var sense_url = jQuery('#sense_url').val();
+        var sense_snippet = sense_url + '?load_from=' + snippet_url;
+
+        jQuery('#direct').attr('href',sense_snippet);
+        jQuery.get(sense_url + '?' + new Date().getTime()).done(function() {
+            window.location = sense_snippet;
+        }).fail(function(e){
+            body.show();
+        });
+    }
+
+    function change_url() {
+        sense_url = jQuery('#sense_url').val();
+        jQuery.cookie('sense_url',sense_url, {path: "/", expires: 365 });
+        load_sense();
+    }
+
+    function reset_url() {
+        jQuery('#sense_url_form')[0].reset();
+        change_url();
+    }
+
+    </script>
+</head>
+<body>
+    <h1>View code in Sense</h1>
+    <p>You need to have the Sense console installed or accessible by your browser. The easiest way to
+       do this is by adding the <b>latest</b> Marvel plugin to your local Elasticsearch node.
+    </p>
+    <div>
+        <p>If you already have Sense installed, you can supply the correct URL below:</p>
+        <form id="sense_url_form">
+            <label for="sense_url">
+                Sense URL:
+            </label>
+            <input type="text" id="sense_url" value="http://localhost:9200/_plugin/marvel/sense/index.html" />
+            <button id="change_url" type="button">Change</button>
+            <button id="reset_url" type="button">Use default URL</button>
+        </form>
+    </div>
+    <h2>Installing Sense</h2>
+    <ol>
+        <li>
+        First, ensure that you have the latest version of Elasticsearch installed.
+        See <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup.html">instructions
+        for downloading and installing Elasticsearch</a>.
+        </li>
+        <li>
+        Next, <a href="http://www.elasticsearch.org/guide/en/marvel/current/index.html#_simple_install">install
+        the Marvel Monitoring and Management plugin</a> and restart your Elasticsearch node.
+        </li>
+    </ol>
+    <p>Once the above two steps are complete, click the <em>Use default URL</em> button above to retry.
+
+    <h2>Cross-domain error</h2>
+    <p>
+        If you have the latest version of Sense installed on a different server and this page is still not working,
+        try clicking on this link:
+            <a id="direct" href="">Open Sense manually</a>
+    </p>
+</body>
