@@ -97,6 +97,7 @@ sub load_docs {
         my $name = $file->basename;
         next
             if ( $name eq 'index.html' and !$single )
+            || $name eq 'sense_widget.html'
             || $name !~ s/\.html$//;
 
         my $url = $URL_Base . substr( $file, $length_dir );
