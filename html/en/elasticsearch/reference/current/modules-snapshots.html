@@ -151,7 +151,7 @@ to the current allocation filtering settings and rebalancing algorithm.</p><p>On
 snapshot and not used by any other snapshots. If the deleted snapshot operation is executed while the snapshot is being
 created the snapshotting process will be aborted and all files created as part of the snapshotting process will be
 cleaned. Therefore, the delete snapshot operation can be used to cancel long running snapshot operations that were
-started by mistake.</p><h3><a id="_restore"></a>Restore</h3><p>A snapshot can be restored using this following command:</p><pre class="programlisting prettyprint lang-shell">$ curl -XPOST "localhost:9200/_snapshot/my_backup/snapshot_1/_restore"</pre><p>By default, all indices in the snapshot as well as cluster state are restored. It’s possible to select indices that
+started by mistake.</p><h3><a id="_restore"></a>Restore</h3><p>A snapshot can be restored using the following command:</p><pre class="programlisting prettyprint lang-shell">$ curl -XPOST "localhost:9200/_snapshot/my_backup/snapshot_1/_restore"</pre><p>By default, all indices in the snapshot as well as cluster state are restored. It’s possible to select indices that
 should be restored as well as prevent global cluster state from being restored by using <code class="literal">indices</code> and
 <code class="literal">include_global_state</code> options in the restore request body. The list of indices supports
 <a class="link" href="search-search.html#search-multi-index-type" title="Multi-Index, Multi-Type">multi index syntax</a>. The <code class="literal">rename_pattern</code> and <code class="literal">rename_replacement</code> options can be also used to
@@ -166,7 +166,9 @@ rename index on restore using regular expression that supports referencing the o
 closed. The restore operation automatically opens restored indices if they were closed and creates new indices if they
 didn’t exist in the cluster. If cluster state is restored, the restored templates that don’t currently exist in the
 cluster are added and existing templates with the same name are replaced by the restored templates. The restored
-persistent settings are added to the existing persistent settings.</p></div><div class="navfooter"><span class="prev"><a href="modules-transport.html">
+persistent settings are added to the existing persistent settings.</p><h3><a id="_snapshot_status"></a>Snapshot status</h3><p>A list of currently running snapshots with their detailed status information can be obtained using the following command:</p><pre class="programlisting prettyprint lang-shell">$ curl -XGET "localhost:9200/_snapshot/_status"</pre><p>In this format, the command will return information about all currently running snapshots. By specifying a repository name, it’s possible
+to limit the results to a particular repository:</p><pre class="programlisting prettyprint lang-shell">$ curl -XGET "localhost:9200/_snapshot/my_backup/_status"</pre><p>If both repository name and snapshot id are specified, this command will return detailed status information for the given snapshot even
+if it’s not currently running:</p><pre class="programlisting prettyprint lang-shell">$ curl -XGET "localhost:9200/_snapshot/my_backup/snapshot_1/_status"</pre><p>Multiple ids are also supported:</p><pre class="programlisting prettyprint lang-shell">$ curl -XGET "localhost:9200/_snapshot/my_backup/snapshot_1,snapshot_2/_status"</pre></div><div class="navfooter"><span class="prev"><a href="modules-transport.html">
               « 
               Transport</a>
            
