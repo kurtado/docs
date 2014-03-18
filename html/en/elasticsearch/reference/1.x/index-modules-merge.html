@@ -150,7 +150,9 @@ Defaults to <code class="literal">1000</code>.</p></td></tr><tr><td align="left"
 (measured by document count) that may be merged with other segments.
 Defaults to unbounded.</p></td></tr></tbody></table></div><h3><a id="scheduling"></a>Scheduling</h3><p>The merge schedule controls the execution of merge operations once they
 are needed (according to the merge policy). The following types are
-supported, with the default being the <code class="literal">ConcurrentMergeScheduler</code>.</p><h4><a id="_concurrentmergescheduler"></a>ConcurrentMergeScheduler</h4><p>A merge scheduler that runs merges using a separate thread. When the maximum
+supported, with the default being the <code class="literal">SerialMergeScheduler</code>.</p><p>Note, the default is the serial merge scheduler since there is a merge
+thread pool that explicitly schedules merges, and it makes sure that
+merges are serial within a shard, yet concurrent across multiple shards.</p><h4><a id="_concurrentmergescheduler"></a>ConcurrentMergeScheduler</h4><p>A merge scheduler that runs merges using a separate thread. When the maximum
 number of threads is reached, further merges will wait until a merge thread
 becomes available.</p><p>The scheduler supports the following settings:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 <code class="literal">index.merge.scheduler.max_thread_count</code>
