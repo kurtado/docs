@@ -18,7 +18,7 @@ chdir($FindBin::RealBin) or die $!;
 
 our $URL_Base = '/guide';
 our $Conf     = LoadFile('conf.yaml');
-our $e        = Search::Elasticsearch->new( nodes => $ENV{ES_HOST} );
+our $e = Search::Elasticsearch->new( nodes => $ENV{ES_HOST}, timeout => 60 );
 
 GetOptions( $Opts, 'force', 'verbose' );
 
@@ -51,7 +51,11 @@ sub main {
     my @docs;
     for my $book ( books( @{ $Conf->{contents} } ) ) {
         say "Indexing book: $book->{title}";
-        my $b = $e->bulk_helper( index => $index, type => 'doc' );
+        my $b = $e->bulk_helper(
+            index     => $index,
+            type      => 'doc',
+            max_count => 100
+        );
 
         my @docs = index_docs( $b, $dir, $book->{prefix}, $book->{abbr},
             $book->{single} );
