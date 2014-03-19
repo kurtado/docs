@@ -57,7 +57,7 @@ sub doc_search {
             query => {
                 multi_match => {
                     query  => $q,
-                    type   => 'cross_fields',
+                    #type   => 'cross_fields',
                     fields => [
                         'title^2',        'title.content',
                         'title.shingles', 'title.ngrams',
