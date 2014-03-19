@@ -6,7 +6,7 @@ use Encode qw(encode_utf8);
 use Plack::Request;
 use Plack::Builder;
 use Plack::Response;
-use Elasticsearch;
+use Search::Elasticsearch;
 
 use FindBin;
 use lib "$FindBin::RealBin/lib";
@@ -15,13 +15,12 @@ use ES::Util qw(run);
 chdir($FindBin::RealBin);
 
 our $host = 'localhost:9200';
-our $es   = Elasticsearch->new( nodes => $host );
+our $es   = Search::Elasticsearch->new( nodes => $host );
 our $JSON = $es->transport->serializer;
 
 builder {
-    mount '/elastic-search-website/' => \&old_doc_search;
-    mount '/search/'                 => \&doc_search;
-    mount '/status'                  => \&status;
+    mount '/search/' => \&doc_search;
+    mount '/status'  => \&status;
 };
 
 #===================================
@@ -39,43 +38,72 @@ sub status {
 #===================================
 sub doc_search {
 #===================================
-    my $req      = Plack::Request->new( shift() );
-    my $callback = $req->param('callback');
+    my $env = shift;
+    my $req = Plack::Request->new($env);
+
     my $q        = $req->param('q');
+    my $callback = $req->param('callback');
+
+    my $ref = $env->{"HTTP_REFERER"} || '';
+    my ( $book, $version );
+    if ( $ref =~ m{^https?://[^/]+/guide/(.+?)(?:/([^/]+)/([^/]+))?$} ) {
+        $book    = $1;
+        $version = $2;
+    }
+    $version ||= 'current';
+
+    my $query = {
+        filtered => {
+            query => {
+                multi_match => {
+                    query  => $q,
+                    type   => 'cross_fields',
+                    fields => [
+                        'title^2',        'title.content',
+                        'title.shingles', 'title.ngrams',
+                        'text',           'text.content',
+                        'text.shingles',  'text.ngrams',
+                    ],
+                    minimum_should_match => '80%',
+                    }
+
+            },
+            filter => {
+                bool => { must => [ { term => { version => $version } } ] }
+            }
+        },
+
+    };
+    if ($book) {
+        push @{ $query->{filtered}{filter}{bool}{must} },
+            { term => { "book.raw" => $book } };
+    }
+    else {
+        $query = {
+            function_score => {
+                query     => $query,
+                functions => [
+                    {   filter => {
+                            term => {
+                                "book.raw" => 'en/elasticsearch/reference'
+                            }
+                        },
+                        boost_factor => 1.5
+                    }
+                ]
+            }
+        };
+    }
 
     my $result = $es->search(
         index   => 'docs',
-        _source => [ 'title', 'abbr', 'url', 'path' ],
+        _source => [ 'title', 'abbr', 'url', 'path', 'book' ],
         body    => {
-            query => {
-                function_score => {
-                    query => {
-                        multi_match => {
-                            query  => $q,
-                            fields => [
-                                'title',         'title.shingles',
-                                'title.ngrams',  'text',
-                                'text.shingles', 'text.ngrams',
-                                'book'
-                            ],
-                            minimum_should_match => '50%',
-                            }
-
-                    },
-                    functions => [
-                        {   filter => {
-                                term => {
-                                    "book.raw" => "en/elasticsearch/reference"
-                                }
-                            },
-                            boost_factor => 1.5
-                        }
-                    ]
-                }
-            },
-            size => 10,
-        }
+            query => $query,
+            size  => 10,
+        },
     );
+
     for ( @{ $result->{hits}{hits} } ) {
         $_->{fields} = delete $_->{_source};
     }
@@ -85,40 +113,5 @@ sub doc_search {
         if $callback;
 
     return [ 200, [ 'Content-Type' => 'application/json' ], [$json] ];
-
-}
-
-#===================================
-sub old_doc_search {
-#===================================
-    my $req      = Plack::Request->new( shift() );
-    my $callback = $req->param('callback');
-    my $q        = $req->param('q');
-
-    my $result = $es->search(
-        index  => 'es_docs',
-        fields => [ 'title', 'category', 'url' ],
-        query  => {
-            multi_match => {
-                query  => $q,
-                fields => [
-                    'title',   'title.shingles^2',
-                    'content', 'content.shingles^10'
-                ],
-                minimum_should_match => '60%',
-            }
-        },
-        size    => 10,
-        as_json => 1
-    );
-
-    $result = $callback . '(' . $result . ')'
-        if $callback;
-
-    return [
-        200,
-        [ 'Content-Type' => 'application/json' ],
-        [ encode_utf8($result) ]
-    ];
 
 }

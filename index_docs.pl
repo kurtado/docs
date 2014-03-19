@@ -9,8 +9,7 @@ use FindBin;
 use lib "$FindBin::RealBin/lib";
 use YAML qw(LoadFile);
 use Path::Class qw(dir file);
-use Elasticsearch();
-use Elasticsearch::Bulk();
+use Search::Elasticsearch();
 use Encode qw(decode_utf8);
 use ES::Util qw(run $Opts sha_for);
 use Getopt::Long;
@@ -19,7 +18,7 @@ chdir($FindBin::RealBin) or die $!;
 
 our $URL_Base = '/guide';
 our $Conf     = LoadFile('conf.yaml');
-our $e        = Elasticsearch->new( nodes => $ENV{ES_HOST} );
+our $e        = Search::Elasticsearch->new( nodes => $ENV{ES_HOST} );
 
 GetOptions( $Opts, 'force', 'verbose' );
 
@@ -29,11 +28,11 @@ if ( !$Opts->{force} and sha_for("HEAD") eq sha_for('_index') ) {
 }
 
 say "Indexing docs";
-index_docs();
+main();
 run qw(git branch -f _index HEAD);
 
 #===================================
-sub index_docs {
+sub main {
 #===================================
     my $dir = $Conf->{paths}{build}
         or die "Missing <paths.build> from config";
@@ -52,16 +51,11 @@ sub index_docs {
     my @docs;
     for my $book ( books( @{ $Conf->{contents} } ) ) {
         say "Indexing book: $book->{title}";
-        my @docs = load_docs( $dir, $book->{prefix}, $book->{abbr},
+        my $b = $e->bulk_helper( index => $index, type => 'doc' );
+
+        my @docs = index_docs( $b, $dir, $book->{prefix}, $book->{abbr},
             $book->{single} );
-        my $b = Elasticsearch::Bulk->new(
-            es        => $e,
-            index     => $index,
-            type      => 'doc',
-            max_count => 0,
-            max_size  => 0
-        );
-        $b->index(@docs);
+
         my $result = $b->flush;
 
         die join "\n", "Error indexing $book->{title}:",
@@ -84,40 +78,47 @@ sub index_docs {
 }
 
 #===================================
-sub load_docs {
+sub index_docs {
 #===================================
-    my ( $dir, $prefix, $abbr, $single ) = @_;
+    my ( $bulk, $dir, $prefix, $abbr, $single ) = @_;
+
     my $length_dir = length($dir);
-    my $book_dir = $dir->subdir( $prefix, 'current' );
+    my $book_dir   = $dir->subdir($prefix);
+    my @versions   = grep { $_->is_dir } $book_dir->children();
 
-    my @docs;
-    for my $file ( $book_dir->children ) {
-        next if $file->is_dir;
+    for my $version_dir (@versions) {
 
-        my $name = $file->basename;
-        next
-            if ( $name eq 'index.html' and !$single )
-            || $name eq 'sense_widget.html'
-            || $name !~ s/\.html$//;
+        for my $file ( $version_dir->children ) {
+            next if $file->is_dir;
 
-        my $url = $URL_Base . substr( $file, $length_dir );
+            my $name = $file->basename;
+            next
+                if ( $name eq 'index.html' and !$single )
+                || $name eq 'sense_widget.html'
+                || $name !~ s/\.html$//;
 
-        for my $page ( load_file($file) ) {
-            push @docs,
-                {
-                _id     => $url . $page->[0],
-                _source => {
-                    book  => $prefix,
-                    title => $page->[1] . ' » ' . $abbr,
-                    text  => $page->[2],
-                    url   => $url . $page->[0],
-                    path  => "/$prefix/$name",
-                }
-                };
+            my $url = $URL_Base . substr( $file, $length_dir );
+
+            for my $page ( load_file($file) ) {
+                $bulk->index(
+                    {   _id     => $url . $page->[0],
+                        _source => {
+                            book    => $prefix,
+                            version => $version_dir->basename,
+                            title   => $page->[1] . ' » ' . $abbr,
+                            text    => $page->[2],
+                            url     => $url . $page->[0],
+                            path    => "/$prefix/"
+                                . $version_dir->basename
+                                . "/$name",
+                        }
+                    }
+                );
+            }
+
         }
-
     }
-    return @docs;
+    return;
 }
 
 #===================================
@@ -147,7 +148,8 @@ sub load_file {
         next unless $id;
         push @sections, [ $id, $title, $body ];
     }
-    $sections[0][0] = '';
+
+    #    $sections[0][0] = '';
     return @sections;
 }
 
@@ -247,9 +249,10 @@ sub mappings {
                     }
                 },
                 title => {
-                    type     => 'string',
-                    analyzer => 'content',
-                    fields   => {
+                    type   => 'string',
+                    fields => {
+                        content =>
+                            { type => 'string', analyzer => 'content' },
                         shingles => {
                             type     => 'string',
                             analyzer => 'shingles',
@@ -262,9 +265,10 @@ sub mappings {
                     }
                 },
                 text => {
-                    type     => 'string',
-                    analyzer => 'content',
-                    fields   => {
+                    type   => 'string',
+                    fields => {
+                        content =>
+                            { type => 'string', analyzer => 'content' },
                         shingles => {
                             type     => 'string',
                             analyzer => 'shingles'
@@ -279,7 +283,11 @@ sub mappings {
                 path => {
                     type  => 'string',
                     index => 'not_analyzed',
-                }
+                },
+                version => {
+                    type  => 'string',
+                    index => 'not_analyzed',
+                },
             }
         }
     };
