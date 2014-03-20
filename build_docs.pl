@@ -25,7 +25,7 @@ our $Conf = LoadFile('conf.yaml');
 GetOptions(
     $Opts,    #
     'all', 'push',    #
-    'single',  'doc=s', 'out=s', 'toc', 'chunk=i',
+    'single',  'doc=s', 'out=s', 'toc', 'chunk=i', 'toc_level=i',
     'open',    'web',
     'lenient', 'verbose'
 );
@@ -282,7 +282,8 @@ sub usage {
                             a chunking into a file per chapter
           --toc             Include a TOC at the beginning of the page.
           --out dest/dir/   Defaults to ./html_docs.
-          --chunk 1         Also chunk sections into separate files
+          --chunk=1         Also chunk sections into separate files
+          --toc_level=1     How many sections deep should the main ToC display
 
           --open            Open the docs in a browser once built.
           --web             Serve the docs via a webserver once built.

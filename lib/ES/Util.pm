@@ -28,11 +28,12 @@ sub build_chunked {
     fcopy( 'resources/styles.css', $index->parent )
         or die "Couldn't copy <styles.css> to <" . $index->parent . ">: $!";
 
-    my $chunk   = $opts{chunk} || 0;
-    my $build   = $dest->parent;
-    my $version = $opts{version} || 'test build';
-    my $multi   = $opts{multi} || 0;
-    my $lenient = $opts{lenient} || '';
+    my $chunk     = $opts{chunk} || 0;
+    my $build     = $dest->parent;
+    my $version   = $opts{version} || 'test build';
+    my $multi     = $opts{multi} || 0;
+    my $lenient   = $opts{lenient} || '';
+    my $toc_level = $opts{toc_level} || 1;
 
     my $output = run(
         'a2x', '-v', '--icons',
@@ -42,6 +43,7 @@ sub build_chunked {
         docinfo($index),
         '--xsl-file'      => 'resources/website_chunked.xsl',
         '--asciidoc-opts' => '-fresources/es-asciidoc.conf',
+        '--xsltproc-opts' => "--stringparam toc.max.depth $toc_level",
         '--xsltproc-opts' => "--stringparam chunk.section.depth $chunk",
         '--xsltproc-opts' => "--stringparam local.book.version '$version'",
         '--xsltproc-opts' =>

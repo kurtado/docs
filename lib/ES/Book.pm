@@ -29,7 +29,8 @@ sub new {
     my $index = $args{index}
         or die "No <index> specfied for book <$title>";
 
-    my $chunk = $args{chunk} || 0;
+    my $chunk     = $args{chunk}     || 0;
+    my $toc_level = $args{toc_level} || 1;
 
     my $branches = $args{branches} || $repo->branches;
     my $current  = $args{current}  || $repo->current;
@@ -41,15 +42,16 @@ sub new {
         unless grep { $current eq $_ } @$branches;
 
     bless {
-        title    => $title,
-        dir      => $dir->subdir($prefix),
-        repo     => $repo,
-        prefix   => $prefix,
-        chunk    => $chunk,
-        single   => $args{single},
-        index    => Path::Class::file($index),
-        branches => $branches,
-        current  => $current
+        title     => $title,
+        dir       => $dir->subdir($prefix),
+        repo      => $repo,
+        prefix    => $prefix,
+        chunk     => $chunk,
+        toc_level => $toc_level,
+        single    => $args{single},
+        index     => Path::Class::file($index),
+        branches  => $branches,
+        current   => $current
     }, $class;
 }
 
@@ -60,14 +62,15 @@ sub build {
 
     say "Book: " . $self->title;
 
-    my $repo     = $self->repo;
-    my $branches = $self->branches;
-    my $current  = $self->current;
-    my $index    = $self->index;
-    my $src_path = $index->parent;
-    my $toc      = ES::Toc->new( $self->title );
-    my $dir      = $self->dir;
-    my $chunk    = $self->chunk;
+    my $repo      = $self->repo;
+    my $branches  = $self->branches;
+    my $current   = $self->current;
+    my $index     = $self->index;
+    my $src_path  = $index->parent;
+    my $toc       = ES::Toc->new( $self->title );
+    my $dir       = $self->dir;
+    my $chunk     = $self->chunk;
+    my $toc_level = $self->toc_level;
 
     $dir->mkpath;
 
@@ -98,9 +101,10 @@ sub build {
                 build_chunked(
                     $repo->dir->file($index),
                     $branch_dir,
-                    chunk   => $chunk,
-                    version => $branch,
-                    multi   => $multi,
+                    chunk     => $chunk,
+                    toc_level => $toc_level,
+                    version   => $branch,
+                    multi     => $multi,
                 );
             }
             $repo->mark_done( $src_path, $branch );
@@ -160,15 +164,16 @@ sub remove_old_branches {
 }
 
 #===================================
-sub title    { shift->{title} }
-sub dir      { shift->{dir} }
-sub repo     { shift->{repo} }
-sub prefix   { shift->{prefix} }
-sub chunk    { shift->{chunk} }
-sub single   { shift->{single} }
-sub index    { shift->{index} }
-sub branches { shift->{branches} }
-sub current  { shift->{current} }
+sub title     { shift->{title} }
+sub dir       { shift->{dir} }
+sub repo      { shift->{repo} }
+sub prefix    { shift->{prefix} }
+sub chunk     { shift->{chunk} }
+sub toc_level { shift->{toc_level} }
+sub single    { shift->{single} }
+sub index     { shift->{index} }
+sub branches  { shift->{branches} }
+sub current   { shift->{current} }
 #===================================
 
 1;
