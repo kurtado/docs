@@ -7,8 +7,8 @@ use ES::Util qw(run);
 
 our $Link_Re = qr{
     http://(?:www.)?elasticsearch.org/guide/
-    ([^"\#>\s]+)           # path
-    (?:\#([^">\s]+))?      # fragment
+    ([^"\#<>\s]+)           # path
+    (?:\#([^"<>\s]+))?      # fragment
 }x;
 
 #===================================
