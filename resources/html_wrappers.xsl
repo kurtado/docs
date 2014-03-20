@@ -64,6 +64,9 @@
     <header>
       <div class="container">
         <div id="header-inner">
+          <h1 id="header-logo">
+            <a class="faux" href="http://www.elasticsearch.org">Elasticsearch</a>
+          </h1>
           <nav role="navigation" id="main-nav-container">
             <ul id="top-nav" class="menu">
               <li id="menu-item-7" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7">
@@ -91,9 +94,6 @@
             </ul>
         </nav>
 
-          <h1 id="header-logo">
-            <a class="faux" href="http://www.elasticsearch.org">Elasticsearch</a>
-          </h1>
           <div class="slide-trigger navigation" id="nav-trigger">
             <span class="bar" />
             <span class="bar" />
