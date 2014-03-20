@@ -7,6 +7,8 @@
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
 
+  <xsl:template match="a[@class='sense_widget']" mode="guide" />
+
   <xsl:template match="text()" mode="not-guide" />
 
   <xsl:template match="text()" mode="guide">
