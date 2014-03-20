@@ -11,6 +11,11 @@ repos:
             - 1.x
             - 0.90
 
+    guide:
+        url:        https://github.com/elasticsearch/elasticsearch-definitive-guide.git
+        current:    master
+        branches:   [master]
+        toc_level:  1
 
     elasticsearch-hadoop:
         url:        https://github.com/elasticsearch/elasticsearch-hadoop.git
@@ -45,13 +50,24 @@ repos:
 contents_title:     Guide
 
 contents:
-    -
-        title:      Elasticsearch reference
-        prefix:     en/elasticsearch/reference
-        repo:       elasticsearch
-        index:      docs/reference/index.asciidoc
-        chunk:      1
-        abbr:       elasticsearch
+    -   title:      Elasticsearch
+        sections:
+          -
+            title:      Elasticsearch reference
+            prefix:     en/elasticsearch/reference
+            repo:       elasticsearch
+            index:      docs/reference/index.asciidoc
+            chunk:      1
+            abbr:       elasticsearch
+
+          -
+            title:      Elasticsearch - The Definitive Guide
+            prefix:     en/elasticsearch/guide
+            repo:       guide
+            index:      book.asciidoc
+            chunk:      1
+            toc_level:  2
+            abbr:       guide
 
     -
         title:      Marvel management and monitoring
