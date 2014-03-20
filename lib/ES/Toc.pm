@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use v5.10;
 use ES::Util qw(build_single);
+use File::Copy::Recursive qw(fcopy);
 
 #===================================
 sub new {
@@ -34,6 +35,8 @@ sub write {
     $adoc_file->spew( iomode => '>:utf8', $adoc );
 
     build_single( $adoc_file, $dir );
+    fcopy( 'resources/styles.css', $dir )
+        or die "Couldn't copy <styles.css> to <" . $dir . ">: $!";
 
     $adoc_file->remove;
 }
