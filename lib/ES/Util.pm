@@ -36,10 +36,10 @@ sub build_chunked {
 
     my $output = run(
         'a2x', '-v', '--icons',
-        '-d'              => 'book',
-        '-f'              => 'chunked',
-        '-a'              => 'showcomments=1',
-        '-a'              => 'docinfo',
+        '-d' => 'book',
+        '-f' => 'chunked',
+        '-a' => 'showcomments=1',
+        docinfo($index),
         '--xsl-file'      => 'resources/website_chunked.xsl',
         '--asciidoc-opts' => '-fresources/es-asciidoc.conf',
         '--xsltproc-opts' => "--stringparam chunk.section.depth $chunk",
@@ -94,7 +94,7 @@ sub build_single {
         '-d'              => $type,
         '--asciidoc-opts' => '-fresources/es-asciidoc.conf',
         '-a'              => 'showcomments=1',
-        '-a'              => 'docinfo',
+        docinfo($index),
         '--xsltproc-opts',
         "--stringparam generate.toc '$toc'",
         '--xsltproc-opts' => "--stringparam local.book.version '$version'",
@@ -116,6 +116,16 @@ sub build_single {
 
     to_html5($dest);
     sense_widget( $index->parent, $dest );
+}
+
+#===================================
+sub docinfo {
+#===================================
+    my $index = shift;
+    my $name  = $index->basename;
+    $name =~ s/\.[^.]+$//;
+    my $docinfo = $index->dir->file("$name-docinfo.xml");
+    return -e $docinfo ? ( -a => 'docinfo' ) : ();
 }
 
 #===================================
