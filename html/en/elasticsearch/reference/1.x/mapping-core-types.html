@@ -219,7 +219,7 @@ in <code class="literal">_source</code>, have <code class="literal">include_in_a
 all.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">include_in_all</code></p></td><td align="left" valign="top"><p>Should the field be included in the <code class="literal">_all</code> field (if
 enabled). If <code class="literal">index</code> is set to <code class="literal">no</code> this defaults to <code class="literal">false</code>, otherwise,
 defaults to <code class="literal">true</code> or to the parent <code class="literal">object</code> type setting.</p></td></tr></tbody></table></div><h4><a id="binary"></a>Binary</h4><p>The binary type is a base64 representation of binary data that can be
-stored in the index. The field is stored by default and not indexed at
+stored in the index. The field is not stored by default and not indexed at
 all.</p><pre class="programlisting prettyprint lang-js">{
     "tweet" : {
         "properties" : {
@@ -230,7 +230,9 @@ all.</p><pre class="programlisting prettyprint lang-js">{
     }
 }</pre><p>The following table lists all the attributes that can be used with the
 binary type:</p><div class="informaltable"><table cellpadding="4px" border="1"><colgroup><col class="col_1" /><col class="col_2" /></colgroup><thead><tr><th align="left" valign="top">Attribute </th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top"><p><code class="literal">index_name</code></p></td><td align="left" valign="top"><p>The name of the field that will be stored in the index.
-Defaults to the property/field name.</p></td></tr></tbody></table></div><h4><a id="fielddata-filters"></a>Fielddata filters</h4><p>It is possible to control which field values are loaded into memory,
+Defaults to the property/field name.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">store</code></p></td><td align="left" valign="top"><p>Set to <code class="literal">true</code> to store actual field in the index, <code class="literal">false</code> to not
+store it. Defaults to <code class="literal">false</code> (note, the JSON document itself is stored,
+and it can be retrieved from it).</p></td></tr></tbody></table></div><h4><a id="fielddata-filters"></a>Fielddata filters</h4><p>It is possible to control which field values are loaded into memory,
 which is particularly useful for faceting on string fields, using
 fielddata filters, which are explained in detail in the
 <a class="link" href="index-modules-fielddata.html" title="Field data">Fielddata</a> section.</p><p>Fielddata filters can exclude terms which do not match a regex, or which
