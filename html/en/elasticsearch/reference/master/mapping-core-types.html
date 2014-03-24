@@ -216,9 +216,7 @@ and it can be retrieved from it).</p></td></tr><tr><td align="left" valign="top"
 in <code class="literal">_source</code>, have <code class="literal">include_in_all</code> enabled, or <code class="literal">store</code> be set to
 <code class="literal">true</code> for this to be useful.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">boost</code></p></td><td align="left" valign="top"><p>The boost value. Defaults to <code class="literal">1.0</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">null_value</code></p></td><td align="left" valign="top"><p>When there is a (JSON) null value for the field, use the
 <code class="literal">null_value</code> as the field value. Defaults to not adding the field at
-all.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">include_in_all</code></p></td><td align="left" valign="top"><p>Should the field be included in the <code class="literal">_all</code> field (if
-enabled). If <code class="literal">index</code> is set to <code class="literal">no</code> this defaults to <code class="literal">false</code>, otherwise,
-defaults to <code class="literal">true</code> or to the parent <code class="literal">object</code> type setting.</p></td></tr></tbody></table></div><h4><a id="binary"></a>Binary</h4><p>The binary type is a base64 representation of binary data that can be
+all.</p></td></tr></tbody></table></div><h4><a id="binary"></a>Binary</h4><p>The binary type is a base64 representation of binary data that can be
 stored in the index. The field is not stored by default and not indexed at
 all.</p><pre class="programlisting prettyprint lang-js">{
     "tweet" : {
