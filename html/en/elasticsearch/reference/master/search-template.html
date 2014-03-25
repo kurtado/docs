@@ -29,12 +29,12 @@
            
           <a href="search-facets.html">Facets
                »
-            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="search-template"></a>Search Template</h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="search-search.html">Search</a></span></dt><dt><span class="chapter"><a href="search-uri-request.html">URI Search</a></span></dt><dt><span class="chapter"><a href="search-request-body.html">Request Body Search</a></span></dt><dt><span class="chapter"><a href="search-template.html">Search Template</a></span></dt><dt><span class="chapter"><a href="search-facets.html">Facets</a></span></dt><dt><span class="chapter"><a href="search-aggregations.html">Aggregations</a></span></dt><dt><span class="chapter"><a href="search-suggesters.html">Suggesters</a></span></dt><dt><span class="chapter"><a href="suggester-context.html">Context Suggester</a></span></dt><dt><span class="chapter"><a href="search-multi-search.html">Multi Search API</a></span></dt><dt><span class="chapter"><a href="search-count.html">Count API</a></span></dt><dt><span class="chapter"><a href="search-validate.html">Validate API</a></span></dt><dt><span class="chapter"><a href="search-explain.html">Explain API</a></span></dt><dt><span class="chapter"><a href="search-percolate.html">Percolator</a></span></dt><dt><span class="chapter"><a href="search-more-like-this.html">More Like This API</a></span></dt></dl></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Coming in 1.1.0.</p></div></div><p>Using a query template allows to use the mustache language to pre render search requests,
-before they are executed and fill existing templates with template parameters.</p><p>You can use the <code class="literal">/_search/template</code> endpoint for that.</p><pre class="programlisting prettyprint lang-js">GET /_search/template
+            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="search-template"></a>Search Template</h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="search-search.html">Search</a></span></dt><dt><span class="chapter"><a href="search-uri-request.html">URI Search</a></span></dt><dt><span class="chapter"><a href="search-request-body.html">Request Body Search</a></span></dt><dt><span class="chapter"><a href="search-template.html">Search Template</a></span></dt><dt><span class="chapter"><a href="search-facets.html">Facets</a></span></dt><dt><span class="chapter"><a href="search-aggregations.html">Aggregations</a></span></dt><dt><span class="chapter"><a href="search-suggesters.html">Suggesters</a></span></dt><dt><span class="chapter"><a href="suggester-context.html">Context Suggester</a></span></dt><dt><span class="chapter"><a href="search-multi-search.html">Multi Search API</a></span></dt><dt><span class="chapter"><a href="search-count.html">Count API</a></span></dt><dt><span class="chapter"><a href="search-validate.html">Validate API</a></span></dt><dt><span class="chapter"><a href="search-explain.html">Explain API</a></span></dt><dt><span class="chapter"><a href="search-percolate.html">Percolator</a></span></dt><dt><span class="chapter"><a href="search-more-like-this.html">More Like This API</a></span></dt></dl></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Coming in 1.1.0.</p></div></div><p>The <code class="literal">/_search/template</code> endpoint allows to use the mustache language to pre render search requests,
+before they are executed and fill existing templates with template parameters.</p><pre class="programlisting prettyprint lang-js">GET /_search/template
 {
     "template" : {
       "query": { "match" : { "{{my_field}}" : "{{my_value}}" } },
-      "size" : {{my_size}}
+      "size" : "{{my_size}}"
     },
     "params" : {
         "my_field" : "foo",
@@ -156,7 +156,16 @@ Include the <code class="literal">lte</code> clause only if <code class="literal
 Fill in the value of param <code class="literal">line_no.end</code>
 </p></td></tr></table></div><p>As written above, this template is not valid JSON because it includes the
 <span class="emphasis"><em>section</em></span> markers like <code class="literal">{{#line_no}}</code>.  For this reason, the template
-can only be written as a string.</p></div><div class="navfooter"><span class="prev"><a href="search-request-named-queries-and-filters.html">
+can only be written as a string.</p><h5><a id="_pre_registered_template"></a>Pre-registered template</h5><p>You can register search templates by storing it in the <code class="literal">config/scripts</code> directory, in a file using the <code class="literal">.mustache</code> extension.
+In order to execute the stored template, reference it by it’s name under the <code class="literal">template</code> key:</p><pre class="programlisting prettyprint lang-js">GET /_search/template
+{
+    "template": "storedTemplate" <a id="CO3-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>,
+    "params": {
+        "query_string": "search for these words"
+    }
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO3-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+Name of the the query template in <code class="literal">config/scripts/</code>, i.e., <code class="literal">storedTemplate.mustache</code>.
+</p></td></tr></table></div></div><div class="navfooter"><span class="prev"><a href="search-request-named-queries-and-filters.html">
               « 
               Named Queries and Filters</a>
            

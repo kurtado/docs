@@ -44,29 +44,29 @@ template parameters.</p><pre class="programlisting prettyprint lang-js">GET /_se
 {
     "query": {
         "template": {
-            "query": "{\"match_{{template}}\": {}}\"", <a id="CO29-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
-            "params" : {
-                "template" : "all"
-            }
-        }
-    }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO29-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-New line characters (<code class="literal">\n</code>) should be escaped as <code class="literal">\\n</code> or removed,
-    and quotes (<code class="literal">"</code>) should be escaped as <code class="literal">\\"</code>.
-</p></td></tr></table></div><p>You can register a template by storing it in the <code class="literal">config/scripts</code> directory.
-In order to execute the stored template, reference it by name in the <code class="literal">query</code>
-parameter:</p><pre class="programlisting prettyprint lang-js">GET /_search
-{
-    "query": {
-        "template": {
-            "query": "storedTemplate", <a id="CO30-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+            "query": "{\"match_{{template}}\": {}}\"", <a id="CO30-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
             "params" : {
                 "template" : "all"
             }
         }
     }
 }</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO30-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-Name of the the query template in <code class="literal">config/scripts/</code>.
+New line characters (<code class="literal">\n</code>) should be escaped as <code class="literal">\\n</code> or removed,
+    and quotes (<code class="literal">"</code>) should be escaped as <code class="literal">\\"</code>.
+</p></td></tr></table></div><p>You can register a template by storing it in the <code class="literal">config/scripts</code> directory, in a file using the <code class="literal">.mustache</code> extension.
+In order to execute the stored template, reference it by name in the <code class="literal">query</code>
+parameter:</p><pre class="programlisting prettyprint lang-js">GET /_search
+{
+    "query": {
+        "template": {
+            "query": "storedTemplate", <a id="CO31-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+            "params" : {
+                "template" : "all"
+            }
+        }
+    }
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO31-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+Name of the the query template in <code class="literal">config/scripts/</code>, i.e., <code class="literal">storedTemplate.mustache</code>.
 </p></td></tr></table></div><p>Templating is based on Mustache. For simple token substitution all you provide
 is a query containing some variable that you want to substitute and the actual
 values:</p><pre class="programlisting prettyprint lang-js">GET /_search
@@ -83,8 +83,8 @@ values:</p><pre class="programlisting prettyprint lang-js">GET /_search
     "query": {
         "match_all": {}
     }
-}</pre><p>There is also a dedicated <code class="literal">template</code> endpoint, which allows you to specify the template query directly.
-You can use the <code class="literal">/_search/template</code> endpoint for that. Please see <a class="xref" href="search-template.html" title="Search Template"><em>Search Template</em></a> for more details.</p></div><div class="navfooter"><span class="prev"><a href="query-dsl-multi-term-rewrite.html">
+}</pre><p>There is also a dedicated <code class="literal">template</code> endpoint, allows you to template an entire search request.
+Please see <a class="xref" href="search-template.html" title="Search Template"><em>Search Template</em></a> for more details.</p></div><div class="navfooter"><span class="prev"><a href="query-dsl-multi-term-rewrite.html">
               « 
               Multi Term Query Rewrite</a>
            
