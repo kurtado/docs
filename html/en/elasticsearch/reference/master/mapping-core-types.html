@@ -91,7 +91,8 @@ Automatically set to <code class="literal">true</code> when the fielddata format
 <code class="literal">with_positions</code>, <code class="literal">with_positions_offsets</code>. Defaults to <code class="literal">no</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">boost</code></p></td><td align="left" valign="top"><p>The boost value. Defaults to <code class="literal">1.0</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">null_value</code></p></td><td align="left" valign="top"><p>When there is a (JSON) null value for the field, use the
 <code class="literal">null_value</code> as the field value. Defaults to not adding the field at
 all.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">norms.enabled</code></p></td><td align="left" valign="top"><p>Boolean value if norms should be enabled or not. Defaults
-to <code class="literal">true</code> for <code class="literal">analyzed</code> fields, and to <code class="literal">false</code> for <code class="literal">not_analyzed</code> fields.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">norms.loading</code></p></td><td align="left" valign="top"><p>Describes how norms should be loaded, possible values are
+to <code class="literal">true</code> for <code class="literal">analyzed</code> fields, and to <code class="literal">false</code> for <code class="literal">not_analyzed</code> fields.
+See the <a class="link" href="mapping-core-types.html#norms" title="Norms">section about norms</a>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">norms.loading</code></p></td><td align="left" valign="top"><p>Describes how norms should be loaded, possible values are
 <code class="literal">eager</code> and <code class="literal">lazy</code> (default). It is possible to change the default value to
 eager for all fields by configuring the index setting <code class="literal">index.norms.loading</code>
 to <code class="literal">eager</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">index_options</code></p></td><td align="left" valign="top"><p>Allows to set the indexing
@@ -118,7 +119,18 @@ with the indexed value. For example:</p><pre class="programlisting prettyprint l
 Otherwise, the structure would interpret "message" as a value of type
 "object". The key <code class="literal">_value</code> (or <code class="literal">value</code>) in the inner document specifies
 the real string content that should eventually be indexed. The <code class="literal">_boost</code>
-(or <code class="literal">boost</code>) key specifies the per field document boost (here 2.0).</p><h4><a id="number"></a>Number</h4><p>A number based type supporting <code class="literal">float</code>, <code class="literal">double</code>, <code class="literal">byte</code>, <code class="literal">short</code>,
+(or <code class="literal">boost</code>) key specifies the per field document boost (here 2.0).</p><h5><a id="norms"></a>Norms</h5><p>Norms store various normalization factors that are later used (at query time)
+in order to compute the score of a document relatively to a query.</p><p>Although useful for scoring, norms also require quite a lot of memory
+(typically in the order of one byte per document per field in your index,
+even for documents that don’t have this specific field). As a consequence, if
+you don’t need scoring on a specific field, it is highly recommended to disable
+norms on it. In  particular, this is the case for fields that are used solely
+for filtering or aggregations.</p><p>In case you would like to disable norms after the fact, it is possible to do so
+by using the <a class="link" href="indices-put-mapping.html" title="Put Mapping">PUT mapping API</a>. Please however note that
+norms won’t be removed instantly, but as your index will receive new insertions
+or updates, and segments get merged. Any score computation on a field that got
+norms removed might return inconsistent results since some documents won’t have
+norms anymore while other documents might still have norms.</p><h4><a id="number"></a>Number</h4><p>A number based type supporting <code class="literal">float</code>, <code class="literal">double</code>, <code class="literal">byte</code>, <code class="literal">short</code>,
 <code class="literal">integer</code>, and <code class="literal">long</code>. It uses specific constructs within Lucene in
 order to support numeric values. The number types have the same ranges
 as corresponding
