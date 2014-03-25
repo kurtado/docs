@@ -29,7 +29,7 @@
            
           <a href="search-multi-search.html">Multi Search API
                »
-            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="suggester-context"></a>Context Suggester</h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="search-search.html">Search</a></span></dt><dt><span class="chapter"><a href="search-uri-request.html">URI Search</a></span></dt><dt><span class="chapter"><a href="search-request-body.html">Request Body Search</a></span></dt><dt><span class="chapter"><a href="search-facets.html">Facets</a></span></dt><dt><span class="chapter"><a href="search-aggregations.html">Aggregations</a></span></dt><dt><span class="chapter"><a href="search-suggesters.html">Suggesters</a></span></dt><dt><span class="chapter"><a href="suggester-context.html">Context Suggester</a></span></dt><dt><span class="chapter"><a href="search-multi-search.html">Multi Search API</a></span></dt><dt><span class="chapter"><a href="search-count.html">Count API</a></span></dt><dt><span class="chapter"><a href="search-validate.html">Validate API</a></span></dt><dt><span class="chapter"><a href="search-explain.html">Explain API</a></span></dt><dt><span class="chapter"><a href="search-percolate.html">Percolator</a></span></dt><dt><span class="chapter"><a href="search-more-like-this.html">More Like This API</a></span></dt></dl></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Coming in 1.2.0.</p></div></div><p>The context suggester is an extension to the suggest API of Elasticsearch. Namely the
+            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="suggester-context"></a>Context Suggester</h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="search-search.html">Search</a></span></dt><dt><span class="chapter"><a href="search-uri-request.html">URI Search</a></span></dt><dt><span class="chapter"><a href="search-request-body.html">Request Body Search</a></span></dt><dt><span class="chapter"><a href="search-template.html">Search Template</a></span></dt><dt><span class="chapter"><a href="search-facets.html">Facets</a></span></dt><dt><span class="chapter"><a href="search-aggregations.html">Aggregations</a></span></dt><dt><span class="chapter"><a href="search-suggesters.html">Suggesters</a></span></dt><dt><span class="chapter"><a href="suggester-context.html">Context Suggester</a></span></dt><dt><span class="chapter"><a href="search-multi-search.html">Multi Search API</a></span></dt><dt><span class="chapter"><a href="search-count.html">Count API</a></span></dt><dt><span class="chapter"><a href="search-validate.html">Validate API</a></span></dt><dt><span class="chapter"><a href="search-explain.html">Explain API</a></span></dt><dt><span class="chapter"><a href="search-percolate.html">Percolator</a></span></dt><dt><span class="chapter"><a href="search-more-like-this.html">More Like This API</a></span></dt></dl></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Coming in 1.2.0.</p></div></div><p>The context suggester is an extension to the suggest API of Elasticsearch. Namely the
 suggester system provides a very fast way of searching documents by handling these
 entirely in memory. But this special treatenment does not allow the handling of
 traditional queries and filters, because those would have notable impact on the
@@ -54,12 +54,12 @@ For instance:</p><pre class="programlisting prettyprint lang-js">PUT services/se
             "suggest_field": {
                 "type": "completion",
                 "context": {
-                    "color": { <a id="CO19-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+                    "color": { <a id="CO21-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
                         "type": "category",
                         "path": "color_field"
                         "default": ["red", "green", "blue"]
                     },
-                    "location": { <a id="CO19-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+                    "location": { <a id="CO21-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
                         "type": "geo",
                         "precision": "5m",
                         "neighbors": true,
@@ -69,9 +69,9 @@ For instance:</p><pre class="programlisting prettyprint lang-js">PUT services/se
             }
         }
     }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO19-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO21-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 See <a class="xref" href="suggester-context.html#suggester-context-category" title="Category Context">the section called “Category Context”</a>
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO19-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO21-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 See <a class="xref" href="suggester-context.html#suggester-context-geo" title="Geo location Context">the section called “Geo location Context”</a>
 </p></td></tr></table></div><p>However contexts are specified (as type <code class="literal">category</code> or <code class="literal">geo</code>, which are discussed below), each
 context value generates a new sub-set of documents which can be queried by the completion
