@@ -90,9 +90,9 @@ searchable at all (as an individual field; it may still be included in
 Automatically set to <code class="literal">true</code> when the fielddata format is <code class="literal">doc_values</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">term_vector</code></p></td><td align="left" valign="top"><p>Possible values are <code class="literal">no</code>, <code class="literal">yes</code>, <code class="literal">with_offsets</code>,
 <code class="literal">with_positions</code>, <code class="literal">with_positions_offsets</code>. Defaults to <code class="literal">no</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">boost</code></p></td><td align="left" valign="top"><p>The boost value. Defaults to <code class="literal">1.0</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">null_value</code></p></td><td align="left" valign="top"><p>When there is a (JSON) null value for the field, use the
 <code class="literal">null_value</code> as the field value. Defaults to not adding the field at
-all.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">norms.enabled</code></p></td><td align="left" valign="top"><p>Boolean value if norms should be enabled or not. Defaults
-to <code class="literal">true</code> for <code class="literal">analyzed</code> fields, and to <code class="literal">false</code> for <code class="literal">not_analyzed</code> fields.
-See the <a class="link" href="mapping-core-types.html#norms" title="Norms">section about norms</a>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">norms.loading</code></p></td><td align="left" valign="top"><p>Describes how norms should be loaded, possible values are
+all.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">norms: {enabled: &lt;value&gt;}</code></p></td><td align="left" valign="top"><p>Boolean value if norms should be enabled or
+not. Defaults to <code class="literal">true</code> for <code class="literal">analyzed</code> fields, and to <code class="literal">false</code> for
+<code class="literal">not_analyzed</code> fields. See the <a class="link" href="mapping-core-types.html#norms" title="Norms">section about norms</a>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">norms: {loading: &lt;value&gt;}</code></p></td><td align="left" valign="top"><p>Describes how norms should be loaded, possible values are
 <code class="literal">eager</code> and <code class="literal">lazy</code> (default). It is possible to change the default value to
 eager for all fields by configuring the index setting <code class="literal">index.norms.loading</code>
 to <code class="literal">eager</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">index_options</code></p></td><td align="left" valign="top"><p>Allows to set the indexing
@@ -125,7 +125,7 @@ in order to compute the score of a document relatively to a query.</p><p>Althoug
 even for documents that don’t have this specific field). As a consequence, if
 you don’t need scoring on a specific field, it is highly recommended to disable
 norms on it. In  particular, this is the case for fields that are used solely
-for filtering or aggregations.</p><p>In case you would like to disable norms after the fact, it is possible to do so
+for filtering or aggregations.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Coming in 1.2.0.</p></div></div><p>In case you would like to disable norms after the fact, it is possible to do so
 by using the <a class="link" href="indices-put-mapping.html" title="Put Mapping">PUT mapping API</a>. Please however note that
 norms won’t be removed instantly, but as your index will receive new insertions
 or updates, and segments get merged. Any score computation on a field that got
