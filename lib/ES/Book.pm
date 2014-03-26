@@ -80,6 +80,7 @@ sub build {
         say " - Branch: $branch";
 
         my $branch_dir = $dir->subdir($branch);
+        my $edit_url = $self->repo->edit_url( $branch, $index );
 
         my $changed = !-e $branch_dir
             || $repo->has_changed( $src_path, $branch );
@@ -93,8 +94,9 @@ sub build {
                 build_single(
                     $repo->dir->file($index),
                     $branch_dir,
-                    version => $branch,
-                    multi   => $multi,
+                    version  => $branch,
+                    multi    => $multi,
+                    edit_url => $edit_url
                 );
             }
             else {
@@ -105,6 +107,7 @@ sub build {
                     toc_level => $toc_level,
                     version   => $branch,
                     multi     => $multi,
+                    edit_url  => $edit_url
                 );
             }
             $repo->mark_done( $src_path, $branch );

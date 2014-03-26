@@ -34,22 +34,27 @@ sub build_chunked {
     my $multi     = $opts{multi} || 0;
     my $lenient   = $opts{lenient} || '';
     my $toc_level = $opts{toc_level} || 1;
+    my $edit_url  = $opts{edit_url} || '';
 
     my $output = run(
-        'a2x', '-v', '--icons',
-        '-d' => 'book',
-        '-f' => 'chunked',
-        '-a' => 'showcomments=1',
-        docinfo($index),
+        'a2x', '-v',
+        '--icons',
+        '-d'              => 'book',
+        '-f'              => 'chunked',
+        '-a'              => 'showcomments=1',
         '--xsl-file'      => 'resources/website_chunked.xsl',
         '--asciidoc-opts' => '-fresources/es-asciidoc.conf',
-        '--xsltproc-opts' => "--stringparam toc.max.depth $toc_level",
-        '--xsltproc-opts' => "--stringparam chunk.section.depth $chunk",
-        '--xsltproc-opts' => "--stringparam local.book.version '$version'",
-        '--xsltproc-opts' =>
-            "--stringparam local.book.multi_version '$multi'",
         '--destination-dir=' . $build,
         ( $lenient ? '-L' : () ),
+        docinfo($index),
+        xsltopts(
+            "toc.max.depth"            => $toc_level,
+            "chunk.section.depth"      => $chunk,
+            "local.book.version"       => $version,
+            "local.book.multi_version" => $multi,
+            "local.root_dir"           => $index->dir->absolute,
+            "local.edit_url"           => $edit_url
+        ),
         $index
     );
 
@@ -81,29 +86,33 @@ sub build_single {
     my ( $index, $dest, %opts ) = @_;
 
     my $toc = $opts{toc} ? 'book toc' : '';
-    my $type    = $opts{type}    || 'book';
-    my $lenient = $opts{lenient} || '';
-    my $version = $opts{version} || 'test build';
-    my $multi   = $opts{multi}   || 0;
+    my $type     = $opts{type}     || 'book';
+    my $lenient  = $opts{lenient}  || '';
+    my $version  = $opts{version}  || 'test build';
+    my $multi    = $opts{multi}    || 0;
+    my $edit_url = $opts{edit_url} || '';
 
     fcopy( 'resources/styles.css', $index->parent )
         or die "Couldn't copy <styles.css> to <" . $index->parent . ">: $!";
 
     my $output = run(
-        'a2x', '-v', '--icons',
+        'a2x', '-v',
+        '--icons',
         '-f'              => 'xhtml',
-        '--xsl-file'      => 'resources/website.xsl',
         '-d'              => $type,
-        '--asciidoc-opts' => '-fresources/es-asciidoc.conf',
         '-a'              => 'showcomments=1',
-        docinfo($index),
-        '--xsltproc-opts',
-        "--stringparam generate.toc '$toc'",
-        '--xsltproc-opts' => "--stringparam local.book.version '$version'",
-        '--xsltproc-opts' =>
-            "--stringparam local.book.multi_version '$multi'",
+        '--xsl-file'      => 'resources/website.xsl',
+        '--asciidoc-opts' => '-fresources/es-asciidoc.conf',
         '--destination-dir=' . $dest,
         ( $lenient ? '-L' : () ),
+        docinfo($index),
+        xsltopts(
+            "generate.toc"             => $toc,
+            "local.book.version"       => $version,
+            "local.book.multi_version" => $multi,
+            "local.root_dir"           => $index->dir->absolute,
+            "local.edit_url"           => $edit_url
+        ),
         $index
     );
 
@@ -128,6 +137,18 @@ sub docinfo {
     $name =~ s/\.[^.]+$//;
     my $docinfo = $index->dir->file("$name-docinfo.xml");
     return -e $docinfo ? ( -a => 'docinfo' ) : ();
+}
+
+#===================================
+sub xsltopts {
+#===================================
+    my @opts;
+    while (@_) {
+        my $key = shift;
+        my $val = shift;
+        push @opts, '--xsltproc-opts', "--stringparam $key '$val'";
+    }
+    return @opts;
 }
 
 #===================================

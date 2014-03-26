@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use v5.10;
 
+use Path::Class();
 use ES::Util qw(run sha_for);
 
 my %Repos;
@@ -35,7 +36,8 @@ sub new {
         git_dir  => $dir->subdir( $name, '.git' ),
         url      => $url,
         current  => $current,
-        branches => $branches
+        branches => $branches,
+        private  => $args{private} || 0
     }, $class;
     $Repos{$name} = $self;
 }
@@ -160,12 +162,25 @@ sub tracker_branch {
 }
 
 #===================================
+sub edit_url {
+#===================================
+    my ( $self, $branch, $index ) = @_;
+    return '' if $self->private;
+    my $url = $self->url;
+    $url =~ s/\.git$//;
+    my $dir = Path::Class::dir( "edit", $branch, $index->dir )
+        ->cleanup->as_foreign('Unix');
+    return "$url/$dir";
+}
+
+#===================================
 sub name     { shift->{name} }
 sub dir      { shift->{dir} }
 sub git_dir  { shift->{git_dir} }
 sub url      { shift->{url} }
 sub current  { shift->{current} }
 sub branches { shift->{branches} }
+sub private  { shift->{private} }
 #===================================
 
 1

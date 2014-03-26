@@ -7,7 +7,11 @@
     <xsl:text>&#10;</xsl:text>
   </xsl:template>
 
+  <xsl:template match="span[@class='coming']" mode="guide" />
+  <xsl:template match="span[@class='added']" mode="guide" />
+  <xsl:template match="span[@class='deprecated']" mode="guide" />
   <xsl:template match="a[@class='sense_widget']" mode="guide" />
+  <xsl:template match="ulink[@role='edit_me']" mode="guide" />
 
   <xsl:template match="text()" mode="not-guide" />
 

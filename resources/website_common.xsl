@@ -1,6 +1,11 @@
 <xsl:stylesheet version="1.0"
                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+  <!-- github repo info -->
+  <xsl:param name="local.root" select="0" />
+  <xsl:param name="local.repo" select="0" />
+  <xsl:param name="local.edit_url" select="0" />
+
   <!-- book versions -->
   <xsl:param name="local.book.version">test build</xsl:param>
   <xsl:param name="local.book.multi_version" select="0"/>
@@ -21,6 +26,16 @@
 
   <xsl:param name="generate.toc"></xsl:param>
 
+  <!-- Edit me links -->
+
+  <xsl:template match="ulink[@role='edit_me']">
+    <xsl:if test="$local.edit_url">
+        <xsl:variable name="url" select="concat($local.edit_url,substring(attribute::url,string-length($local.root_dir)+1))" />
+        <a href="{$url}" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="ulink[@role='edit_me']" mode="no.anchor.mode" />
  <!--  head title element with version -->
 
     <xsl:template name="user.header.content">
@@ -119,6 +134,9 @@
       </span>
     </span>
   </xsl:template>
+
+  <!-- Don't display in ToC -->
+  <xsl:template match="phrase" mode="no.anchor.mode" />
 
     <xsl:template name="graphical.admonition">
       <xsl:variable name="admon.type">
