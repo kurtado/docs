@@ -50,13 +50,18 @@ instance ones), for example:</p><pre class="programlisting prettyprint lang-js">
     "type1" : {
         "properties" : {
             "obj1" : {
-                "type" : "nested"
+                "type" : "nested",
+                "properties": {
+                    "name" : {"type": "string", "index": "not_analyzed"},
+                    "count" : {"type": "integer"}
+                }
             }
         }
     }
 }</pre><p>The above will cause all <code class="literal">obj1</code> to be indexed as a nested doc. The
 mapping is similar in nature to setting <code class="literal">type</code> to <code class="literal">object</code>, except that
-it’s <code class="literal">nested</code>.</p><p>Note: changing an object type to nested type requires reindexing.</p><p>The <code class="literal">nested</code> object fields can also be automatically added to the
+it’s <code class="literal">nested</code>. Nested object fields can be defined explicitly as in the
+example above or added dynamically in the same way as for the root object.</p><p>Note: changing an object type to nested type requires reindexing.</p><p>The <code class="literal">nested</code> object fields can also be automatically added to the
 immediate parent by setting <code class="literal">include_in_parent</code> to true, and also
 included in the root object by setting <code class="literal">include_in_root</code> to true.</p><p>Nested docs will also automatically use the root doc <code class="literal">_all</code> field.</p><p>Searching on nested docs can be done using either the
 <a class="link" href="query-dsl-nested-query.html" title="Nested Query">nested query</a> or
