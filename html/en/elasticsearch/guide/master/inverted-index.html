@@ -41,8 +41,8 @@ document into separate words (which we call <span class="emphasis"><em>terms</em
 sorted list of all the unique terms, then list in which document each term
 appears. The result looks something like this:</p><pre class="literallayout">Term      Doc_1  Doc_2
 -------------------------
-Quick   |   X   |
-The     |       |  X
+Quick   |       |  X
+The     |   X   |
 brown   |   X   |  X
 dog     |   X   |
 dogs    |       |  X
@@ -53,7 +53,7 @@ jumped  |   X   |
 lazy    |   X   |  X
 leap    |       |  X
 over    |   X   |  X
-quick   |       |  X
+quick   |   X   |
 summer  |       |  X
 the     |   X   |
 ------------------------</pre><p>Now, if we want to search for <code class="literal">"quick brown"</code> we just need to find the
@@ -73,11 +73,11 @@ matching terms, then we can say that the first document is a better match —�
 </li><li class="listitem">
 <code class="literal">"jumped"</code> and <code class="literal">"leap"</code>, while not from the same root word, are similar
    in meaning — they are synonyms.
-</li></ol></div><p>With the above index, a search for <code class="literal">"+Quick +foxes"</code> wouldn’t match any
+</li></ol></div><p>With the above index, a search for <code class="literal">"+Quick +fox"</code> wouldn’t match any
 documents. (Remember, a preceding <code class="literal">+</code> means that the word must be present).
-Both the term <code class="literal">"Quick"</code> and the term <code class="literal">"foxes"</code> have to be in the same document
-in order to satisfy the query, but the first doc contains <code class="literal">"Quick fox"</code> and
-the second doc contains <code class="literal">"quick foxes"</code>.</p><p>Our user could reasonably expect both documents to match the query. We can do
+Both the term <code class="literal">"Quick"</code> and the term <code class="literal">"fox"</code> have to be in the same document
+in order to satisfy the query, but the first doc contains <code class="literal">"quick fox"</code> and
+the second doc contains <code class="literal">"Quick foxes"</code>.</p><p>Our user could reasonably expect both documents to match the query. We can do
 better.</p><p>If we normalize the terms into a standard format, then we can find documents
 that contain terms that are not exactly the same as the user requested, but
 are similar enough to still be relevant. For instance:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
@@ -100,11 +100,11 @@ over    |   X   |  X
 quick   |   X   |  X
 summer  |       |  X
 the     |   X   |  X
-------------------------</pre><p>But we’re not there yet. Our search for <code class="literal">"+Quick +foxes"</code> would <span class="strong"><strong>still</strong></span> fail,
-because we no longer have the exact term <code class="literal">"Quick"</code> in our index. However, if we
-apply the same normalization rules that we used on the <code class="literal">content</code> field to
-our query string, it would become a query for <code class="literal">"+quick +fox"</code>, which
-would succeed!</p><div class="important admon"><div class="icon"><img alt="Important" src="images/icons/important.png" /></div><div class="admon_content"><p>This is very important. You can only find terms that actually exist in your
+------------------------</pre><p>But we’re not there yet. Our search for <code class="literal">"+Quick +fox"</code> would <span class="strong"><strong>still</strong></span> fail,
+because we no longer have the exact term <code class="literal">"Quick"</code> in our index. However, if
+we apply the same normalization rules that we used on the <code class="literal">content</code> field to
+our query string, it would become a query for <code class="literal">"+quick +fox"</code>, which would
+match both documents!</p><div class="important admon"><div class="icon"><img alt="Important" src="images/icons/important.png" /></div><div class="admon_content"><p>This is very important. You can only find terms that actually exist in your
 index, so: <span class="strong"><strong>both the indexed text and and query string must be normalized
 into the same form</strong></span>.</p></div></div><p>This process of tokenization and normalization is called <span class="emphasis"><em>analysis</em></span>, which we
 discuss in the next section.</p></div><div class="navfooter"><span class="prev"><a href="_exact_values_vs_full_text.html">

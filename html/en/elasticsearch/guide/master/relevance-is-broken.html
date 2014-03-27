@@ -37,7 +37,7 @@ appearing above more relevant results.</p><p>To understand why this happens, let
 primary shards and we index 10 documents, 6 of which contain the word <code class="literal">"foo"</code>.
 It may happen that shard 1 contains 3 of the <code class="literal">"foo"</code> documents and shard
 2 contains the other 3.  In other words, our documents are well distributed.</p><p>In <a class="xref" href="relevance-intro.html" title="What is relevance?">What is relevance?</a> we described the default similarity algorithm used in
-Elastisearch, called <span class="emphasis"><em>Term Frequency / Inverse Document Frequency</em></span> or TF/IDF.
+Elasticsearch, called <span class="emphasis"><em>Term Frequency / Inverse Document Frequency</em></span> or TF/IDF.
 Term frequency counts how many times a term appears within the field we are
 querying in the current document.  The more times it appears, the more
 relevant is this document. The <span class="emphasis"><em>inverse document frequency</em></span> takes into account

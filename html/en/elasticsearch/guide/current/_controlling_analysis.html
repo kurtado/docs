@@ -103,11 +103,11 @@ and the search time sequence.  The <code class="literal">_analyzer</code> field 
 default analyzer for each document (eg <code class="literal">english</code>, <code class="literal">french</code>, <code class="literal">spanish</code>) while
 the <code class="literal">analyzer</code> parameter in the query specifies which analyzer to use on the
 query string. This is one way of handling multiple languages in a single
-index. We will look at this technique in more detail in <a class="xref" href="languages.html" title="Languages (TODO)"><em>Languages (TODO)</em></a>.</p></div><p>Occasionally, it makese sense to use a different analyzer at index and search
+index. We will look at this technique in more detail in <a class="xref" href="languages.html" title="Languages (TODO)"><em>Languages (TODO)</em></a>.</p></div><p>Occasionally, it makes sense to use a different analyzer at index and search
 time. For instance, at index time we may want to index synonyms, eg for every
 occurrence of <code class="literal">quick</code> we also index <code class="literal">fast</code>, <code class="literal">rapid</code> and <code class="literal">speedy</code>. But at
 search time, we don’t need to search for all of these synonyms.  Instead we
-can just lookup the single word that the user has entered, be it <code class="literal">quick</code>,
+can just look up the single word that the user has entered, be it <code class="literal">quick</code>,
 <code class="literal">fast</code>, <code class="literal">rapid</code> or <code class="literal">speedy</code>.</p><p>To enable this distinction, Elasticsearch also supports the <code class="literal">index_analyzer</code>
 and <code class="literal">search_analyzer</code> parameters, and analyzers named <code class="literal">default_index</code> and
 <code class="literal">default_search</code>.</p><p>Taking these extra parameters into account, the <span class="strong"><strong>full</strong></span> sequence at index time
@@ -170,7 +170,7 @@ fields such as tags or enums, plus a handful of full-text fields which will
 use some default analyzer like <code class="literal">standard</code> or <code class="literal">english</code> or some other language.
 Then you may have one or two fields which need custom analysis: perhaps the
 <code class="literal">title</code> field needs to be indexed in a way that supports <span class="emphasis"><em>find-as-you-type</em></span>.</p><p>You can set the <code class="literal">default</code> analyzer in the index to the analyzer you want to
-use for almost all full-text fields, and just configure the specialised
+use for almost all full-text fields, and just configure the specialized
 analyzer on the one or two fields that need it.  If, in your model, you need
 a different default analyzer per type, then use the type level <code class="literal">analyzer</code>
 setting instead.</p><div class="sidebar"><div class="titlepage"></div><p>A common work-flow for time based data like logging is to create a new index

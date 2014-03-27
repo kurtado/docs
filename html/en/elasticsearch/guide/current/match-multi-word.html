@@ -97,13 +97,13 @@ You can change it to <code class="literal">"and"</code> to require that all spec
     }
 }</pre><a class="sense_widget" href="sense_widget.html?snippets/100_Full_Text_Search/05_Match_query.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO55-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The structure of the <code class="literal">match</code> query has to change slightly in order to
-    accomodate the <code class="literal">operator</code> parameter.
+    accommodate the <code class="literal">operator</code> parameter.
 </p></td></tr></table></div><p>This query would exclude document 1 which only contains one of the two terms.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="match-precision"></a>Controlling precision<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/100_Full_Text_Search/10_Multi_word_queries.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The choice between <span class="strong"><strong>all</strong></span> and <span class="strong"><strong>any</strong></span> is a bit too black-or-white. What if the
 user specified five query terms and a document contains only four of them?
 Setting <code class="literal">"operator"</code> to <code class="literal">"and"</code> would exclude this document.</p><p>Sometimes that is exactly what you want, but for most full-text search use
 cases, you want to include documents which may be relevant but exclude those
 that are unlikely to be relevant.  In other words, we need something
-inbetween.</p><p>The <code class="literal">match</code> query supports the <code class="literal">minimum_should_match</code> parameter which allows
+in-between.</p><p>The <code class="literal">match</code> query supports the <code class="literal">minimum_should_match</code> parameter which allows
 you to specify how many terms must match for a document to be considered
 relevant.  While you can specify an absolute number of terms, it usually makes
 sense to specify a percentage instead as you have no control over how many
