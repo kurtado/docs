@@ -77,7 +77,7 @@ of the same shard, there would be no copies of that shard available to respond
 to search requests. In this case, Elasticsearch would report the shard as
 <code class="literal">failed</code>, but continue to return results from the remaining shards.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_literal_timeout_literal"></a><code class="literal">timeout</code><a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/050_Search/05_Empty_search.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The <code class="literal">timed_out</code> value tells us whether the query timed out or not.  By
 default, search requests do not timeout.  If low response times are more
-important to you than complete results, then can specify a <code class="literal">timeout</code> as <code class="literal">10</code>
+important to you than complete results, you can specify a <code class="literal">timeout</code> as <code class="literal">10</code>
 or <code class="literal">"10ms"</code> (10 milliseconds), or <code class="literal">"1s"</code> (1 second):</p><pre class="programlisting prettyprint lang-js">GET /_search?timeout=10ms</pre><p>Elasticsearch will return any results that it has managed to gather from
 shards which responded before the request timed out.</p><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><h4>Timeout is not a circuit breaker</h4><p>It should be noted that this <code class="literal">timeout</code> does not halt the execution of the
 query, it merely tells the coordinating node to return the results collected
