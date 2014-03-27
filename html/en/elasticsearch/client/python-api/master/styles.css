@@ -82,10 +82,11 @@ color:#555;
 margin-bottom:20px;
 }
 
-#search_container #blog_search #results{
+#search_container #blog_search ul#results{
 width:auto;
 margin-left:-2px;
 margin-right:-2px;
+z-index: 5000;
 }
 
 pre.prettyprint{
@@ -576,8 +577,4 @@ h3.author {
     line-height: 1.4;
     padding: 0;
     margin: 0
-}
-
-ul#results {
-    z-index: 5000;
 }
