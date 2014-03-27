@@ -577,3 +577,7 @@ h3.author {
     padding: 0;
     margin: 0
 }
+
+ul#results {
+    z-index: 5000;
+}
