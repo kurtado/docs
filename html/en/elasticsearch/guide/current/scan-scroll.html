@@ -46,7 +46,7 @@ use the <code class="literal">scan</code> search type. Scan instructs Elasticsea
 to just return the next batch of results from every shard which still has
 results to return.
 </dd></dl></div><p>To use <span class="emphasis"><em>scan-and-scroll</em></span>, we execute a search request setting <code class="literal">search_type</code> to
-<code class="literal">scan</code>, and passing a <code class="literal">scroll</code> paramater telling Elasticsearch how long it
+<code class="literal">scan</code>, and passing a <code class="literal">scroll</code> parameter telling Elasticsearch how long it
 should keep the scroll open:</p><pre class="programlisting prettyprint lang-js">GET /old_index/_search?search_type=scan&amp;scroll=1m <a id="CO28-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
 {
     "query": { "match_all": {}},
@@ -63,7 +63,7 @@ UVM4U0NMd2pjWlJ3YWlBOzEyMDpRNV9aY1VyUVM4U0NMd2pjWlJ3YWlBOzE7dG90YW
 xfaGl0czoxOw==</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO29-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Keep the scroll open for another minute.
 </p></td></tr></table></div><p>Note that we again specify <code class="literal">?scroll=1m</code>.  The scroll expiry time is refreshed
-every time we run a scroll request, so it only needs to be give us enough time
+every time we run a scroll request, so it only needs to give us enough time
 to process the current batch of results, not all of the documents that match
 the query.</p><p>The response to this scroll request includes the first batch of results.
 Although we specified a <code class="literal">size</code> of 1,000, we actually get back many more
