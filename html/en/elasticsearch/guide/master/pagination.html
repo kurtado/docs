@@ -53,7 +53,7 @@ GET /_search?size=5&amp;from=5
 GET /_search?size=5&amp;from=10</pre><a class="sense_widget" href="sense_widget.html?snippets/050_Search/15_Pagination.json" target="sense">View in Sense</a><p>Beware of paging too deep or requesting too many results at once. Results are
 sorted before being returned. But remember that a search request usually spans
 multiple shards. Each shard generates its own sorted results, which then need
-to be sorted centrally to ensure that the overll order is correct.</p><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Deep paging in distributed systems</strong></p></div></div></div><p>To understand why deep paging is problematic, let’s imagine that we are
+to be sorted centrally to ensure that the overall order is correct.</p><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Deep paging in distributed systems</strong></p></div></div></div><p>To understand why deep paging is problematic, let’s imagine that we are
 searching within a single index with 5 primary shards.  When we request the
 first page of results (results 1 to 10), each shard produces its own top 10
 results and returns them to the <span class="emphasis"><em>requesting node</em></span>, which then sorts all 50
