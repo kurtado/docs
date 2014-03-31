@@ -78,7 +78,7 @@ field is compressed before being written to disk.</p><p>This is almost always de
 the full document is available directly from the search results — no need
   for a separate round trip to fetch the document from another datastore
 </li><li class="listitem">
-<code class="literal">update</code> requests will not function without the <code class="literal">_source</code> field
+partial <code class="literal">update</code> requests will not function without the <code class="literal">_source</code> field
 </li><li class="listitem">
 when your mapping changes and you need to reindex your data, you can
   do so directly from Elasticsearch instead of having to retrieve all of your
