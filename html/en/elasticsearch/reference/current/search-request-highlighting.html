@@ -354,7 +354,7 @@ it is just fine not to list the field to which the matches are combined
 (<code class="literal">content</code>) in the matched fields.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Technically it is also fine to add fields to <code class="literal">matched_fields</code> that
 don’t share the same underlying string as the field to which the matches
 are combined.  The results might not make much sense and if one of the
-matches is off the end of the text then the whole the query will fail.</p></div></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>There is a small amount of overhead involved with setting
+matches is off the end of the text then the whole query will fail.</p></div></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>There is a small amount of overhead involved with setting
 <code class="literal">matched_fields</code> to a non-empty array so always prefer</p><pre class="programlisting prettyprint lang-js">    "highlight": {
         "fields": {
             "content": {}
