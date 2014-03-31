@@ -57,7 +57,19 @@ $response = $client-&gt;indices()-&gt;stats($params);
 
 // Corresponds to curl -XGET localhost:9200/my_index1,my_index2/_stats
 $params['index'] = array('my_index1', 'my_index2');
-$response = $client-&gt;indices()-&gt;stats($params);</pre><p>​</p></div><div class="navfooter"><span class="prev"><a href="_search_operations.html">
+$response = $client-&gt;indices()-&gt;stats($params);</pre><p>​</p><p>As another example, here is how you might add an alias to an existing index:</p><pre class="programlisting prettyprint lang-php">$params['body'] = array(
+    'actions' =&gt; array(
+        array(
+            'add' =&gt; array(
+                'index' =&gt; 'myindex',
+                'alias' =&gt; 'myalias'
+            )
+        )
+    )
+);
+$client-&gt;indices()-&gt;updateAliases($params);</pre><p>Notice how both the <code class="literal">stats</code> calls and the updateAlias took a variety of parameters,
+each according to what the particular API requires.  The <code class="literal">stats</code> API only requires
+an index name(s), while the <code class="literal">updateAlias</code> requires a body of actions.</p></div><div class="navfooter"><span class="prev"><a href="_search_operations.html">
               « 
               Search Operations</a>
            
