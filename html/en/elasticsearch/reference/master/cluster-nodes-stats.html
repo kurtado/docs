@@ -138,7 +138,12 @@ curl localhost:9200/_stats/fielddata/field1,field2?pretty
 
 # You can use wildcards for field names
 curl localhost:9200/_stats/fielddata/field*?pretty
-curl localhost:9200/_nodes/stats/indices/field*?pretty</pre></div><div class="navfooter"><span class="prev"><a href="cluster-update-settings.html">
+curl localhost:9200/_nodes/stats/indices/field*?pretty</pre><h3><a id="search-groups"></a>Search groups<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/cluster/nodes-stats.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>You can get statistics about search groups for searches executed
+on this node.</p><pre class="programlisting prettyprint lang-js"># All groups with all stats
+curl localhost:9200/_nodes/stats?pretty&amp;groups=_all
+
+# Some groups from just the indices stats
+curl localhost:9200/_nodes/stats/indices?pretty&amp;groups=foo,bar</pre></div><div class="navfooter"><span class="prev"><a href="cluster-update-settings.html">
               « 
               Cluster Update Settings</a>
            
