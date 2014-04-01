@@ -32,7 +32,7 @@
 to search for multiple values.  What if you want to find documents that have a
 price of $20 or $30?</p><p>Rather than using multiple <code class="literal">term</code> filters, you can instead use a single <code class="literal">terms</code>
 filter (note the “s” at the end).  The <code class="literal">terms</code> filter is simply the plural
-version of the singular <code class="literal">term</code> filter.</p><p>It looks looks nearly identical to a vanilla <code class="literal">term</code> too.  Instead of
+version of the singular <code class="literal">term</code> filter.</p><p>It looks nearly identical to a vanilla <code class="literal">term</code> too.  Instead of
 specifying a single price, we are now specifying an array of values:</p><pre class="programlisting prettyprint lang-js">{
     "terms" : {
         "price" : [20, 30]

@@ -104,7 +104,7 @@ in the last hour:</p><pre class="programlisting prettyprint lang-js">"range" : {
         "gt" : "now-1h"
     }
 }</pre><p>This filter will now constantly find all documents with a timestamp greater
-than the current time minus 1 hour, making the filter a sliding window''
+than the current time minus 1 hour, making the filter a “sliding window”
 across your documents.</p><p>Date math can also be applied to actual dates, rather than a placeholder like
 now. Just add a double pipe || after the date and follow it with a date
 math expression:</p><pre class="programlisting prettyprint lang-js">"range" : {
