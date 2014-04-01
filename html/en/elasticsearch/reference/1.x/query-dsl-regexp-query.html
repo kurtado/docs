@@ -48,8 +48,10 @@ matchers like <code class="literal">.*?+</code> will mostly lower performance.</
     }
 }</pre><p>You can also use special flags</p><pre class="programlisting prettyprint lang-js">{
     "regexp":{
-        "name.first": "s.*y",
-        "flags" : "INTERSECTION|COMPLEMENT|EMPTY"
+        "name.first": {
+            "value": "s.*y",
+            "flags" : "INTERSECTION|COMPLEMENT|EMPTY"
+        }
     }
 }</pre><p>Possible flags are <code class="literal">ALL</code>, <code class="literal">ANYSTRING</code>, <code class="literal">AUTOMATON</code>, <code class="literal">COMPLEMENT</code>,
 <code class="literal">EMPTY</code>, <code class="literal">INTERSECTION</code>, <code class="literal">INTERVAL</code>, or <code class="literal">NONE</code>. Please check the
