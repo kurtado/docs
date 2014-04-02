@@ -136,7 +136,7 @@ for all documents that have at least one category in common with the query.</p><
     }
 }</pre><h3><a id="suggester-context-geo"></a>Geo location Context<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/suggesters/context-suggest.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>A <code class="literal">geo</code> context allows you to limit results to those that lie within a certain distance
 of a specified geolocation. At index time, a lat/long geo point is converted into a
-geohash of a certain precision, which provides the context.</p><h4><a id="_geo_location_mapping"></a>Geo location Mapping<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/suggesters/context-suggest.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The mapping for a geo context accepts four settings:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
+geohash of a certain precision, which provides the context.</p><h4><a id="_geo_location_mapping"></a>Geo location Mapping<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/suggesters/context-suggest.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The mapping for a geo context accepts four settings, only of which <code class="literal">precision</code> is required:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
 <p>
 <code class="literal">precision</code>
 </p>
@@ -145,7 +145,6 @@ geohash of a certain precision, which provides the context.</p><h4><a id="_geo_l
 This defines the precision of the geohash and can be specified as <code class="literal">5m</code>, <code class="literal">10km</code>,
                or as a raw geohash precision: <code class="literal">1</code>..<code class="literal">12</code>. It’s also possible to setup multiple
                precisions by defining a list of precisions: <code class="literal">["5m", "10km"]</code>
-               (default is a geohash level of 12)
 </p>
 </td></tr><tr><td valign="top">
 <p>

@@ -403,7 +403,7 @@ processed as an analyzed string and this version is accessible under the field n
 <code class="literal">name</code>, this is the main field and is in fact just like any other field. The second time
 it gets processed as a not analyzed string and is accessible under the name <code class="literal">name.raw</code>.</p><h4><a id="_include_in_all"></a>Include in All<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/mapping/types/core-types.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">include_in_all</code> setting is ignored on any field that is defined in
 the <code class="literal">fields</code> options. Setting the <code class="literal">include_in_all</code> only makes sense on
-the main field, since the raw field value to copied to the <code class="literal">_all</code> field,
+the main field, since the raw field value is copied to the <code class="literal">_all</code> field,
 the tokens aren’t copied.</p><h4><a id="_updating_a_field"></a>Updating a field<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/mapping/types/core-types.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>In the essence a field can’t be updated. However multi fields can be
 added to existing fields. This allows for example to have a different
 <code class="literal">index_analyzer</code> configuration in addition to the already configured
