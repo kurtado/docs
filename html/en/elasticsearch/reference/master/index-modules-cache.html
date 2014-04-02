@@ -36,7 +36,7 @@ in the query). The default implementation of a filter cache (and the one
 recommended to use in almost all cases) is the <code class="literal">node</code> filter cache type.</p><h4><a id="node-filter"></a>Node Filter Cache<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/cache.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">node</code> filter cache may be configured to use either a percentage of
 the total memory allocated to the process or an specific amount of
 memory. All shards present on a node share a single node cache (thats
-why its called <code class="literal">node`</code>). The cache implements an LRU eviction policy:
+why its called <code class="literal">node</code>). The cache implements an LRU eviction policy:
 when a cache becomes full, the least recently used data is evicted to
 make way for new data.</p><p>The setting that allows one to control the memory size for the filter
 cache is <code class="literal">indices.cache.filter.size</code>, which defaults to <code class="literal">20%</code>. <span class="strong"><strong>Note</strong></span>,
