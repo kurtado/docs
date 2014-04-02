@@ -30,7 +30,7 @@
            
           <a href="extending_core_components.html">Extending
                »
-            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="configuration"></a>Configuration<a href="https://github.com/elasticsearch/elasticsearch-js/edit/2.1/docs/configuration.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h1></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="about.html">About</a></span></dt><dt><span class="chapter"><a href="quick-start.html">Quick Start</a></span></dt><dt><span class="chapter"><a href="api-conventions.html">API Conventions</a></span></dt><dt><span class="chapter"><a href="configuration.html">Configuration</a></span></dt><dt><span class="chapter"><a href="extending_core_components.html">Extending</a></span></dt><dt><span class="chapter"><a href="logging.html">setup logging</a></span></dt><dt><span class="chapter"><a href="contributing.html">Contributing</a></span></dt><dt><span class="chapter"><a href="api-reference.html">1.1 API</a></span></dt><dt><span class="chapter"><a href="api-reference-0-90.html">0.90 API</a></span></dt><dt><span class="chapter"><a href="errors.html">Errors</a></span></dt><dt><span class="chapter"><a href="transport-reference.html">Transport</a></span></dt></dl></div><p>The <code class="literal">Client</code> constructor accepts a single object as it’s argument. In the <a class="xref" href="configuration.html#config-options" title="Config options">Config options</a> section all of the available options/keys are listed.</p><pre class="programlisting prettyprint lang-js">var elasticsearch = require('elasticsearch');
+            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="configuration"></a>Configuration<a href="https://github.com/elasticsearch/elasticsearch-js/edit/2.1/docs/configuration.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h1></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="about.html">About</a></span></dt><dt><span class="chapter"><a href="quick-start.html">Quick Start</a></span></dt><dt><span class="chapter"><a href="api-conventions.html">API Conventions</a></span></dt><dt><span class="chapter"><a href="configuration.html">Configuration</a></span></dt><dt><span class="chapter"><a href="extending_core_components.html">Extending</a></span></dt><dt><span class="chapter"><a href="logging.html">setup logging</a></span></dt><dt><span class="chapter"><a href="contributing.html">Contributing</a></span></dt><dt><span class="chapter"><a href="api-reference.html">1.1 API</a></span></dt><dt><span class="chapter"><a href="api-reference-1-0.html">1.0 API</a></span></dt><dt><span class="chapter"><a href="api-reference-0-90.html">0.90 API</a></span></dt><dt><span class="chapter"><a href="host-reference.html">Host</a></span></dt><dt><span class="chapter"><a href="transport-reference.html">Transport</a></span></dt><dt><span class="chapter"><a href="errors.html">Errors</a></span></dt></dl></div><p>The <code class="literal">Client</code> constructor accepts a single object as it’s argument. In the <a class="xref" href="configuration.html#config-options" title="Config options">Config options</a> section all of the available options/keys are listed.</p><pre class="programlisting prettyprint lang-js">var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
   ... config options ...
 });</pre><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><p>Due to the complex nature of the configuration, the config object you pass in will be modified and can only be used to create one <code class="literal">Client</code> instance. Sorry for the inconvenience. Related Github issue: <a class="ulink" href="https://github.com/elasticsearch/elasticsearch-js/issues/33" target="_top">https://github.com/elasticsearch/elasticsearch-js/issues/33</a></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="config-options"></a>Config options<a href="https://github.com/elasticsearch/elasticsearch-js/edit/2.1/docs/configuration.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
@@ -41,6 +41,7 @@ var client = new elasticsearch.Client({
 <p>
 <code class="literal">String, String[], Object[]</code> — Specify the hosts that this client will connect to. If sniffing is enabled, or you call <code class="literal">client.sniff()</code>, this list will be used as seeds to discover the rest of your cluster.
 </p>
+<p>The value(s) are passed to the <a class="link" href="host-reference.html" title="Host"><code class="literal">Host</code></a> constructor. <code class="literal">Host</code> objects can help enforce path-prefixes, default headers and query strings, and can be helpfull in making more intellegent selection algorithms; Head over to <a class="link" href="host-reference.html" title="Host">the <code class="literal">Host</code> docs</a> for more information.</p>
 <div class="variablelist"><dl class="variablelist"><dt><span class="term">
 Default
 </span></dt><dd><pre class="programlisting prettyprint lang-js">'http://localhost:9200'</pre></dd></dl></div>
@@ -82,7 +83,7 @@ Options
 </li></ul></div></dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">sniffOnStart</code>
+<code class="literal">sniffOnStart</code><a id="config-sniff-on-start"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -95,7 +96,7 @@ Default
 </dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">sniffInterval</code>
+<code class="literal">sniffInterval</code><a id="config-sniff-interval"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -108,7 +109,7 @@ Default
 </dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">sniffOnConnectionFault</code>
+<code class="literal">sniffOnConnectionFault</code><a id="config-sniff-on-connection-fault"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -147,7 +148,7 @@ Default
 </dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">deadTimeout</code>
+<code class="literal">deadTimeout</code><a id="config-dead-timeout"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -160,7 +161,7 @@ Default
 </dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">keepAlive</code>
+<code class="literal">keepAlive</code><a id="config-keep-alive"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -173,7 +174,7 @@ Default
 </dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">maxSockets</code>
+<code class="literal">maxSockets</code><a id="config-max-sockets"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -186,7 +187,7 @@ Default
 </dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">minSockets</code>
+<code class="literal">minSockets</code><a id="config-min-sockets"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -199,7 +200,7 @@ Default
 </dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">connectionClass</code><a id="config-connectionClass"></a>
+<code class="literal">connectionClass</code><a id="config-connection-class"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -218,7 +219,7 @@ jQuery Build: <code class="literal">"jquery"</code>
 </li></ul></div></dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">selector</code>
+<code class="literal">selector</code><a id="config-selector"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -238,7 +239,7 @@ Options
 </li></ul></div></dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">defer</code>
+<code class="literal">defer</code><a id="config-defer"></a>
 </p>
 </td><td valign="top">
 <p>
@@ -251,7 +252,7 @@ Default
 }</pre></dd></dl></div>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">nodesToHostCallback</code>
+<code class="literal">nodesToHostCallback</code><a id="config-nodes-to-host-callback"></a>
 </p>
 </td><td valign="top">
 <p>
