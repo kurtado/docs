@@ -63,8 +63,8 @@ main field, but if it also matches the <span class="emphasis"><em>signal</em></s
 points and is pushed up the results list.</p><p>We will discuss synonyms, word proximity, partial-matching and other potential
 signals later in the book, but we will use the simple example of stemmed and
 unstemmed fields to illustrate this technique.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_multi_field_mapping"></a>Multi-field mapping<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/110_Multi_Field_Search/30_Most_fields.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The first thing to do is to setup our field to be indexed twice: once in a
-stemmed form and once in an unstemmed form.  To do this we will use <span class="emphasis"><em>multi-
-fields</em></span> which we introduced in <a class="xref" href="multi-fields.html" title="String sorting and multi-fields">String sorting and multi-fields</a>.</p><pre class="programlisting prettyprint lang-js">DELETE /my_index
+stemmed form and once in an unstemmed form.  To do this we will use
+<span class="emphasis"><em>multi-fields</em></span> which we introduced in <a class="xref" href="multi-fields.html" title="String sorting and multi-fields">String sorting and multi-fields</a>.</p><pre class="programlisting prettyprint lang-js">DELETE /my_index
 
 PUT /my_index
 {

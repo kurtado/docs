@@ -35,7 +35,7 @@ before they have finished typing their query, so called <span class="emphasis"><
 time, but we can guide them towards results which actually exist in our index.</p><p>For instance, if a user types in <code class="literal">johnnie walker bl</code>, we would like to show
 them results for “Johnnie Walker Black Label” and “Johnnie Walker Blue
 Label” before they can finish typing their query.</p><p>As always, there are more ways than one to skin a cat! We will start by
-looking at the way that is simplest to implement.  You don’t need prepare your
+looking at the way that is simplest to implement.  You don’t need to prepare your
 data in any way; you can implement <span class="emphasis"><em>search-as-you-type</em></span> at query time on any
 full text field.</p><p>In <a class="xref" href="phrase-matching.html" title="Phrase matching">Phrase matching</a> we introduced the <code class="literal">match_phrase</code> query, which matches
 all of the specified words in the same positions relative to each other.  For
@@ -81,7 +81,7 @@ a reasonable number, such as 50.</p><pre class="programlisting prettyprint lang-
 }</pre><a class="sense_widget" href="sense_widget.html?snippets/130_Partial_Matching/20_Match_phrase_prefix.json" target="sense">View in Sense</a><p>The <code class="literal">max_expansions</code> parameter controls how many terms the prefix is allowed
 to match.  It will find the first term starting with <code class="literal">bl</code> and keep collecting
 terms (in alphabetical order) until it either runs out of terms with prefix
-<code class="literal">bl</code>, or it has more terms than <code class="literal">max_expansions</code>.</p><p>Don’t forget that we are run this query every time the user types another
+<code class="literal">bl</code>, or it has more terms than <code class="literal">max_expansions</code>.</p><p>Don’t forget that we have to run this query every time the user types another
 character, so it needs to be fast.  If the first set of results isn’t what the
 user is after, they’ll keep typing until they get the results that they want.</p></div><div class="navfooter"><span class="prev"><a href="_literal_wildcard_literal_and_literal_regexp_literal_queries.html">
               « 

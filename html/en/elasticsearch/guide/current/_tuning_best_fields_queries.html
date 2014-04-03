@@ -104,7 +104,7 @@ take the <code class="literal">_score</code> of the best matching clause
 multiply the score of each of the other matching clauses by the <code class="literal">tie_breaker</code>
 </li><li class="listitem">
 add them all together, and normalize
-</li></ul></div><p>With the <code class="literal">tiebreaker</code>, all matching clauses count, but the best matching
+</li></ul></div><p>With the <code class="literal">tie_breaker</code>, all matching clauses count, but the best matching
 clause counts most.</p><div class="sidebar"><div class="titlepage"></div><p>The <code class="literal">tie_breaker</code> can be a floating point value between <code class="literal">0</code> and <code class="literal">1</code>, where <code class="literal">0</code>
 uses just the best matching clause and <code class="literal">1</code> counts all matching clauses
 equally.  The exact value can be tuned based on your data and queries, but a
