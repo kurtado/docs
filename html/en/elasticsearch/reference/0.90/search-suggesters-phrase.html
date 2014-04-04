@@ -32,7 +32,7 @@
                »
             </a></span></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="search-suggesters-phrase"></a>Phrase Suggester<a href="https://github.com/elasticsearch/elasticsearch/edit/0.90/docs/reference/search/suggesters/phrase-suggest.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="search-suggesters-term.html">Term suggester</a></span></dt><dt><span class="section"><a href="search-suggesters-phrase.html">Phrase Suggester</a></span></dt><dt><span class="section"><a href="search-suggesters-completion.html">Completion Suggester</a></span></dt></dl></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Added in 0.90.0.Beta1.</p></div></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>In order to understand the format of suggestions, please
 read the <a class="xref" href="search-suggesters.html" title="Suggesters"><em>Suggesters</em></a> page first.</p></div></div><p>The <code class="literal">term</code> suggester provides a very convenient API to access word
-alternatives on token basis within a certain string distance. The API
+alternatives on a per token basis within a certain string distance. The API
 allows accessing each token in the stream individually while
 suggest-selection is left to the API consumer. Yet, often pre-selected
 suggestions are required in order to present to the end-user. The
@@ -64,8 +64,8 @@ request:</p><pre class="programlisting prettyprint lang-js">curl -XPOST 'localho
       }
     }
   }
-}</pre><p>The response contains suggested scored by the most likely spell
-correction first. In this case we got the expected correction
+}</pre><p>The response contains suggestions scored by the most likely spell
+correction first. In this case we received the expected correction
 <code class="literal">xorr the god jewel</code> first while the second correction is less
 conservative where only one of the errors is corrected. Note, the
 request is executed with <code class="literal">max_errors</code> set to <code class="literal">0.5</code> so 50% of the terms
