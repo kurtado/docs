@@ -79,7 +79,7 @@ query:</p><pre class="programlisting prettyprint lang-js">curl -XGET 'localhost:
         "match_all" : {}
     }
 }
-'</pre><p>The <code class="literal">scroll</code> parameter control the keep alive time of the scrolling
+'</pre><p>The <code class="literal">scroll</code> parameter controls the keep alive time of the scrolling
 request and initiates the scrolling process. The timeout applies per
 round trip (i.e. between the previous scan scroll request, to the next).</p><p>The response will include no hits, with two important results, the
 <code class="literal">total_hits</code> will include the total hits that match the query, and the
