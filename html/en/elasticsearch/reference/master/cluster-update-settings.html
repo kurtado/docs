@@ -54,26 +54,35 @@ last example will be:</p><pre class="programlisting prettyprint lang-js">{
 <code class="literal">cluster.routing.allocation.awareness.force.*</code>
 </span></dt><dd>
      See <a class="xref" href="modules-cluster.html" title="Cluster"><em>Cluster</em></a>.
-</dd></dl></div><h5><a id="_balanced_shards"></a>Balanced Shards<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/cluster/update-settings.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h5><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+</dd></dl></div><h5><a id="_balanced_shards"></a>Balanced Shards<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/cluster/update-settings.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h5><p>All these values are relative to one another.  The first three are used to
+compose a three separate weighting functions into one.  The cluster is balanced
+when no allowed action can bring the weights of each node closer together by
+more then the fourth setting.  Actions might not be allowed, for instance,
+due to forced awareness or allocation filtering.</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 <code class="literal">cluster.routing.allocation.balance.shard</code>
 </span></dt><dd>
      Defines the weight factor for shards allocated on a node
-     (float). Defaults to <code class="literal">0.45f</code>.
+     (float). Defaults to <code class="literal">0.45f</code>.  Raising this raises the tendency to
+     equalize the number of shards across all nodes in the cluster.
 </dd><dt><span class="term">
 <code class="literal">cluster.routing.allocation.balance.index</code>
 </span></dt><dd>
      Defines a factor to the number of shards per index allocated
-      on a specific node (float). Defaults to <code class="literal">0.5f</code>.
+      on a specific node (float). Defaults to <code class="literal">0.5f</code>.  Raising this raises the
+      tendency to equalize the number of shards per index across all nodes in
+      the cluster.
 </dd><dt><span class="term">
 <code class="literal">cluster.routing.allocation.balance.primary</code>
 </span></dt><dd>
-      defines a weight factor for the number of primaries of a specific index
-      allocated on a node (float). <code class="literal">0.05f</code>.
+     Defines a weight factor for the number of primaries of a specific index
+      allocated on a node (float). <code class="literal">0.05f</code>.  Raising this raises the tendency
+      to equalize the number of primary shards across all nodes in the cluster.
 </dd><dt><span class="term">
 <code class="literal">cluster.routing.allocation.balance.threshold</code>
 </span></dt><dd>
-      minimal optimization value of operations that should be performed (non
-      negative float). Defaults to <code class="literal">1.0f</code>.
+     Minimal optimization value of operations that should be performed (non
+      negative float). Defaults to <code class="literal">1.0f</code>.  Raising this will cause the cluster
+      to be less aggressive about optimizing the shard balance.
 </dd></dl></div><h5><a id="_concurrent_rebalance"></a>Concurrent Rebalance<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/cluster/update-settings.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h5><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 <code class="literal">cluster.routing.allocation.cluster_concurrent_rebalance</code>
 </span></dt><dd>
