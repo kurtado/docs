@@ -35,7 +35,7 @@ configuration which suits your particular data.</p><p>In <a class="xref" href="a
 three functions into a single package, which are executed in sequence:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 Character filters
 </span></dt><dd><p class="simpara">Character filters are used to “tidy up” a string before it is tokenized.
-For instance, if our text is in HTML format, it will contains HTML tags like
+For instance, if our text is in HTML format, it will contain HTML tags like
 <code class="literal">&lt;p&gt;</code> or <code class="literal">&lt;div&gt;</code> that we don’t want to be indexed. We can use the
 <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current//analysis-htmlstrip-charfilter.html" target="_top"><code class="literal">html_strip</code> character filter</a>
 to remove all HTML tags and to convert HTML entities like <code class="literal">&amp;Aacute;</code> into the
