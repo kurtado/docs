@@ -57,7 +57,7 @@ Content-Length: 83
   "_type" :  "blog",
   "_id" :    "124",
   "found" :  false
-}</pre><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_retrieving_part_of_a_document"></a>Retrieving part of a document<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/030_Data/15_Get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>By default, a <code class="literal">get</code> request will return the whole document, as stored in the
+}</pre><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_retrieving_part_of_a_document"></a>Retrieving part of a document<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/030_Data/15_Get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>By default, a <code class="literal">GET</code> request will return the whole document, as stored in the
 <code class="literal">_source</code> field. But perhaps all you are interested in is the <code class="literal">title</code> field.
 Individual fields can be requested using the <code class="literal">_source</code> parameter. Multiple
 fields can be specified in a comma-separated list:</p><pre class="programlisting prettyprint lang-sh">GET /website/blog/123?_source=title,text</pre><a class="sense_widget" href="sense_widget.html?snippets/030_Data/15_Get_document.json" target="sense">View in Sense</a><p>The  <code class="literal">_source</code> field now contains just the fields that we requested and has
