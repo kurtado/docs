@@ -34,7 +34,7 @@
 in order to retrieve these documents. The percolator works in the opposite direction, first you store queries into an
 index and then via the percolate api you define documents in order to retrieve these queries.</p><p>The reason that queries can be stored comes from the fact that in Elasticsearch both documents and queries are defined in
 JSON. This allows you to embed queries into documents via the index api. Elasticsearch can extract the query from a
-document and make it available to the percolate api. Since documents are also defines as json, you can define a document
+document and make it available to the percolate api. Since documents are also defined as json, you can define a document
 in a request to the percolate api.</p><p>The percolator and most of its features work in realtime, so once a percolate query is indexed it can immediately be used
 in the percolate api.</p><h3><a id="_sample_usage"></a>Sample usage<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/search/percolate.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Adding a query to the percolator:</p><pre class="programlisting prettyprint lang-js">curl -XPUT 'localhost:9200/my-index/.percolator/1' -d '{
     "query" : {
@@ -124,7 +124,7 @@ comma separated string, in that case the request can be be executed on more than
 <code class="literal">ignore_unavailable</code> - Controls if missing concrete indices should silently be ignored. Same as is in the search api.
 </li><li class="listitem">
 <code class="literal">percolate_format</code> - If <code class="literal">ids</code> is specified then the matches array in the percolate response will contain a string
-array of the matching ids instead of an array of objects. This can be useful the reduce the amount of data being send
+array of the matching ids instead of an array of objects. This can be useful to reduce the amount of data being send
 back to the client. Obviously if there are to percolator queries with same id from different indices there is no way
 the find out which percolator query belongs to what index. Any other value to <code class="literal">percolate_format</code> will be ignored.
 </li></ul></div><div class="itemizedlist"><p class="title"><strong>Additional request body options</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
@@ -180,7 +180,7 @@ Example:</p><pre class="programlisting prettyprint lang-js">curl -XGET 'localhos
    ... // header
    "total" : 3
 }</pre><h3><a id="_percolating_an_existing_document"></a>Percolating an existing document<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/search/percolate.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>In order to percolate in newly indexed document, the percolate existing document can be used. Based on the response
-from an index request the <code class="literal">_id</code> and other meta information can be used to the immediately percolate the newly added
+from an index request the <code class="literal">_id</code> and other meta information can be used to immediately percolate the newly added
 document.</p><div class="itemizedlist"><p class="title"><strong>Supported options for percolating an existing document on top of existing percolator options:</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
 <code class="literal">id</code> - The id of the document to retrieve the source for.
 </li><li class="listitem">
