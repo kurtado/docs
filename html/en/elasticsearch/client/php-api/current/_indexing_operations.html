@@ -71,7 +71,7 @@ pattern is as follows:</p><p><strong>Bulk indexing with PHP arrays. </strong>
     $params['body'][] = array(
         'doc' =&gt; array(
             'my_field' =&gt; 'my_value',
-            'second_field =&gt; 'some more values'
+            'second_field' =&gt; 'some more values'
         )
     );
 }
@@ -89,7 +89,7 @@ $responses = $client-&gt;bulk($params);</pre><p>
         'doc_as_upsert' =&gt; 'true'
         'doc' =&gt; array(
             'my_field' =&gt; 'my_value',
-            'second_field =&gt; 'some more values'
+            'second_field' =&gt; 'some more values'
         )
     );
 }
