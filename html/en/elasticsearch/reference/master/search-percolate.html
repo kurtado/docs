@@ -101,7 +101,7 @@ The default percolate mapping doesn’t index the query field and only stores it
                         }
                 }
         }
-}</pre><p>If needed this mapping can be modified wit the update mapping api.</p><p>In order to un-register a percolate query the delete api can be used. So if the previous added query needs to be deleted
+}</pre><p>If needed this mapping can be modified with the update mapping api.</p><p>In order to un-register a percolate query the delete api can be used. So if the previous added query needs to be deleted
 the following delete requests needs to be executed:</p><pre class="programlisting prettyprint lang-js">curl -XDELETE localhost:9200/my-index/.percolator/1</pre><h3><a id="_percolate_api"></a>Percolate api<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/percolate.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The percolate api executes in a distributed manner, meaning it executes on all shards an index points to.</p><div class="itemizedlist"><p class="title"><strong>Required options</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
 <code class="literal">index</code> - The index that contains the <code class="literal">.percolator</code> type. This can also be an alias.
 </li><li class="listitem">
