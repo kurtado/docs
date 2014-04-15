@@ -354,10 +354,13 @@ The <code class="literal">similarity</code> setting provides a simple way of cho
 other than the default TF/IDF, such as <code class="literal">BM25</code>.</p><p>You can configure similarities via the
 <a class="link" href="index-modules-similarity.html" title="Similarity module">similarity module</a></p><h5><a id="_configuring_similarity_per_field"></a>Configuring Similarity per Field<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/mapping/types/core-types.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h5><p>Defining the Similarity for a field is done via the <code class="literal">similarity</code> mapping
 property, as this example shows:</p><pre class="programlisting prettyprint lang-js">{
-  "book" : {
-    "properties" : {
-      "title" : { "type" : "string", "similarity" : "BM25" }
-    }
+   "book":{
+      "properties":{
+         "title":{
+            "type":"string", "similarity":"BM25"
+         }
+      }
+   }
 }</pre><p>The following Similarities are configured out-of-box:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 <code class="literal">default</code>
 </span></dt><dd>
