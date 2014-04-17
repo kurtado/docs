@@ -49,7 +49,7 @@ Doc:        quick         brown         fox
 -----------------------------------------------
 Query:      quick         fox
 Slop 1:     quick                 ↳     fox</pre><p>While all words need to be present in phrase matching, even when using <code class="literal">slop</code>,
-the words don’t neccessarily need to be in the same sequence in order to
+the words don’t necessarily need to be in the same sequence in order to
 match. With a high enough <code class="literal">slop</code> value, words can be arranged in any order.</p><p>To make the query <code class="literal">"fox quick"</code> match our document, we need a <code class="literal">slop</code> of <code class="literal">3</code>:</p><pre class="literallayout">            Pos 1         Pos 2         Pos 3
 -----------------------------------------------
 Doc:        quick         brown         fox

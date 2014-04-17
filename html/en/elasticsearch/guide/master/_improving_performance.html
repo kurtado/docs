@@ -53,7 +53,7 @@ results</strong></span> to give an extra relevance bump to those documents that 
 phrase query.</p><p>The <code class="literal">search</code> API supports exactly this functionality via <span class="emphasis"><em>rescoring</em></span>. The
 rescore phase allows you to apply a more expensive scoring algorithm — like a
 <code class="literal">phrase</code> query — to just the top <code class="literal">K</code> results from each shard. These top
-results are then resorted accoring to their new scores.</p><p>The actual request looks like this:</p><pre class="programlisting prettyprint lang-js">GET /my_index/my_type/_search
+results are then resorted according to their new scores.</p><p>The actual request looks like this:</p><pre class="programlisting prettyprint lang-js">GET /my_index/my_type/_search
 {
     "query": {
         "match": {  <a id="CO81-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>

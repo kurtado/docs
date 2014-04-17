@@ -34,10 +34,13 @@ The client sends a get request to <code class="literal">Node 1</code>.
 </li><li class="listitem">
 The node uses the document’s <code class="literal">_id</code> to determine that the document
    belongs to shard <code class="literal">0</code>. Copies of shard <code class="literal">0</code> exist on all three nodes.
-   On this occasion, it forwards the request to <code class="literal">Node 2</code>, which returns
-   the document.
+   On this occasion, it forwards the request to <code class="literal">Node 2</code>.
+</li><li class="listitem">
+<code class="literal">Node 2</code> returns the document to <code class="literal">Node 1</code> which returns the document
+   to the client.
 </li></ol></div><p>For read requests, the requesting node will choose a different shard copy on
-every request — it round-robins through the nodes.</p><p>It is possible that a document has been indexed on the primary shard but
+every request in order to balance the load — it round-robins through all
+shard copies.</p><p>It is possible that a document has been indexed on the primary shard but
 has not yet been copied to the replica shards. In this case a replica
 might report that the document doesn’t exist, while the primary would have
 returned the document successfully.</p></div><div class="navfooter"><span class="prev"><a href="distrib-write.html">

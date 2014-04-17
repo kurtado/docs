@@ -57,11 +57,14 @@ Keep the scroll open for 1 minute.
 <code class="literal">_scroll_id</code>, which is a long Base 64 encoded string. Now we can pass the
 <code class="literal">_scroll_id</code> to the <code class="literal">_search/scroll</code> endpoint to retrieve the first batch of
 results:</p><pre class="programlisting prettyprint lang-js">GET /_search/scroll?scroll=1m <a id="CO29-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
-c2Nhbjs1OzExODpRNV9aY1VyUVM4U0NMd2pjWlJ3YWlBOzExOTpRNV9aY1VyUVM4U0
+c2Nhbjs1OzExODpRNV9aY1VyUVM4U0NMd2pjWlJ3YWlBOzExOTpRNV9aY1VyUVM4U0 <a id="CO29-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
 NMd2pjWlJ3YWlBOzExNjpRNV9aY1VyUVM4U0NMd2pjWlJ3YWlBOzExNzpRNV9aY1Vy
 UVM4U0NMd2pjWlJ3YWlBOzEyMDpRNV9aY1VyUVM4U0NMd2pjWlJ3YWlBOzE7dG90YW
 xfaGl0czoxOw==</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO29-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Keep the scroll open for another minute.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO29-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+The <code class="literal">_scroll_id</code> can be passed in the body, in the URL or as a
+    query parameter.
 </p></td></tr></table></div><p>Note that we again specify <code class="literal">?scroll=1m</code>.  The scroll expiry time is refreshed
 every time we run a scroll request, so it only needs to give us enough time
 to process the current batch of results, not all of the documents that match
