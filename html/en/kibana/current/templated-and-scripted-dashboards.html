@@ -75,9 +75,9 @@ github)</a>. This file accomplishes the same goals as <code class="literal">logs
 with the added power of scripts we can do things like split queries on
 commas:</p><p><span class="strong"><strong>Note</strong></span>: Take careful note of the <code class="literal">script</code> part of
 <code class="literal">#/dashboard/script/logstash.js</code>. This instructs kibana to treat this
-file as javascript.</p><pre class="screen">http://yourserver/index.html#/dashboard/script/logstash.json?query=status:403,status:404&amp;from=7d</pre><p>This will create 2 query objects, <code class="literal">status:403</code> and <code class="literal">status:404</code> and
+file as javascript.</p><pre class="screen">http://yourserver/index.html#/dashboard/script/logstash.js?query=status:403,status:404&amp;from=7d</pre><p>This will create 2 query objects, <code class="literal">status:403</code> and <code class="literal">status:404</code> and
 chart them seperately. In fact this dashboard takes another parameter
-that describes the string by which to split the query on: <code class="literal">split</code></p><pre class="screen">http://yourserver/index.html#/dashboard/script/logstash.json?query=status:403!status:404&amp;from=7d&amp;split=!</pre><p>We can see this happening in <code class="literal">logstash.js</code>
+that describes the string by which to split the query on: <code class="literal">split</code></p><pre class="screen">http://yourserver/index.html#/dashboard/script/logstash.js?query=status:403!status:404&amp;from=7d&amp;split=!</pre><p>We can see this happening in <code class="literal">logstash.js</code>
 <a class="ulink" href="https://github.com/elasticsearch/kibana/blob/master/src/app/dashboards/logstash.js" target="_top">(on
 github)</a> here:</p><pre class="programlisting prettyprint lang-javascript">// In this dashboard we let users pass queries as comma separated list to the query parameter.
 // Or they can specify a split character using the split aparameter
