@@ -196,7 +196,7 @@ execution of the search, and causing more IO load):</p><pre class="programlistin
         }
     }
 }</pre><p>Note also, that the above will use the whole field value as a single
-term.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_index"></a>_index<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/facets/terms-facet.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The term facet allows to specify a special field name called <code class="literal">_index</code>.
+term.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_index_2"></a>_index<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/facets/terms-facet.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The term facet allows to specify a special field name called <code class="literal">_index</code>.
 This will return a facet count of hits per <code class="literal">_index</code> the search was
 executed on (relevant when a search request spans more than one index).</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_memory_considerations_2"></a>Memory Considerations<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/facets/terms-facet.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Term facet causes the relevant field values to be loaded into memory.
 This means that per shard, there should be enough memory to contain
