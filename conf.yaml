@@ -1,6 +1,6 @@
 paths:
     build:          html/
-    repos:          .repos/
+  repos:          .repos/
 
 repos:
     elasticsearch:
