@@ -43,25 +43,15 @@ layout will define the <code class="literal">en_US</code> dictionary:</p><pre cl
     |    |    |-- en_US.dic
     |    |    |-- en_US.aff</pre><p>The location of the hunspell directory can be configured using the
 <code class="literal">indices.analysis.hunspell.dictionary.location</code> settings in
-<span class="emphasis"><em>elasticsearch.yml</em></span>.</p><p>Each dictionary can be configured with two settings:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+<span class="emphasis"><em>elasticsearch.yml</em></span>.</p><p>Each dictionary can be configured with one setting:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 <code class="literal">ignore_case</code>
 </span></dt><dd>
     If true, dictionary matching will be case insensitive
     (defaults to <code class="literal">false</code>)
-</dd><dt><span class="term">
-<code class="literal">strict_affix_parsing</code>
-</span></dt><dd>
-    Determines whether errors while reading a
-    affix rules file will cause exception or simple be ignored (defaults to
-    <code class="literal">true</code>)
-</dd></dl></div><p>These settings can be configured globally in <code class="literal">elasticsearch.yml</code> using</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-<code class="literal">indices.analysis.hunspell.dictionary.ignore_case</code> and
-</li><li class="listitem">
-<code class="literal">indices.analysis.hunspell.dictionary.strict_affix_parsing</code>
+</dd></dl></div><p>This setting can be configured globally in <code class="literal">elasticsearch.yml</code> using</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="literal">indices.analysis.hunspell.dictionary.ignore_case</code>
 </li></ul></div><p>or for specific dictionaries:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-<code class="literal">indices.analysis.hunspell.dictionary.en_US.ignore_case</code> and
-</li><li class="listitem">
-<code class="literal">indices.analysis.hunspell.dictionary.en_US.strict_affix_parsing</code>.
+<code class="literal">indices.analysis.hunspell.dictionary.en_US.ignore_case</code>.
 </li></ul></div><p>It is also possible to add <code class="literal">settings.yml</code> file under the dictionary
 directory which holds these settings (this will override any other
 settings defined in the <code class="literal">elasticsearch.yml</code>).</p><p>One can use the hunspell stem filter by configuring it the analysis
@@ -98,11 +88,10 @@ settings:</p><pre class="programlisting prettyprint lang-js">{
     If only unique terms should be returned, this needs to be
     set to <code class="literal">true</code>. Defaults to <code class="literal">true</code>.
 </dd><dt><span class="term">
-<code class="literal">recursion_level</code>
+<code class="literal">longest_only</code>
 </span></dt><dd>
-    Configures the recursion level a
-    stemmer can go into. Defaults to <code class="literal">2</code>. Some languages (for example czech)
-    give better results when set to <code class="literal">1</code> or <code class="literal">0</code>, so you should test it out.
+    If only the longest term should be returned, set this to <code class="literal">true</code>.
+    Defaults to <code class="literal">false</code>: all possible stems are returned.
 </dd></dl></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>As opposed to the snowball stemmers (which are algorithm based)
 this is a dictionary lookup based stemmer and therefore the quality of
 the stemming is determined by the quality of the dictionary.</p></div></div><h4><a id="_references"></a>References<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/analysis/tokenfilters/hunspell-tokenfilter.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>Hunspell is a spell checker and morphological analyzer designed for

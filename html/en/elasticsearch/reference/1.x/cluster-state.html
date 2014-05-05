@@ -59,18 +59,14 @@ it is possible to filter the cluster state response specifying the parts in the 
 <code class="literal">blocks</code>
 </span></dt><dd>
     Shows the <code class="literal">blocks</code> part of the response
-</dd></dl></div><p>In addition the <code class="literal">index_templates</code> parameter can be specified, which returns the specified index templates only. This works only if the <code class="literal">metadata</code> is asked to be returned.</p><p>A couple of example calls:</p><pre class="programlisting prettyprint lang-js"># return only metadata and routing_table data for specified indices
+</dd></dl></div><p>A couple of example calls:</p><pre class="programlisting prettyprint lang-js"># return only metadata and routing_table data for specified indices
 $ curl -XGET 'http://localhost:9200/_cluster/state/metadata,routing_table/foo,bar'
 
 # return everything for these two indices
 $ curl -XGET 'http://localhost:9200/_cluster/state/_all/foo,bar'
 
 # Return only blocks data
-$ curl -XGET 'http://localhost:9200/_cluster/state/blocks'
-
-# Return only metadata and a specific index_template
-# You should use the dedicated template endpoint for this
-$ curl -XGET 'http://localhost:9200/_cluster/state/metadata?index_templates=template_1'</pre></div><div class="navfooter"><span class="prev"><a href="cluster-health.html">
+$ curl -XGET 'http://localhost:9200/_cluster/state/blocks'</pre></div><div class="navfooter"><span class="prev"><a href="cluster-health.html">
               « 
               Cluster Health</a>
            

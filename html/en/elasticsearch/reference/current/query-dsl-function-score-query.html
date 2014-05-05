@@ -186,7 +186,21 @@ specific queries gets normalized, while for this score function it does
 not.</p><pre class="programlisting prettyprint lang-js">"boost_factor" : number</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_random"></a>Random<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>The <code class="literal">random_score</code> generates scores via a pseudo random number algorithm
 that is initialized with a <code class="literal">seed</code>.</p><pre class="programlisting prettyprint lang-js">"random_score": {
     "seed" : number
-}</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_decay_functions"></a>Decay functions<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>Decay functions score a document with a function that decays depending
+}</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_field_value_factor"></a>Field Value factor<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>The <code class="literal">field_value_factor</code> function allows you to use a field from a document to
+influence the score. It’s similar to using the <code class="literal">script_score</code> function, however,
+it avoids the overhead of scripting. If used on a multi-valued field, only the
+first value of the field is used in calculations.</p><p>As an example, imagine you have a document indexed with a numeric <code class="literal">popularity</code>
+field and wish in influence the score of a document with this field, an example
+doing so would look like:</p><pre class="programlisting prettyprint lang-js">"field_value_factor": {
+  "field": "popularity",
+  "factor": 1.2,
+  "modifier": "sqrt"
+}</pre><p>Which will translate into the following forumla for scoring:</p><p><code class="literal">sqrt(1.2 * doc['popularity'].value)</code></p><p>There are a number of options for the <code class="literal">field_value_factor</code> function:</p><div class="informaltable"><table cellpadding="4px" border="1"><colgroup><col class="col_1" /><col class="col_2" /></colgroup><thead><tr><th align="left" valign="top"> Parameter </th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top"><p><code class="literal">field</code></p></td><td align="left" valign="top"><p>Field to be extracted from the document.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">factor</code></p></td><td align="left" valign="top"><p>Optional factor to multiply the field value with, defaults to 1.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">modifier</code></p></td><td align="left" valign="top"><p>Modifier to apply to the field value, can be one of: <code class="literal">none</code>, <code class="literal">log</code>,
+ <code class="literal">log1p</code>, <code class="literal">log2p</code>, <code class="literal">ln</code>, <code class="literal">ln1p</code>, <code class="literal">ln2p</code>, <code class="literal">square</code>, <code class="literal">sqrt</code>, or <code class="literal">reciprocal</code>.
+ Defaults to <code class="literal">none</code>.</p></td></tr></tbody></table></div><p>Keep in mind that taking the log() of 0, or the square root of a negative number
+is an illegal operation, and an exception will be thrown. Be sure to limit the
+values of the field with a range filter to avoid this, or use <code class="literal">log1p</code> and
+<code class="literal">ln1p</code>.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_decay_functions"></a>Decay functions<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>Decay functions score a document with a function that decays depending
 on the distance of a numeric field value of the document from a user
 given origin. This is similar to a range query, but with smooth edges
 instead of boxes.</p><p>To use distance scoring on a query that has numerical fields, the user
@@ -265,21 +279,46 @@ Linear decay, computed as:
 <p>In contrast to the normal and exponential decay, this function actually
 sets the score to 0 if the field value exceeds twice the user given
 scale value.</p>
-</td></tr></tbody></table></div></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_field_value_factor"></a>Field Value factor<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>The <code class="literal">field_value_factor</code> function allows you to use a field from a document to
-influence the score. It’s similar to using the <code class="literal">script_score</code> function, however,
-it avoids the overhead of scripting. If used on a multi-valued field, only the
-first value of the field is used in calculations.</p><p>As an example, imagine you have a document indexed with a numeric <code class="literal">popularity</code>
-field and wish in influence the score of a document with this field, an example
-doing so would look like:</p><pre class="programlisting prettyprint lang-js">"field_value_factor": {
-  "field": "popularity",
-  "factor": 1.2,
-  "modifier": "sqrt"
-}</pre><p>Which will translate into the following forumla for scoring:</p><p><code class="literal">sqrt(1.2 * doc['popularity'].value)</code></p><p>There are a number of options for the <code class="literal">field_value_factor</code> function:</p><div class="informaltable"><table cellpadding="4px" border="1"><colgroup><col class="col_1" /><col class="col_2" /></colgroup><thead><tr><th align="left" valign="top"> Parameter </th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top"><p><code class="literal">field</code></p></td><td align="left" valign="top"><p>Field to be extracted from the document.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">factor</code></p></td><td align="left" valign="top"><p>Optional factor to multiply the field value with, defaults to 1.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">modifier</code></p></td><td align="left" valign="top"><p>Modifier to apply to the field value, can be one of: <code class="literal">none</code>, <code class="literal">log</code>,
- <code class="literal">log1p</code>, <code class="literal">log2p</code>, <code class="literal">ln</code>, <code class="literal">ln1p</code>, <code class="literal">ln2p</code>, <code class="literal">square</code>, <code class="literal">sqrt</code>, or <code class="literal">reciprocal</code>.
- Defaults to <code class="literal">none</code>.</p></td></tr></tbody></table></div><p>Keep in mind that taking the log() of 0, or the square root of a negative number
-is an illegal operation, and an exception will be thrown. Be sure to limit the
-values of the field with a range filter to avoid this, or use <code class="literal">log1p</code> and
-<code class="literal">ln1p</code>.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_detailed_example"></a>Detailed example<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Suppose you are searching for a hotel in a certain town. Your budget is
+</td></tr></tbody></table></div></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_multiple_values"></a>Multiple values:<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>If a field used for computing the decay contains multiple values, per default the value closest to the origin is chosen for determining the distance.
+This can be changed by setting <code class="literal">multi_value_mode</code>.</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
+<p>
+<code class="literal">min</code>
+</p>
+</td><td valign="top">
+<p>
+Distance is the minimum distance
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">max</code>
+</p>
+</td><td valign="top">
+<p>
+Distance is the maximum distance
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">avg</code>
+</p>
+</td><td valign="top">
+<p>
+Distance is the average distance
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">sum</code>
+</p>
+</td><td valign="top">
+<p>
+Distance is the sum of all distances
+</p>
+</td></tr></tbody></table></div><p>Example:</p><pre class="programlisting prettyprint lang-js">    "DECAY_FUNCTION": {
+        "FIELD_NAME": {
+              "origin": ...,
+              "scale": ...
+        },
+        "multi_value_mode": "avg"
+    }</pre></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_detailed_example"></a>Detailed example<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Suppose you are searching for a hotel in a certain town. Your budget is
 limited. Also, you would like the hotel to be close to the town center,
 so the farther the hotel is from the desired location the less likely
 you are to check in.</p><p>You would like the query results that match your criterion (for
@@ -345,7 +384,7 @@ defined location but "BnB Bellevue" is cheaper, so it gets a multiplier
 of 0.86 whereas "Backpack Nap" gets a value of 0.66.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_exponential_decay_keyword_literal_exp_literal"></a>Exponential decay, keyword <code class="literal">exp</code><a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>When choosing <code class="literal">exp</code> as the decay function in the above example, the
 contour and surface plot of the multiplier looks like this:</p><div class="informalfigure"><div class="mediaobject"><img src="https://f.cloud.github.com/assets/4320215/768161/082975c0-e899-11e2-86f7-174c3a729d64.png" width="700" alt="https://f.cloud.github.com/assets/4320215/768161/082975c0-e899-11e2-86f7-174c3a729d64.png" /></div></div><div class="informalfigure"><div class="mediaobject"><img src="https://f.cloud.github.com/assets/4320215/768162/0b606884-e899-11e2-907b-aefc77eefef6.png" width="700" alt="https://f.cloud.github.com/assets/4320215/768162/0b606884-e899-11e2-907b-aefc77eefef6.png" /></div></div></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_linear_decay_keyword_literal_linear_literal"></a>Linear' decay, keyword <code class="literal">linear</code><a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>When choosing <code class="literal">linear</code> as the decay function in the above example, the
 contour and surface plot of the multiplier looks like this:</p><div class="informalfigure"><div class="mediaobject"><img src="https://f.cloud.github.com/assets/4320215/768164/1775b0ca-e899-11e2-9f4a-776b406305c6.png" width="700" alt="https://f.cloud.github.com/assets/4320215/768164/1775b0ca-e899-11e2-9f4a-776b406305c6.png" /></div></div><div class="informalfigure"><div class="mediaobject"><img src="https://f.cloud.github.com/assets/4320215/768165/19d8b1aa-e899-11e2-91bc-6b0553e8d722.png" width="700" alt="https://f.cloud.github.com/assets/4320215/768165/19d8b1aa-e899-11e2-91bc-6b0553e8d722.png" /></div></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_supported_fields_for_decay_functions"></a>Supported fields for decay functions<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Only single valued numeric fields, including time and geo locations,
-are supported.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_what_is_a_field_is_missing"></a>What is a field is missing?<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>If the numeric field is missing in the document, the function will
+are supported.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_what_if_a_field_is_missing"></a>What if a field is missing?<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>If the numeric field is missing in the document, the function will
 return 1.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_relation_to_literal_custom_boost_literal_literal_custom_score_literal_and_literal_custom_filters_score_literal"></a>Relation to <code class="literal">custom_boost</code>, <code class="literal">custom_score</code> and <code class="literal">custom_filters_score</code><a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The <code class="literal">custom_boost_factor</code> query</p><pre class="programlisting prettyprint lang-js">"custom_boost_factor": {
     "boost_factor": 5.2,
     "query": {...}

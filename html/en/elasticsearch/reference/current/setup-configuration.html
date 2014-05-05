@@ -46,17 +46,24 @@ machine (or for the user running elasticsearch). Setting it to 32k or
 even 64k is recommended.</p><p>In order to test how many open files the process can open, start it with
 <code class="literal">-Des.max-open-files</code> set to <code class="literal">true</code>. This will print the number of open
 files the process can open on startup.</p><p>Alternatively, you can retrieve the <code class="literal">max_file_descriptors</code> for each node
-using the <a class="xref" href="cluster-nodes-info.html" title="Nodes Info"><em>Nodes Info</em></a> API, with:</p><pre class="programlisting prettyprint lang-js">curl localhost:9200/_nodes/process?pretty</pre><h4><a id="setup-configuration-memory"></a>Memory Settings<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/setup/configuration.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>There is an option to use
+using the <a class="xref" href="cluster-nodes-info.html" title="Nodes Info"><em>Nodes Info</em></a> API, with:</p><pre class="programlisting prettyprint lang-js">curl localhost:9200/_nodes/process?pretty</pre><h4><a id="setup-configuration-memory"></a>Memory Settings<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/setup/configuration.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The Linux kernel tries to use as much memory as possible for file system
+caches, and eagerly swaps out unused application memory, possibly resulting
+in the elasticsearch process being swapped out and suffer from low
+performance then.</p><p>The first option is to ensure that the sysctl value <code class="literal">vm.swappiness</code> is set
+to <code class="literal">0</code>. This reduces the kernel’s tendency to swap and should not lead to
+swapping under normal circumstances, while still allowing the whole system
+to swap in emergency conditions.</p><p>In the above case there is an option to use
 <a class="ulink" href="http://opengroup.org/onlinepubs/007908799/xsh/mlockall.html" target="_top">mlockall</a> to
-try to lock the process address space so it won’t be swapped. For this
-to work, the <code class="literal">bootstrap.mlockall</code> should be set to <code class="literal">true</code> and it is
-recommended to set both the min and max memory allocation to be the
-same. Note: This option is only available on Linux/Unix operating
-systems.</p><p>In order to see if this works or not, set the <code class="literal">common.jna</code> logging to
-DEBUG level. A solution to "Unknown mlockall error 0" can be to set
-<code class="literal">ulimit -l unlimited</code>.</p><p>Note, <code class="literal">mlockall</code> might cause the JVM or shell
-session to exit if it fails to allocate the memory (because not enough
-memory is available on the machine).</p><h3><a id="settings"></a>Elasticsearch Settings<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/setup/configuration.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p><span class="strong"><strong>elasticsearch</strong></span> configuration files can be found under <code class="literal">ES_HOME/config</code>
+try to lock the process address space so it won’t be swapped by configuring
+the <code class="literal">bootstrap.mlockall</code> setting to <code class="literal">true</code>.
+Note: This option is only available on Linux/Unix operating systems.</p><p>After starting Elasticsearch can check the process part of the nodes
+info API to find out if the <code class="literal">mlockall</code> setting has been applied successfully.</p><p>If the setting has not been applied, you can try to execute
+<code class="literal">ulimit -l unlimited</code> to allow memory locking.</p><p>Another possible reason why <code class="literal">mlockall</code> can fail is when the directory pointed
+to by the <code class="literal">java.io.tmpdir</code> JVM system property - typically <code class="literal">/tmp</code> - is mounted
+with the <code class="literal">noexec</code> option. In this case you can specify an additional directory
+using the <code class="literal">jna.tmpdir</code> system property to use for loading the native library.</p><p>Note, that <code class="literal">mlockall</code> might cause the JVM or shell session to exit if it fails
+to allocate the memory, possibly due to not enough memory being available on
+the machine.</p><h3><a id="settings"></a>Elasticsearch Settings<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/setup/configuration.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p><span class="strong"><strong>elasticsearch</strong></span> configuration files can be found under <code class="literal">ES_HOME/config</code>
 folder. The folder comes with two files, the <code class="literal">elasticsearch.yml</code> for
 configuring Elasticsearch different
 <a class="link" href="modules.html" title="Modules">modules</a>, and <code class="literal">logging.yml</code> for

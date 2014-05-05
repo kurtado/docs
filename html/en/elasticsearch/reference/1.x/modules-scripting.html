@@ -42,30 +42,57 @@ for JavaScript, <code class="literal">lang-groovy</code> for Groovy, and <code c
 All places where a <code class="literal">script</code> parameter can be used, a <code class="literal">lang</code> parameter
 (on the same level) can be provided to define the language of the
 script. The <code class="literal">lang</code> options are <code class="literal">mvel</code>, <code class="literal">js</code>, <code class="literal">groovy</code>, <code class="literal">python</code>, and
-<code class="literal">native</code>.</p><h3><a id="_default_scripting_language"></a>Default Scripting Language<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The default scripting language (assuming no <code class="literal">lang</code> parameter is
-provided) is <code class="literal">mvel</code>. In order to change it set the <code class="literal">script.default_lang</code>
-to the appropriate language.</p><h3><a id="_preloaded_scripts"></a>Preloaded Scripts<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Scripts can always be provided as part of the relevant API, but they can
-also be preloaded by placing them under <code class="literal">config/scripts</code> and then
-referencing them by the script name (instead of providing the full
-script). This helps reduce the amount of data passed between the client
-and the nodes.</p><p>The name of the script is derived from the hierarchy of directories it
+<code class="literal">native</code>.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><h4>Added in 1.2.0.</h4><p> Dynamic scripting is disabled by default since version 1.2.0.</p></div></div><p>To increase security, Elasticsearch does not allow you to specify scripts with a
+request. Instead, scripts must be placed in the <code class="literal">scripts</code> directory inside the
+configuration directory (the directory where elasticsearch.yml is). Scripts
+placed into this directory will automatically be picked up and be available to
+be used. Once a script has been placed in this directory, it can be referenced
+by name. For example, a script called <code class="literal">calculate-score.mvel</code> can be referenced
+in a request like this:</p><pre class="programlisting prettyprint lang-sh">$ tree config
+config
+├── elasticsearch.yml
+├── logging.yml
+└── scripts
+    └── calculate-score.mvel</pre><pre class="programlisting prettyprint lang-sh">$ cat config/scripts/calculate-score.mvel
+Math.log(_score * 2) + my_modifier</pre><pre class="programlisting prettyprint lang-js">curl -XPOST localhost:9200/_search -d '{
+  "query": {
+    "function_score": {
+      "query": {
+        "match": {
+          "body": "foo"
+        }
+      },
+      "functions": [
+        {
+          "script_score": {
+            "script": "calculate-score",
+            "params": {
+              "my_modifier": 8
+            }
+          }
+        }
+      ]
+    }
+  }
+}'</pre><p>The name of the script is derived from the hierarchy of directories it
 exists under, and the file name without the lang extension. For example,
 a script placed under <code class="literal">config/scripts/group1/group2/test.py</code> will be
-named <code class="literal">group1_group2_test</code>.</p><h3><a id="_disabling_dynamic_scripts"></a>Disabling dynamic scripts<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>We recommend running Elasticsearch behind an application or proxy,
+named <code class="literal">group1_group2_test</code>.</p><h3><a id="_default_scripting_language"></a>Default Scripting Language<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The default scripting language (assuming no <code class="literal">lang</code> parameter is
+provided) is <code class="literal">mvel</code>. In order to change it set the <code class="literal">script.default_lang</code>
+to the appropriate language.</p><h3><a id="_enabling_dynamic_scripting"></a>Enabling dynamic scripting<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>We recommend running Elasticsearch behind an application or proxy,
 which protects Elasticsearch from the outside world. If users are
 allowed to run dynamic scripts (even in a search request), then they
 have the same access to your box as the user that Elasticsearch is
-running as.</p><p>First, you should not run Elasticsearch as the <code class="literal">root</code> user, as this
-would allow a script to access or do <span class="strong"><strong>anything</strong></span> on your server, without
-limitations. Second, you should not expose Elasticsearch directly to
-users, but instead have a proxy application inbetween.  If you <span class="strong"><strong>do</strong></span>
-intend to expose Elasticsearch directly to your users, then you have
-to decide whether you trust them enough to run scripts on your box or
-not. If not, then even if you have a proxy which only allows <code class="literal">GET</code>
-requests, you should disable dynamic scripting by adding the following
-setting to the <code class="literal">config/elasticsearch.yml</code> file on every node:</p><pre class="programlisting prettyprint lang-yaml">script.disable_dynamic: true</pre><p>This will still allow execution of named scripts provided in the config, or
-<span class="emphasis"><em>native</em></span> Java scripts registered through plugins, however it will prevent
-users from running arbitrary scripts via the API.</p><h3><a id="_automatic_script_reloading"></a>Automatic Script Reloading<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">config/scripts</code> directory is scanned periodically for changes.
+running as. For this reason dynamic scripting is disabled by default.</p><p>First, you should not run Elasticsearch as the <code class="literal">root</code> user, as this would allow
+a script to access or do <span class="strong"><strong>anything</strong></span> on your server, without limitations. Second,
+you should not expose Elasticsearch directly to users, but instead have a proxy
+application inbetween. If you <span class="strong"><strong>do</strong></span> intend to expose Elasticsearch directly to
+your users, then you have to decide whether you trust them enough to run scripts
+on your box or not. If you do, you can enable dynamic scripting by adding the
+following setting to the <code class="literal">config/elasticsearch.yml</code> file on every node:</p><pre class="programlisting prettyprint lang-yaml">script.disable_dynamic: false</pre><p>While this still allows execution of named scripts provided in the config, or
+<span class="emphasis"><em>native</em></span> Java scripts registered through plugins, it also allows users to run
+arbitrary scripts via the API. Instead of sending the name of the file as the
+script, the body of the script can be sent instead.</p><h3><a id="_automatic_script_reloading"></a>Automatic Script Reloading<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">config/scripts</code> directory is scanned periodically for changes.
 New and changed scripts are reloaded and deleted script are removed
 from preloaded scripts cache. The reload frequency can be specified
 using <code class="literal">watcher.interval</code> setting, which defaults to <code class="literal">60s</code>.
