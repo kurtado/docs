@@ -51,10 +51,10 @@ case equal to the boost on the <code class="literal">has_parent</code> query (De
 the score type is set to <code class="literal">score</code>, then the score of the matching parent
 document is aggregated into the child documents belonging to the
 matching parent document. The score type can be specified with the
-<code class="literal">score_type</code> field inside the <code class="literal">has_parent</code> query:</p><pre class="programlisting prettyprint lang-js">{
+<code class="literal">score_mode</code> field inside the <code class="literal">has_parent</code> query:</p><pre class="programlisting prettyprint lang-js">{
     "has_parent" : {
         "parent_type" : "blog",
-        "score_type" : "score",
+        "score_mode" : "score",
         "query" : {
             "term" : {
                 "tag" : "something"
