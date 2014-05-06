@@ -62,7 +62,7 @@ node.close();</pre><p>When you start a <code class="literal">Node</code>, it joi
 different clusters by simple setting the <code class="literal">cluster.name</code> setting, or
 explicitly using the <code class="literal">clusterName</code> method on the builder.</p><p>You can define <code class="literal">cluster.name</code> in <code class="literal">/src/main/resources/elasticsearch.yml</code>
 dir in your project. As long as <code class="literal">elasticsearch.yml</code> is present in the
-classloader, it will be used when you start your node.</p><pre class="programlisting prettyprint lang-java">cluster.name=yourclustername</pre><p>Or in Java:</p><pre class="programlisting prettyprint lang-java">Node node = nodeBuilder().clusterName("yourclustername").node();
+classpath, it will be used when you start your node.</p><pre class="programlisting prettyprint lang-java">cluster.name=yourclustername</pre><p>Or in Java:</p><pre class="programlisting prettyprint lang-java">Node node = nodeBuilder().clusterName("yourclustername").node();
 Client client = node.client();</pre><p>The benefit of using the <code class="literal">Client</code> is the fact that operations are
 automatically routed to the node(s) the operations need to be executed
 on, without performing a "double hop". For example, the index operation
