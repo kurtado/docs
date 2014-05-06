@@ -171,7 +171,7 @@ using the <code class="literal">order</code> setting.</p><p>Ordering the buckets
         }
     }
 }</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO21-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-The <code class="literal">{ "price_stats.min" : asc" }</code> will sort the buckets based on <code class="literal">min</code> value of their their <code class="literal">price_stats</code> sub-aggregation.
+The <code class="literal">{ "price_stats.min" : asc" }</code> will sort the buckets based on <code class="literal">min</code> value of their <code class="literal">price_stats</code> sub-aggregation.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO21-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 There is no need to configure the <code class="literal">price</code> field for the <code class="literal">price_stats</code> aggregation as it will inherit it by default from its parent histogram aggregation.
 </p></td></tr></table></div><p>It is also possible to order the buckets based on a "deeper" aggregation in the hierarchy. This is supported as long
