@@ -64,7 +64,7 @@ quick   |   X   |
 ------------------------
 Total   |   2   |  1</pre><p>Both documents match, but the first document has more matches than the second.
 If we apply a naive <span class="emphasis"><em>similarity algorithm</em></span> which just counts the number of
-matching terms, then we can say that the first document is a better match — is <span class="emphasis"><em>more relevant</em></span> to our query — than the second document.</p><p>Bu there are a few problems with our current inverted index:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+matching terms, then we can say that the first document is a better match — is <span class="emphasis"><em>more relevant</em></span> to our query — than the second document.</p><p>But there are a few problems with our current inverted index:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <code class="literal">"Quick"</code> and <code class="literal">"quick"</code> appear as separate terms, while the user probably
    thinks of them as the same word.
 </li><li class="listitem">

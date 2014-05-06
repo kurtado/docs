@@ -45,15 +45,15 @@ Object Notation ) as the serialization format for documents. JSON
 serialization is supported by most programming languages, and has become the
 standard format used by the NoSQL movement. It is simple, concise and easy to
 read.</p><p>Consider this JSON document which represents a user object:</p><pre class="programlisting prettyprint lang-js">{
-    "email":     "john@smith.com",
-    "name": {
-        "first": "John",
-        "last":  "Smith"
+    "email":      "john@smith.com",
+    "first_name": "John",
+    "last_name":  "Smith",
+    "about": {
+        "bio":         "Eco-warrior and defender of the weak",
+        "age":         25,
+        "interests": [ "dolphins", "whales" ]
     },
-    "bio":       "Eco-warrior and defender of the weak",
-    "age":       25,
     "join_date": "2014/05/01",
-    "interests": [ "dolphins", "whales" ]
 }</pre><p>Although the original <code class="literal">user</code> object was complex, the structure and meaning of
 the object has been retained in the JSON version. Converting an object to JSON
 for indexing in Elasticsearch is much simpler than the equivalent process for

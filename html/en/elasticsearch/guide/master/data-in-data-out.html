@@ -54,13 +54,13 @@ other words, as soon as a document has been stored in Elasticsearch, it can be
 retrieved from any node in the cluster.</p><p>Of course, we don’t only need to store data, we must also query it, <span class="emphasis"><em>en masse</em></span>
 and at speed. While a number of NoSQL solutions exist which allow us to store
 objects as documents, they still require us to think about how we want to
-query our data, and which fields require a index in order to make data
+query our data, and which fields require an index in order to make data
 retrieval fast.</p><p>In Elasticsearch, <span class="strong"><strong>all data in every field</strong></span> is <span class="strong"><strong>indexed by default</strong></span>. That is,
 every field has a dedicated inverted index for fast retrieval. And, unlike
 most other databases, it can use all of those inverted indices <span class="strong"><strong>in the same
 query</strong></span>, to return results at breathtaking speed.</p><p>In this chapter we will discuss the APIs that we use to create, retrieve,
 update and delete documents. For the moment, we don’t care about the data
-inside our documents or how to query it. All we care about is how to store our
+inside our documents or how to query them. All we care about is how to store our
 documents safely in Elasticsearch, and how to get them back again.</p></div><div class="navfooter"><span class="prev"><a href="_coping_with_failure.html">
               « 
               Coping with failure</a>

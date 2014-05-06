@@ -41,7 +41,7 @@ Elasticsearch to store the number of widgets that we have in stock in our
 online store. Every time that we sell a widget, we decrement the stock count
 in Elasticsearch.</p><p>One day, management decides to have a sale. Suddenly, we are selling several
 widgets every second. Imagine two web processes, running in parallel, both
-processing the sale of one widget each:</p><div class="figure"><a id="img-data-lww"></a><p class="title"><strong>Figure 7. Consequence of no concurrency control</strong></p><div class="figure-contents"><div class="mediaobject" align="center"><img src="png/03-01_concurrency.png" align="middle" width="270" alt="Consequence of no concurrency control" /></div></div></div><br class="figure-break" /><p>The change that <code class="literal">web_1</code> made to the <code class="literal">stock_count</code> has been lost because
+processing the sale of one widget each:</p><div class="figure"><a id="img-data-lww"></a><p class="title"><strong>Figure 7. Consequence of no concurrency control</strong></p><div class="figure-contents"><div class="mediaobject" align="center"><img src="images/03-01_concurrency.png" align="middle" width="270" alt="Consequence of no concurrency control" /></div></div></div><br class="figure-break" /><p>The change that <code class="literal">web_1</code> made to the <code class="literal">stock_count</code> has been lost because
 <code class="literal">web_2</code> is unaware that its copy of the <code class="literal">stock_count</code> is out of date. The
 result is that we think we have more widgets than we actually do, and we’re
 going to disappoint customers by selling them stock that doesn’t exist.</p><p>The more frequently that changes are made, or the longer the gap between

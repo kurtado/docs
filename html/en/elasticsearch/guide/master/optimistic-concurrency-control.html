@@ -39,7 +39,7 @@ document is changed. Elasticsearch uses this <code class="literal">_version</cod
 changes are applied in the correct order. If an older version of a document
 arrives after a new version, it can simply be ignored.</p><p>We can take advantage of the <code class="literal">_version</code> number to ensure that conflicting
 changes made by our application do not result in data loss. We do this by
-specifying the `version number of the document that we wish to change.  If that
+specifying the <code class="literal">version</code> number of the document that we wish to change.  If that
 version is no longer current, our request fails.</p><p>Let’s create a new blog post:</p><pre class="programlisting prettyprint lang-js">PUT /website/blog/1/_create
 {
   "title": "My first blog entry",
