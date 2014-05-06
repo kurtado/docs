@@ -411,11 +411,11 @@ return 1.</p></div><div class="section"><div class="titlepage"><div><div><h3 cla
 }</pre><p>and the <code class="literal">custom_filters_score</code></p><pre class="programlisting prettyprint lang-js">"custom_filters_score": {
     "filters": [
         {
-            "boost_factor": "3",
+            "boost": "3",
             "filter": {...}
         },
         {
-            "filter": {â¦},
+            "filter": {...},
             "script": "_score * doc['my_numeric_field'].value / pow(param1, param2)"
         }
     ],
