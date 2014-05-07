@@ -47,7 +47,7 @@ $params['connectionParams']['auth'] = array(
     'Basic' <a id="CO1-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
 );
 $client = new Elasticsearch\Client($params);</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-Accepts four different options: <code class="literal">Basic</code>, <code class="literal">Digets</code>, <code class="literal">NTLM</code>, <code class="literal">Any</code>
+Accepts four different options: <code class="literal">Basic</code>, <code class="literal">Digests</code>, <code class="literal">NTLM</code>, <code class="literal">Any</code>
 </p></td></tr></table></div><p>After being initialized with authentication credentials, all outgoing requests will automatically include the HTTP auth headers.</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_example_ignoring_exceptions"></a>Example: Ignoring exceptions<a href="https://github.com/elasticsearch/elasticsearch-php/edit/master/docs/configuration.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>The library attempts to throw exceptions for common problems.  These exceptions
 match the HTTP response code provided by Elasticsearch.  For example, attempting to
 GET a nonexistent document will throw a <code class="literal">MissingDocument404Exception</code>.</p><p>Exceptions are a useful and consistent way to deal with problems like missing
