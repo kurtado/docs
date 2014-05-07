@@ -58,16 +58,21 @@ percentiles: <code class="literal">[ 1, 5, 25, 50, 75, 95, 99 ]</code>.  The res
 
    "aggregations": {
       "load_time_outlier": {
-         "1.0": 15,
-         "5.0": 20,
-         "25.0": 23,
-         "50.0": 25,
-         "75.0": 29,
-         "95.0": 60,
-         "99.0": 150
+         "values" : {
+            "1.0": 15,
+            "5.0": 20,
+            "25.0": 23,
+            "50.0": 25,
+            "75.0": 29,
+            "95.0": 60,
+            "99.0": 150
+         }
       }
    }
-}</pre><p>As you can see, the aggregation will return a calculated value for each percentile
+}</pre><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><p><span class="added">
+      [<span class="version">1.2.0</span>]
+      <span class="detail">Added in 1.2.0.</span></span> The above response structure applies for <code class="literal">1.2.0</code> and above. Pre <code class="literal">1.2.0</code> release, the <code class="literal">values</code> object was
+         missing and all the percentiles where placed directly under the aggregation name object</p></div></div><p>As you can see, the aggregation will return a calculated value for each percentile
 in the default range.  If we assume response times are in milliseconds, it is
 immediately obvious that the webpage normally loads in 15-30ms, but occasionally
 spikes to 60-150ms.</p><p>Often, administrators are only interested in outliers — the extreme percentiles.
