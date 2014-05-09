@@ -40,7 +40,8 @@ API is equivalent to performing a boolean query of <code class="literal">more_li
 queries, with one query per specified <code class="literal">mlt_fields</code>.</p><p>Rest parameters relating to search are also allowed, including
 <code class="literal">search_type</code>, <code class="literal">search_indices</code>, <code class="literal">search_types</code>, <code class="literal">search_scroll</code>,
 <code class="literal">search_size</code> and <code class="literal">search_from</code>.</p><p>When no <code class="literal">mlt_fields</code> are specified, all the fields of the document will
-be used in the <code class="literal">more_like_this</code> query generated.</p><p>Note: In order to use the <code class="literal">mlt</code> feature a <code class="literal">mlt_field</code> needs to be either
+be used in the <code class="literal">more_like_this</code> query generated.</p><p>By default, the queried document is excluded from the response (<code class="literal">include</code>
+set to false).</p><p>Note: In order to use the <code class="literal">mlt</code> feature a <code class="literal">mlt_field</code> needs to be either
 be <code class="literal">stored</code>, store <code class="literal">term_vector</code> or <code class="literal">source</code> needs to be enabled.</p></div><div class="navfooter"><span class="prev"><a href="search-percolate.html">
               « 
               Percolator</a>
