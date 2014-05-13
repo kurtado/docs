@@ -143,13 +143,13 @@ Compression controls memory usage and approximation error
 </p></td></tr></table></div><p>The TDigest algorithm uses a number of "nodes" to approximate percentiles — the
 more nodes available, the higher the accuracy (and large memory footprint) proportional
 to the volume of data.  The <code class="literal">compression</code> parameter limits the maximum number of
-nodes to <code class="literal">100 * compression</code>.</p><p>Therefore, by increasing the compression value, you can increase the accuracy of
+nodes to <code class="literal">20 * compression</code>.</p><p>Therefore, by increasing the compression value, you can increase the accuracy of
 your percentiles at the cost of more memory.  Larger compression values also
 make the algorithm slower since the underlying tree data structure grows in size,
 resulting in more expensive operations.  The default compression value is
-<code class="literal">100</code>.</p><p>A "node" uses roughly 48 bytes of memory, so under worst-case scenarios (large amount
+<code class="literal">100</code>.</p><p>A "node" uses roughly 32 bytes of memory, so under worst-case scenarios (large amount
 of data which arrives sorted and in-order) the default settings will produce a
-TDigest roughly 480KB in size.  In practice data tends to be more random and
+TDigest roughly 64KB in size.  In practice data tends to be more random and
 the TDigest will use less memory.</p></div></div><div class="navfooter"><span class="prev"><a href="search-aggregations-metrics-valuecount-aggregation.html">
               « 
               Value Count Aggregation</a>
