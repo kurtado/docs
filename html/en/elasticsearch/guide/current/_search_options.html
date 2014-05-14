@@ -46,7 +46,7 @@ like the user’s session ID.</p></div></div><div class="section"><div class="ti
 If one node is having trouble, it could slow down the response to all search
 requests.</p><p>The <code class="literal">timeout</code> parameter tells the coordinating node how long it should wait
 before giving up and just returning the results that it already has. It can be
-better to return some results than none at all.</p><p>The response to a search request will indicate whether the search timed out
+better to return some results than none at all.</p><p>The response to a search request will indicate whether the search timed out and
 how many shards responded successfully:</p><pre class="programlisting prettyprint lang-js">    ...
     "timed_out":     true,  <a id="CO27-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
     "_shards": {

@@ -63,7 +63,7 @@ in the metadata for each request.</p><div class="section"><div class="titlepage"
 yourself: “Why does the <code class="literal">bulk</code> API require the funny format with the newline
 characters, instead of just sending the requests wrapped in a JSON array, like
 the <code class="literal">mget</code> API?”</p><p>To answer this, we need to explain a little background:</p><p>Each document referenced in a bulk request may belong to a different primary
-shard, each which may be allocated to any of the nodes in the cluster. This
+shard, each of which may be allocated to any of the nodes in the cluster. This
 means that every <span class="emphasis"><em>action</em></span> inside a <code class="literal">bulk</code> request needs to be forwarded to the
 correct shard on the correct node.</p><p>If the individual requests were wrapped up in a JSON array, that would mean
 that we would need to:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
