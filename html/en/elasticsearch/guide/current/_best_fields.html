@@ -74,14 +74,16 @@ contains both of the words that we are looking for.</p><p>Now we run the followi
 }</pre><p>To understand why, think about how the <code class="literal">bool</code> query calculates its score:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 First, it runs both of the queries in the <code class="literal">should</code> clause
 </li><li class="listitem">
-then it adds their scores together
+then it adds their scores together,
 </li><li class="listitem">
-and divides the total by the number of clauses, ie two.
+multiplies the total by the number of matching clauses,
+</li><li class="listitem">
+and divides the result by the total number of clauses, ie two.
 </li></ul></div><p>Document 1 contains the word <code class="literal">"brown"</code> in both fields, so both <code class="literal">match</code> clauses
 are successful and have a score.  Document 2 contains both <code class="literal">"brown"</code> and
 <code class="literal">"fox"</code> in the <code class="literal">body</code> field but neither word in the <code class="literal">title</code> field. The high
 score from the <code class="literal">body</code> query is added to the zero score from the <code class="literal">title</code> query,
-and divided by two, resulting in a lower overall score than for Document 1.</p><p>In this example, the <code class="literal">title</code> and <code class="literal">body</code> fields are competing with each other.
+and multiplied by ½, resulting in a lower overall score than for Document 1.</p><p>In this example, the <code class="literal">title</code> and <code class="literal">body</code> fields are competing with each other.
 We want to find the single <span class="strong"><strong>best-matching</strong></span> field.</p><p>What if, instead of combining the scores from each field, we used the score
 from the <span class="strong"><strong>best-matching</strong></span> field as the overall score for the query?  This would
 give preference to a single field that contain <span class="strong"><strong>both</strong></span> of the words we are
