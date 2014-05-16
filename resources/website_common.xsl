@@ -5,6 +5,7 @@
   <xsl:param name="local.root" select="0" />
   <xsl:param name="local.repo" select="0" />
   <xsl:param name="local.edit_url" select="0" />
+  <xsl:param name="local.comments" select="0" />
 
   <!-- book versions -->
   <xsl:param name="local.book.version">test build</xsl:param>
@@ -179,21 +180,32 @@
     </xsl:template>
 
     <!-- Sense widget -->
-<xsl:template match="remark[parent::answer|parent::appendix|parent::article|parent::bibliodiv|                                 parent::bibliography|parent::blockquote|parent::caution|parent::chapter|                                 parent::glossary|parent::glossdiv|parent::important|parent::index|                                 parent::indexdiv|parent::listitem|parent::note|parent::orderedlist|                                 parent::partintro|parent::preface|parent::procedure|parent::qandadiv|                                 parent::qandaset|parent::question|parent::refentry|parent::refnamediv|                                 parent::refsect1|parent::refsect2|parent::refsect3|parent::refsection|                                 parent::refsynopsisdiv|parent::sect1|parent::sect2|parent::sect3|parent::sect4|                                 parent::sect5|parent::section|parent::setindex|parent::sidebar|                                 parent::simplesect|parent::taskprerequisites|parent::taskrelated|                                 parent::tasksummary|parent::warning|parent::topic]">
+    <xsl:template match="remark[parent::answer|parent::appendix|parent::article|parent::bibliodiv|                                 parent::bibliography|parent::blockquote|parent::caution|parent::chapter|                                 parent::glossary|parent::glossdiv|parent::important|parent::index|                                 parent::indexdiv|parent::listitem|parent::note|parent::orderedlist|                                 parent::partintro|parent::preface|parent::procedure|parent::qandadiv|                                 parent::qandaset|parent::question|parent::refentry|parent::refnamediv|                                 parent::refsect1|parent::refsect2|parent::refsect3|parent::refsection|                                 parent::refsynopsisdiv|parent::sect1|parent::sect2|parent::sect3|parent::sect4|                                 parent::sect5|parent::section|parent::setindex|parent::sidebar|                                 parent::simplesect|parent::taskprerequisites|parent::taskrelated|                                 parent::tasksummary|parent::warning|parent::topic]">
       <xsl:if test="$show.comments != 0">
-        <xsl:if test="contains(text(),'SENSE:')">
+        <xsl:choose>
+        <xsl:when test="contains(text(),'SENSE:')">
             <xsl:variable name="sense_url" select="translate(substring-after(text(),'SENSE:'),' ','')" />
             <a class="sense_widget" href="sense_widget.html?snippets/{$sense_url}" target="sense">View in Sense</a>
-        </xsl:if>
+        </xsl:when>
+        <xsl:when test="$local.comments != 0">
+            <p class="remark"><xsl:call-template name="inline.charseq"/></p>
+        </xsl:when>
+        </xsl:choose>
+
       </xsl:if>
     </xsl:template>
 
     <xsl:template match="comment|remark">
       <xsl:if test="$show.comments != 0">
-        <xsl:if test="contains(text(),'SENSE:')">
+        <xsl:choose>
+        <xsl:when test="contains(text(),'SENSE:')">
             <xsl:variable name="sense_url" select="translate(substring-after(text(),'SENSE:'),' ','')" />
             <a class="sense_widget" href="sense_widget.html?snippets/{$sense_url}" target="sense">View in Sense</a>
-        </xsl:if>
+        </xsl:when>
+        <xsl:when test="$local.comments != 0">
+            <p class="remark"><xsl:call-template name="inline.charseq"/></p>
+        </xsl:when>
+        </xsl:choose>
       </xsl:if>
     </xsl:template>
 

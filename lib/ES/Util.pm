@@ -91,6 +91,7 @@ sub build_single {
     my $version  = $opts{version}  || 'test build';
     my $multi    = $opts{multi}    || 0;
     my $edit_url = $opts{edit_url} || '';
+    my $comments = $opts{comments} || 0;
 
     fcopy( 'resources/styles.css', $index->parent )
         or die "Couldn't copy <styles.css> to <" . $index->parent . ">: $!";
@@ -111,7 +112,8 @@ sub build_single {
             "local.book.version"       => $version,
             "local.book.multi_version" => $multi,
             "local.root_dir"           => $index->dir->absolute,
-            "local.edit_url"           => $edit_url
+            "local.edit_url"           => $edit_url,
+            "local.comments"           => $comments,
         ),
         $index
     );
