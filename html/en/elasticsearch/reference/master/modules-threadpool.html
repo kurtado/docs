@@ -94,6 +94,26 @@ pools, but the important ones include:</p><div class="horizontal"><table cellpad
 </p>
 </td></tr><tr><td valign="top">
 <p>
+<code class="literal">snapshot</code>
+</p>
+</td><td valign="top">
+<p>
+    For snapshot/restore operations, defaults to <code class="literal">scaling</code>
+    keep-alive <code class="literal">5m</code>,
+    size <code class="literal">(# of available processors)/2</code>.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">snapshot_data</code>
+</p>
+</td><td valign="top">
+<p>
+    For snapshot/restore operations on data files, defaults to <code class="literal">scaling</code>
+    with a <code class="literal">5m</code> keep-alive,
+    size <code class="literal">5</code>.
+</p>
+</td></tr><tr><td valign="top">
+<p>
 <code class="literal">warmer</code>
 </p>
 </td><td valign="top">
