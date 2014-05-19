@@ -215,7 +215,7 @@ and <code class="literal">false</code> respectively.</p><pre class="programlisti
     "tweet" : {
         "properties" : {
             "hes_my_special_tweet" : {
-                "type" : "boolean",
+                "type" : "boolean"
             }
         }
     }
@@ -236,7 +236,7 @@ all.</p><pre class="programlisting prettyprint lang-js">{
     "tweet" : {
         "properties" : {
             "image" : {
-                "type" : "binary",
+                "type" : "binary"
             }
         }
     }
@@ -426,12 +426,12 @@ the parameter. In the following example all values from fields <code class="lite
     "properties" : {
       "title" : { "type" : "string", "copy_to" : "meta_data" },
       "abstract" : { "type" : "string", "copy_to" : "meta_data" },
-      "meta_data" : { "type" : "string" },
+      "meta_data" : { "type" : "string" }
     }
 }</pre><p>Multiple fields are also supported:</p><pre class="programlisting prettyprint lang-js">{
   "book" : {
     "properties" : {
-      "title" : { "type" : "string", "copy_to" : ["meta_data", "article_info"] },
+      "title" : { "type" : "string", "copy_to" : ["meta_data", "article_info"] }
     }
 }</pre><h5><a id="_multi_fields_3"></a>Multi fields<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/mapping/types/core-types.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h5><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Added in 1.0.0.RC1.</p></div></div><p>The <code class="literal">fields</code> options allows to map several core types fields into a single
 json source field. This can be useful if a single field need to be
