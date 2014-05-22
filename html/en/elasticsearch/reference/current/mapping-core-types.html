@@ -126,7 +126,7 @@ in order to compute the score of a document relatively to a query.</p><p>Althoug
 even for documents that don’t have this specific field). As a consequence, if
 you don’t need scoring on a specific field, it is highly recommended to disable
 norms on it. In  particular, this is the case for fields that are used solely
-for filtering or aggregations.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Coming in 1.2.0.</p></div></div><p>In case you would like to disable norms after the fact, it is possible to do so
+for filtering or aggregations.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Added in 1.2.0.</p></div></div><p>In case you would like to disable norms after the fact, it is possible to do so
 by using the <a class="link" href="indices-put-mapping.html" title="Put Mapping">PUT mapping API</a>. Please however note that
 norms won’t be removed instantly, but as your index will receive new insertions
 or updates, and segments get merged. Any score computation on a field that got
