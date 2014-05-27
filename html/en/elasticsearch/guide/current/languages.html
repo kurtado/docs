@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Dealing with human language</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch" /><link rel="up" href="index.html" title="Elasticsearch" /><link rel="prev" href="_binary_fields.html" title="Binary fields" /><link rel="next" href="language-analysis.html" title="Analyzing natural language" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Dealing with human language</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch" /><link rel="up" href="index.html" title="Elasticsearch" /><link rel="prev" href="_binary_fields.html" title="Binary fields" /><link rel="next" href="language-intro.html" title="Getting started with languages" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
       jQuery(function() {
         jQuery('div.navheader+div').css('minHeight',jQuery('div.toc').height()+'px');
         jQuery('article.guide_content a[id]').each(function() { this.href='#'+this.id });
@@ -26,15 +26,17 @@
            
         </span><span class="next">
            
-          <a href="language-analysis.html">Analyzing natural language
+          <a href="language-intro.html">Getting started with languages
                »
             </a></span></div><div class="part"><div class="titlepage"><div><div><h1 class="title"><a id="languages"></a>Dealing with human language <a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/02_Dealing_with_language.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h1></div></div></div><div class="partintro"><div></div><div class="blockquote"><table border="0" class="blockquote" summary="Block quote"><tr><td width="10%" valign="top"> </td><td width="80%" valign="top"><p>“I know all those words, but that sentence makes no sense to me.”</p></td><td width="10%" valign="top"> </td></tr><tr><td width="10%" valign="top"> </td><td colspan="2" align="right" valign="top">--<span class="attribution">
 Matt Groening
-</span></td></tr></table></div><p>In <a class="xref" href="search-in-depth.html" title="Search in depth">Search in depth </a> we covered the mechanics of search, but we didn’t pay
-much attention to the words themselves. It is not enough for full text  search
-to just match the exact words that the user has queried. Instead, we need to
+</span></td></tr></table></div><p>Full text search is a battle between <span class="emphasis"><em>precision</em></span> — returning as few
+irrelevant documents as possible — and <span class="emphasis"><em>recall</em></span> — returning as many relevant
+documents as possible. While matching only the exact words that the user has
+queried would be precise, it is not enough. We would miss out on many
+documents that the user would consider to be relevant. Instead, we need to
 spread the net wider, to also search for words that are not exactly the same
-as the original, but are related.</p><p>Wouldn’t you expect a search for “quick brown fox” to match a document
+as the original but are related.</p><p>Wouldn’t you expect a search for “quick brown fox” to match a document
 containing “fast brown foxes”, “Johnny Walker” to match “Johnnie
 Walker”, or “Arnolt Schwarzenneger” to match “Arnold Schwarzenegger”?</p><p>If documents exist which <span class="strong"><strong>do</strong></span> contain exactly what the user has queried then
 those documents should appear at the top of the result set, but weaker matches
@@ -46,13 +48,13 @@ Remove diacritics like <code class="literal">´</code>, <code class="literal">^<
 </li><li class="listitem">
 Remove the distinction between singular and plural — “fox” vs “foxes”
     — or between different tenses — “jumping” vs “jumped” vs “jumps”
-    — by <span class="emphasis"><em>stemming</em></span> each word to its root form. See <a class="xref" href="stemming.html" title="Reducing words to their root form"><em>Reducing words to their root form</em></a>.
+    — by <span class="emphasis"><em>stemming</em></span> each word to its root form. See <a class="xref" href="stemming.html" title="Reducing words to their root form (TODO)"><em>Reducing words to their root form (TODO)</em></a>.
 </li><li class="listitem">
 Remove commonly used words or <span class="emphasis"><em>stopwords</em></span> like “the”, “and”, and “or”
-    to improve search performance.  See <a class="xref" href="stopwords.html" title="Stopwords: performance vs precision"><em>Stopwords: performance vs precision</em></a>.
+    to improve search performance.  See <a class="xref" href="stopwords.html" title="Stopwords: performance vs precision (TODO)"><em>Stopwords: performance vs precision (TODO)</em></a>.
 </li><li class="listitem">
 Including synonyms so that a query for “quick” could also match “fast”,
-    or “UK” could match “United Kingdom”. See <a class="xref" href="synonyms.html" title="Synonyms"><em>Synonyms</em></a>.
+    or “UK” could match “United Kingdom”. See <a class="xref" href="synonyms.html" title="Synonyms (TODO)"><em>Synonyms (TODO)</em></a>.
 </li><li class="listitem">
 Check for misspellings or alternate spellings, or match on <span class="emphasis"><em>homophones</em></span>
     — words that sound the same like “their” vs “there”, “meat” vs
@@ -60,16 +62,16 @@ Check for misspellings or alternate spellings, or match on <span class="emphasis
 </li><li class="listitem">
 We can use a <span class="emphasis"><em>search-as-you-type</em></span> suggester to direct users towards data
     that we know exists in the index, and a <span class="emphasis"><em>did-you-mean</em></span> suggester to
-    redirect users who may have mistyped a search term. See <a class="xref" href="suggesters.html" title="Suggesters"><em>Suggesters</em></a>.
-</li></ul></div><p>But before we can manipulate individual words, we need to divide text up into
-words, which means that we need to know what constitutes a <span class="emphasis"><em>word</em></span>, which we
-will tackle in <a class="xref" href="language-analysis.html" title="Analyzing natural language"><em>Analyzing natural language</em></a>.</p><div class="toc"><dl><dt><span class="chapter"><a href="language-analysis.html">Analyzing natural language</a></span></dt><dt><span class="chapter"><a href="token-normalization.html">Normalizing tokens</a></span></dt><dt><span class="chapter"><a href="stemming.html">Reducing words to their root form</a></span></dt><dt><span class="chapter"><a href="stopwords.html">Stopwords: performance vs precision</a></span></dt><dt><span class="chapter"><a href="multi-lingual.html">Handling multiple languages</a></span></dt><dt><span class="chapter"><a href="synonyms.html">Synonyms</a></span></dt><dt><span class="chapter"><a href="fuzzy-matching.html">Fuzzy matching (TODO)</a></span></dt><dt><span class="chapter"><a href="suggesters.html">Suggesters</a></span></dt></dl></div></div></div><div class="navfooter"><span class="prev"><a href="_binary_fields.html">
+    redirect users who may have mistyped a search term. See <a class="xref" href="suggesters.html" title="Suggesters (TODO)"><em>Suggesters (TODO)</em></a>.
+</li></ul></div><p>Before we can manipulate individual words, we need to divide text up into
+words, which means that we need to know what constitutes a <span class="emphasis"><em>word</em></span>. We will
+tackle this in <a class="xref" href="identifying-words.html" title="Identifying words"><em>Identifying words</em></a>.</p><p>But first, let’s take a look at how to get started quickly and easily.</p><div class="toc"><dl><dt><span class="chapter"><a href="language-intro.html">Getting started with languages</a></span></dt><dt><span class="chapter"><a href="identifying-words.html">Identifying words</a></span></dt><dt><span class="chapter"><a href="token-normalization.html">Normalizing tokens</a></span></dt><dt><span class="chapter"><a href="stemming.html">Reducing words to their root form (TODO)</a></span></dt><dt><span class="chapter"><a href="stopwords.html">Stopwords: performance vs precision (TODO)</a></span></dt><dt><span class="chapter"><a href="synonyms.html">Synonyms (TODO)</a></span></dt><dt><span class="chapter"><a href="fuzzy-matching.html">Fuzzy matching (TODO)</a></span></dt><dt><span class="chapter"><a href="suggesters.html">Suggesters (TODO)</a></span></dt></dl></div></div></div><div class="navfooter"><span class="prev"><a href="_binary_fields.html">
               « 
               Binary fields</a>
            
         </span><span class="next">
            
-          <a href="language-analysis.html">Analyzing natural language
+          <a href="language-intro.html">Getting started with languages
                »
             </a></span></div></article></section></div></div></div><footer><div id="footer_container" class="full_wrapper"><div class="container"><nav role="navigation"><ul id="footer_nav" class="menu"><li id="menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36"><a target="_blank" href="http://elasticsearch.com">Company</a></li><li id="menu-item-74980" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74980"><a href="/resources/">Resources</a></li><li id="menu-item-3106" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3106"><a href="/terms-of-use/">Terms</a></li><li id="menu-item-3107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3107"><a href="/privacy-and-cookie-policy/">Privacy</a></li><li id="menu-item-3105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3105"><a href="/contact/">Contact</a></li><li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="/blog/">Blog</a></li></ul></nav><div id="social"><a href="https://twitter.com/elasticsearch" class="social_icons" target="_blank"><i class="twitter"></i></a><a href="https://www.facebook.com/elasticsearch" class="social_icons" target="_blank"><i class="facebook"></i></a></div><div id="footer_form"><label class="form_label">Sign up for updates!</label><div class="gf_browser_chrome gform_wrapper" id="gform_wrapper_4"><a id="gf_4" name="gf_4" class="gform_anchor"></a><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_4" id="gform_4" action="/empty-template/#gf_4"><div class="gform_body"><ul id="gform_fields_4" class="gform_fields top_label description_below"><li id="field_4_6" class="gfield               gfield_contains_required"><label class="gfield_label" for="input_4_6">enter you email<span class="gfield_required">*</span></label><div class="ginput_container"><input name="input_6" id="input_4_6" type="email" value="" class="medium" tabindex="50" /></div></li><li id="field_4_2" class="gfield     gform_hidden"><input name="input_2" id="input_4_2" type="hidden" class="gform_hidden" value="813-MAM-392" /></li><li id="field_4_3" class="gfield     gform_hidden"><input name="input_3" id="input_4_3" type="hidden" class="gform_hidden" value="WEB.org" /></li><li id="field_4_4" class="gfield     gform_hidden"><input name="input_4" id="input_4_4" type="hidden" class="gform_hidden" value="WEB.org - Footer - Updates" /></li></ul></div><script type="text/javascript">//<![CDATA[
             jQuery(function(){

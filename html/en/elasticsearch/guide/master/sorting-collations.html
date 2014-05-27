@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Sorting and collations</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch" /><link rel="up" href="token-normalization.html" title="Normalizing tokens" /><link rel="prev" href="character-folding.html" title="Unicode character folding" /><link rel="next" href="stemming.html" title="Reducing words to their root form (TODO)" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
+      jQuery(function() {
+        jQuery('div.navheader+div').css('minHeight',jQuery('div.toc').height()+'px');
+        jQuery('article.guide_content a[id]').each(function() { this.href='#'+this.id });
+      });
+    </script><link rel="stylesheet" type="text/css" href="styles.css?3" /></head><body class="single single-guide"><img src="http://ad.retargeter.com/seg?add=1235131&amp;t=2" width="1" height="1" style="position:absolute; visibility:hidden;" /><script type="text/javascript">
+        if(jQuery('body').data('cookie') != "eu" || jQuery.cookie('allowCookies')){
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-12395217-2']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    }</script><!--[if lt IE 8]>
+        <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+      <![endif]--><header><nav role="navigation" id="mobile-nav-container" class="off-canvas-nav"><ul id="mobile-nav" class="menu"><li id="menu-item-75892" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75892"><a href="/overview/">Overview</a><ul class="sub-menu"><li id="menu-item-75895" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75895"><a href="/overview/">Overview</a></li><li id="menu-item-68760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68760"><a href="/overview/elasticsearch/">Elasticsearch</a></li><li id="menu-item-75894" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75894"><a href="/overview/marvel/">Marvel</a></li><li id="menu-item-68758" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68758"><a href="/overview/kibana/">Kibana</a></li><li id="menu-item-68756" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68756"><a href="/overview/kibana/installation/">Kibana Installation</a></li><li id="menu-item-68757" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68757"><a href="/overview/kibana/support/">Kibana Support</a></li><li id="menu-item-68759" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68759"><a href="/overview/logstash/">Logstash</a></li><li id="menu-item-74019" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74019"><a href="/overview/hadoop/">Hadoop</a></li><li id="menu-item-75893" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75893"><a href="/overview/elkdownloads/">ELK Downloads</a></li></ul></li><li id="menu-item-55" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55"><a href="/resources/">Resources</a><ul class="sub-menu"><li id="menu-item-76342" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-76342"><a href="/guide/">Guide</a></li><li id="menu-item-4843" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4843"><a href="/videos/">Videos</a></li></ul></li><li id="menu-item-657" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-657"><a href="/community/">Community</a></li><li id="menu-item-68802" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68802"><a href="/case-studies/">Case Studies</a></li><li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="/blog/">Blog</a></li><li id="menu-item-12" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12"><a target="_blank" href="http://elasticsearch.com">Company</a></li></ul><ul class="add-on"><li><a href="/overview/elkdownloads/">Download</a></li></ul></nav><div class="container"><div id="header-inner"><h1 id="header-logo"><a class="faux" href="http://www.elasticsearch.org">Elasticsearch</a></h1><nav role="navigation" id="main-nav-container" class="main-nav"><ul id="top-nav" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75892"><a href="/overview/">Overview</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-53 current_page_item menu-item-55"><a href="/resources/">Resources</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-657"><a href="/community/">Community</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68802"><a href="/case-studies/">Case Studies</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="/blog/">Blog</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12"><a target="_blank" href="http://elasticsearch.com">Company</a></li></ul><ul class="add-on"><li><a class="btn btn-primary" href="/overview/elkdownloads/">Download</a></li></ul></nav><div class="slide-trigger navigation" id="nav-trigger" aria-hidden="true"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div><hr /><ul id="sub_nav"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-76342"><a href="/guide/">Guide</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4843"><a href="/videos/">Videos</a></li></ul></div></div></header><div class="global_wrapper"><div class="page_content"><div class="container"><section id="search_container" class="active"><form id="blog_search" role="search" action="/" method="get"><div class="blog_search_wrapper"><input id="s" name="s" class="search_term" type="text" placeholder="search" autocomplete="off" tabindex="1" /><input type="submit" class="search_submit" value=" " /><ul id="results"></ul></div></form></section><section class="full_width guide"><article class="guide_content"><div class="breadcrumbs"><span class="breadcrumb-link"><a href="index.html">Elasticsearch</a></span> » <span class="breadcrumb-link"><a href="languages.html">Dealing with human language </a></span> » <span class="breadcrumb-link"><a href="token-normalization.html">Normalizing tokens</a></span> » <span class="breadcrumb-node">Sorting and collations</span></div><div class="navheader"><span class="prev"><a href="character-folding.html">
+              « 
+              Unicode character folding</a>
+           
+        </span><span class="next">
+           
+          <a href="stemming.html">Reducing words to their root form (TODO)
+               »
+            </a></span></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="sorting-collations"></a>Sorting and collations<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/220_Token_normalization/60_Sorting_and_collations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="lowercase-token-filter.html">In that case</a></span></dt><dt><span class="section"><a href="asciifolding-token-filter.html">You have an accent</a></span></dt><dt><span class="section"><a href="unicode-normalization.html">Living in a Unicode world</a></span></dt><dt><span class="section"><a href="case-folding.html">Unicode case-folding</a></span></dt><dt><span class="section"><a href="character-folding.html">Unicode character folding</a></span></dt><dt><span class="section"><a href="sorting-collations.html">Sorting and collations</a></span></dt></dl></div><p>So far in this chapter, we have looked at how to normalize tokens for the
+purposes of search.  The final use case that we will consider in this chapter
+is that of string sorting.</p><p>In <a class="xref" href="multi-fields.html" title="String sorting and multi-fields">String sorting and multi-fields</a> we explained that Elasticsearch cannot sort on an
+<code class="literal">analyzed</code> string field, and demonstrated how to use <span class="emphasis"><em>multi-fields</em></span> to index
+the same field once as an <code class="literal">analyzed</code> field for search, and once as a
+<code class="literal">not_analyzed</code> field for sorting.</p><p>The problem with sorting on an <code class="literal">analyzed</code> field is not the fact that it uses
+an analyzer, but the fact that the analyzer tokenizes the string value into
+multiple tokens, like  a “bag of words”, and Elasticsearch doesn’t know which
+token to use for sorting.</p><p>Relying on a <code class="literal">not_analyzed</code> field for sorting is inflexible — it only allows
+us to sort on the exact value of the original string.  However, we <span class="strong"><strong>can</strong></span> use
+analyzers to achieve other sort orders, as long as our chosen analyzer only
+ever emits a single token for each string value.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="case-insensitive-sorting"></a>Case insensitive sorting<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/220_Token_normalization/60_Sorting_and_collations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Imagine that we have three <code class="literal">user</code> documents whose <code class="literal">name</code> field contain <code class="literal">Boffey</code>,
+<code class="literal">BROWN</code>, and <code class="literal">bailey</code> respectively.  First we will apply the technique
+described in <a class="xref" href="multi-fields.html" title="String sorting and multi-fields">String sorting and multi-fields</a> of using a <code class="literal">not_indexed</code> field for sorting:</p><pre class="programlisting prettyprint lang-js">PUT /my_index
+{
+  "mappings": {
+    "user": {
+      "properties": {
+        "name": { <a id="CO120-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+          "type": "string",
+          "fields": {
+            "raw": { <a id="CO120-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+              "type":  "string",
+              "index": "not_analyzed"
+            }
+          }
+        }
+      }
+    }
+  }
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO120-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+The <code class="literal">analyzed</code> <code class="literal">name</code> field is used for search.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO120-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+The <code class="literal">not_analyzed</code> <code class="literal">name.raw</code> field is used for sorting
+</p></td></tr></table></div><p>We can index some documents and try sorting:</p><pre class="programlisting prettyprint lang-js">PUT /my_index/user/1
+{ "name": "Boffey" }
+
+PUT /my_index/user/2
+{ "name": "BROWN" }
+
+PUT /my_index/user/3
+{ "name": "bailey" }
+
+GET /my_index/user/_search?sort=name.raw</pre><p>The above search request would return the documents in this order: <code class="literal">BROWN</code>,
+<code class="literal">Boffey</code>, <code class="literal">bailey</code>. This is known as <span class="emphasis"><em>lexicographical order</em></span> as opposed to
+<span class="emphasis"><em>alphabetical order</em></span>.  Essentially, the bytes used to represent capital
+letters have a lower value than the bytes used to represent lower case letters
+and so the names are sorted with the lowest bytes first.</p><p>That may make sense to a computer, but doesn’t make much sense to human beings
+who would reasonably expect these names to be sorted alphabetically,
+regardless of case.  To achieve this, we need to index each name in a way that
+their byte ordering corresponds to the sort order that we want.</p><p>In other words, we need an analyzer that will emit a single lower case token:</p><pre class="programlisting prettyprint lang-js">PUT /my_index
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "case_insensitive_sort": {
+          "tokenizer": "keyword",    <a id="CO121-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+          "filter":  [ "lowercase" ] <a id="CO121-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+        }
+      }
+    }
+  }
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO121-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+The <code class="literal">keyword</code> tokenizer emits the original input string
+    as a single unchanged token.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO121-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+The <code class="literal">lowercase</code> token filter lower cases the token.
+</p></td></tr></table></div><p>With the <code class="literal">case_insentive_sort</code> analyzer in place, we can now use it in our
+multi-field:</p><pre class="programlisting prettyprint lang-js">PUT /my_index/_mapping/user
+{
+  "properties": {
+    "name": {
+      "type": "string",
+      "fields": {
+        "lower_case_sort": { <a id="CO122-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+          "type":     "string",
+          "analyzer": "case_insensitive_sort"
+        }
+      }
+    }
+  }
+}
+
+PUT /my_index/user/1
+{ "name": "Boffey" }
+
+PUT /my_index/user/2
+{ "name": "BROWN" }
+
+PUT /my_index/user/3
+{ "name": "bailey" }
+
+GET /my_index/user/_search?sort=name.lower_case_sort</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO122-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+The <code class="literal">name.lower_case_sort</code> field will provide us with
+    case-insentive sorting.
+</p></td></tr></table></div><p>The above search request returns our documents in the order that we expect:
+<code class="literal">bailey</code>, <code class="literal">Boffey</code>, <code class="literal">BROWN</code>.</p><p>But is this order correct? It appears to be correct as it matches our
+expectations, but our expectations have probably been influenced by the fact
+that this book is in English and all of the letters used in our example belong
+to the English alphabet.</p><p>What if we were to add the German name “Böhm”?</p><p>Now our names would be returned in this order: <code class="literal">bailey</code>, <code class="literal">Boffey</code>, <code class="literal">BROWN</code>,
+<code class="literal">Böhm</code>. The reason that <code class="literal">böhm</code> comes after <code class="literal">BROWN</code> is that these words are
+still being sorted by the values of the bytes used to represent them, and an
+<code class="literal">r</code> is stored as the byte <code class="literal">0x72</code>, while <code class="literal">ö</code> is stored as <code class="literal">0xF6</code> and so is
+sorted last. The byte value of each character is an accident of history.</p><p>Clearly, the default sort order is meaningless for anything other than plain
+English. In fact, there is no “right” sort order.  It all depends on the
+language you speak.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_differences_between_languages"></a>Differences between languages<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/220_Token_normalization/60_Sorting_and_collations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Every language has its own sort order, and sometimes even multiple sort
+orders. Here are a few examples of how our four names from the previous
+section would be sorted in different contexts:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
+<p>
+English
+</p>
+</td><td valign="top">
+<p>
+<code class="literal">bailey</code>, <code class="literal">boffey</code>, <code class="literal">böhm</code>,   <code class="literal">brown</code>
+</p>
+</td></tr><tr><td valign="top">
+<p>
+German
+</p>
+</td><td valign="top">
+<p>
+<code class="literal">bailey</code>, <code class="literal">boffey</code>, <code class="literal">böhm</code>,   <code class="literal">brown</code>
+</p>
+</td></tr><tr><td valign="top">
+<p>
+German phonebook
+</p>
+</td><td valign="top">
+<p>
+<code class="literal">bailey</code>, <code class="literal">böhm</code>,   <code class="literal">boffey</code>, <code class="literal">brown</code>
+</p>
+</td></tr><tr><td valign="top">
+<p>
+Swedish
+</p>
+</td><td valign="top">
+<p>
+<code class="literal">bailey</code>, <code class="literal">boffey</code>, <code class="literal">brown</code>,  <code class="literal">böhm</code>
+</p>
+</td></tr></tbody></table></div><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>German phonebook sort order</strong></p></div></div></div><p>The reason why the German phonebook sort order places <code class="literal">böhm</code> <span class="strong"><strong>before</strong></span> <code class="literal">boffey</code>
+is that <code class="literal">ö</code> and <code class="literal">oe</code> are considered to be synonyms when dealing with names and
+places, so <code class="literal">böhm</code> is sorted as if it had been written as <code class="literal">boehm</code>.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="uca"></a>Unicode Collation Algorithm<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/220_Token_normalization/60_Sorting_and_collations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p><span class="emphasis"><em>Collation</em></span> is the process of sorting text into some predefined order.  The
+<span class="emphasis"><em>Unicode Collation Algorithm</em></span> (UCA, see
+<a class="ulink" href="http://www.unicode.org/reports/tr10/" target="_top">www.unicode.org/reports/tr10</a>) defines a
+method of sorting strings into the order defined in a <span class="emphasis"><em>Collation Element
+Table</em></span> (usually referred to just as a <span class="emphasis"><em>collation</em></span>).</p><p>The UCA also defines the <span class="emphasis"><em>Default Unicode Collation Element Table</em></span> or <span class="emphasis"><em>DUCET</em></span>
+which defines the default sort order for all Unicode characters, regardless of
+language. As you have already seen, there is no single correct sort order, so
+DUCET is designed to annoy as few people as possible as seldom as possible,
+but it is far from being a panacea for all sorting woes.</p><p>Instead, language specific collations exist for pretty much every language
+under the sun. Most use DUCET as their starting point and add a few custom
+rules to deal with the peculiarities of each language.</p><p>The UCA takes a string and a collation as inputs and outputs a binary sort
+key. Sorting a collection of strings according to the specified collation then
+becomes a simple comparison of their binary sort keys.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_unicode_sorting_todo"></a>Unicode sorting (TODO)<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/220_Token_normalization/60_Sorting_and_collations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><p>The <code class="literal">icu_collation</code> field explained in this section has not yet
+been implemented in Elasticsearch.  Currently, there is an <code class="literal">icu_collation</code>
+token filter which serves a similar purpose but is considerably less
+efficient.</p></div></div><p>The <a class="link" href="icu-plugin.html" title="Installing the ICU plugin"><code class="literal">icu</code> plugin</a> enables a new type of field — an
+<code class="literal">icu_collation</code> field — dedicated to multilingual sorting.  This field
+converts its string value into a binary sort key, using the specified
+collation.</p><p>The only purpose of this sort key is for sorting, not search, so the sort key
+is not added to the inverted index but is instead stored on disk in a data
+structure known as <span class="emphasis"><em>doc values</em></span>.</p><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Doc values</strong></p></div></div></div><p>Doc values, like <a class="xref" href="fielddata-intro.html" title="Field data">Field data</a> allows Elasticsearch to lookup the value of
+a field for a particular document. Unlike field data, doc values are stored on
+disk rather than being loaded into memory.  This greatly reduces the amount of
+RAM that is required, especially when dealing with string values. The new
+<code class="literal">icu_collation</code> field should be available in Elasticsearch v1.3.0.</p></div><p>Typically, the field that we want to sort on is also a field that we want to
+search on so we use the same multi-field approach as we used in
+<a class="xref" href="sorting-collations.html#case-insensitive-sorting" title="Case insensitive sorting">Case insensitive sorting</a>:</p><pre class="programlisting prettyprint lang-js">PUT /my_index
+{
+  "mappings": {
+    "user": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "fields": {
+            "sort": {
+              "type":   "icu_collation", <a id="CO123-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+              "length": 20 <a id="CO123-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+            }
+          }
+        }
+      }
+    }
+  }
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO123-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+The <code class="literal">icu_collation</code> field defaults to using the DUCET collation.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO123-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+Truncate the sort key to the first <code class="literal">20</code> bytes.
+</p></td></tr></table></div><p>With this mapping, the <code class="literal">name.sort</code> field will contain a binary sort key
+which will be used only for sorting.  We haven’t specified a language, so
+it defaults to using the <a class="link" href="sorting-collations.html#uca" title="Unicode Collation Algorithm">DUCET collation</a>.</p><p>Names can be very long but, depending on our data, it is quite likely that we
+only need the first 10 or 20 characters of each name in order to be able to
+sort our documents correctly.  The <code class="literal">length</code> parameter allows us to set the
+maximum number of bytes that will be used for each sort key.</p><p>Now, we can reindex our example docs and test out the sorting:</p><pre class="programlisting prettyprint lang-js">PUT /my_index/user/_bulk
+{ "index": { "_id": 1 }}
+{ "name": "Boffey" }
+{ "index": { "_id": 2 }}
+{ "name": "BROWN" }
+{ "index": { "_id": 3 }}
+{ "name": "bailey" }
+{ "index": { "_id": 4 }}
+{ "name": "Böhm" }
+
+GET /my_index/user/_search?sort=name.sort</pre><div class="sidebar"><div class="titlepage"></div><p>The first thing to notice is that the <code class="literal">sort</code> key returned with each document,
+which in earlier examples looked like <code class="literal">brown</code> and <code class="literal">böhm</code>, now looks like
+gobbledygook: TODO.  The reason is that the <code class="literal">icu_collation</code> field emits binary sort
+keys rather than strings. In order to return binary values in JSON, they have
+to be encoded as Base64 strings.</p></div><p>The above search returns our docs in this order: <code class="literal">bailey</code>, <code class="literal">Boffey</code>, <code class="literal">Böhm</code>,
+<code class="literal">BROWN</code>. This is already an improvement as the sort order is now correct for
+English and German, but it is still incorrect for German phonebooks and
+Swedish. The next step is to customize our mapping for different languages.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_specifying_a_language_todo"></a>Specifying a language (TODO)<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/220_Token_normalization/60_Sorting_and_collations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><p>The <code class="literal">icu_collation</code> field explained in this section has not yet
+been implemented in Elasticsearch.  Currently, there is an <code class="literal">icu_collation</code>
+token filter which serves a similar purpose but is considerably less
+efficient.</p></div></div><p>The <code class="literal">icu_collation</code> field can be configured to use the collation table for a
+specific language, a country-specific version of a language, or some other
+subset like German phonebooks.  This can be done by specifying a <code class="literal">locale</code> like:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
+<p>
+<code class="literal">en</code>
+</p>
+</td><td valign="top">
+<p>
+English
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">de</code>
+</p>
+</td><td valign="top">
+<p>
+German
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">de_AT</code>
+</p>
+</td><td valign="top">
+<p>
+Austrian German
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">de_DE@collation=phonebook</code>
+</p>
+</td><td valign="top">
+<p>
+German phonebooks
+</p>
+</td></tr></tbody></table></div><p>TODO: Link to list of supported locales?</p><p>The same field can support multiple sort orders by using a multi-field for
+each language:</p><pre class="programlisting prettyprint lang-js">PUT /my_index
+{
+  "mappings": {
+    "user": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "fields": {
+            "default": {
+              "type":   "icu_collation",
+              "length": 20
+            },
+            "french": {
+              "type":   "icu_collation",
+              "locale": "fr",
+              "length": 20
+            },
+            "german": {
+              "type":   "icu_collation",
+              "locale": "de_DE@collation=phonebook",
+              "length": 20
+            },
+            "swedish": {
+              "type":   "icu_collation",
+              "locale": "se",
+              "length": 20
+            }
+          }
+        }
+      }
+    }
+  }
+}</pre><p>With this mapping in place, results can be ordered correctly for French,
+German and Swedish users, just by sorting on the <code class="literal">name.french</code>, <code class="literal">name.german</code>,
+or <code class="literal">name.swedish</code> fields.  Unsupported languages can fall back to using the
+<code class="literal">name.default</code> field, which uses the DUCET sort order.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_customizing_collations"></a>Customizing collations<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/220_Token_normalization/60_Sorting_and_collations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The <code class="literal">icu_collation</code> field takes many more options than just <code class="literal">locale</code> which can
+be used to tailor the sorting algorithm.  Options are available to:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+ignore diacritics
+</li><li class="listitem">
+order uppercase first, last, or ignore case
+</li><li class="listitem">
+take punctuation and whitespace into account or ignore it
+</li><li class="listitem">
+sort numbers as strings or by their numeric value
+</li><li class="listitem">
+customize existing collations or define your own custom collations
+</li></ul></div><p>Details of these options are beyond the scope of this book, but more information
+can be found in the <a class="ulink" href="https://github.com/elasticsearch/elasticsearch-analysis-icu" target="_top">ICU plugin documentation</a>
+and in the <a class="ulink" href="http://userguide.icu-project.org/collation/concepts" target="_top">ICU project collation documentation</a>.</p></div></div><div class="navfooter"><span class="prev"><a href="character-folding.html">
+              « 
+              Unicode character folding</a>
+           
+        </span><span class="next">
+           
+          <a href="stemming.html">Reducing words to their root form (TODO)
+               »
+            </a></span></div></article></section></div></div></div><footer><div id="footer_container" class="full_wrapper"><div class="container"><nav role="navigation"><ul id="footer_nav" class="menu"><li id="menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36"><a target="_blank" href="http://elasticsearch.com">Company</a></li><li id="menu-item-74980" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74980"><a href="/resources/">Resources</a></li><li id="menu-item-3106" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3106"><a href="/terms-of-use/">Terms</a></li><li id="menu-item-3107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3107"><a href="/privacy-and-cookie-policy/">Privacy</a></li><li id="menu-item-3105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3105"><a href="/contact/">Contact</a></li><li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="/blog/">Blog</a></li></ul></nav><div id="social"><a href="https://twitter.com/elasticsearch" class="social_icons" target="_blank"><i class="twitter"></i></a><a href="https://www.facebook.com/elasticsearch" class="social_icons" target="_blank"><i class="facebook"></i></a></div><div id="footer_form"><label class="form_label">Sign up for updates!</label><div class="gf_browser_chrome gform_wrapper" id="gform_wrapper_4"><a id="gf_4" name="gf_4" class="gform_anchor"></a><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_4" id="gform_4" action="/empty-template/#gf_4"><div class="gform_body"><ul id="gform_fields_4" class="gform_fields top_label description_below"><li id="field_4_6" class="gfield               gfield_contains_required"><label class="gfield_label" for="input_4_6">enter you email<span class="gfield_required">*</span></label><div class="ginput_container"><input name="input_6" id="input_4_6" type="email" value="" class="medium" tabindex="50" /></div></li><li id="field_4_2" class="gfield     gform_hidden"><input name="input_2" id="input_4_2" type="hidden" class="gform_hidden" value="813-MAM-392" /></li><li id="field_4_3" class="gfield     gform_hidden"><input name="input_3" id="input_4_3" type="hidden" class="gform_hidden" value="WEB.org" /></li><li id="field_4_4" class="gfield     gform_hidden"><input name="input_4" id="input_4_4" type="hidden" class="gform_hidden" value="WEB.org - Footer - Updates" /></li></ul></div><script type="text/javascript">//<![CDATA[
+            jQuery(function(){
+                jQuery('#gform_submit_button_4').click( function() {
+                    if(window["gf_submitting_4"]){
+                        return false;
+                    }
+                    if( !jQuery("#gform_4")[0].checkValidity || jQuery("#gform_4")[0].checkValidity()){
+                        window["gf_submitting_4"]=true;
+                    }
+                });
+            });
+            //]]></script><div class="gform_footer top_label"><input type="submit" id="gform_submit_button_4" class="button gform_button" value="Submit" tabindex="51" /><input type="hidden" name="gform_ajax" value="form_id=4&amp;title=&amp;description=" /><input type="hidden" class="gform_hidden" name="is_submit_4" value="1" /><input type="hidden" class="gform_hidden" name="gform_submit" value="4" /><input type="hidden" class="gform_hidden" name="gform_unique_id" value="" /><input type="hidden" class="gform_hidden" name="state_4" value="WyJhOjA6e30iLCJmMjE2MmM2ZjUxYmQ4M2Q3ZmMzNzVlNmY2ODYyZTI2NCJd" /><input type="hidden" class="gform_hidden" name="gform_target_page_number_4" id="gform_target_page_number_4" value="0" /><input type="hidden" class="gform_hidden" name="gform_source_page_number_4" id="gform_source_page_number_4" value="1" /><input type="hidden" name="gform_field_values" value="" /></div></form></div><iframe style="display:none;width:0px; height:0px;" src="about:blank" name="gform_ajax_frame_4" id="gform_ajax_frame_4"></iframe><script type="text/javascript">//<![CDATA[
+                    function gformInitSpinner_4(){jQuery('#gform_4').submit(function(){if(jQuery('#gform_ajax_spinner_4').length == 0){jQuery('#gform_submit_button_4, #gform_wrapper_4 .gform_next_button, #gform_wrapper_4 .gform_image_button').after('<' + 'img id="gform_ajax_spinner_4"  class="gform_ajax_spinner" src="http://www.elasticsearch.org/content/plugins/gravityforms/images/spinner.gif" alt="" />'); }} );}jQuery(document).ready(function($){gformInitSpinner_4();jQuery('#gform_ajax_frame_4').load( function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_4');var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = !(form_content.length <= 0 || is_redirect);if(is_form){jQuery('#gform_wrapper_4').html(form_content.html());jQuery(document).scrollTop(jQuery('#gform_wrapper_4').offset().top);if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_4').val();gformInitSpinner_4();jQuery(document).trigger('gform_page_loaded', [4, current_page]);window['gf_submitting_4'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('#gforms_confirmation_message').html();if(!confirmation_content){confirmation_content = contents;}setTimeout(function(){jQuery('#gform_wrapper_4').replaceWith('<' + 'div id=\'gforms_confirmation_message\' class=\'gform_confirmation_message_4\'' + '>' + confirmation_content + '<' + '/div' + '>');jQuery(document).scrollTop(jQuery('#gforms_confirmation_message').offset().top);jQuery(document).trigger('gform_confirmation_loaded', [4]);window['gf_submitting_4'] = false;}, 50);}else{jQuery('#gform_4').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger('gform_post_render', [4, current_page]);} );} );</script><script type='text/javascript'> jQuery(document).ready(function(){jQuery(document).trigger('gform_post_render', [4, 1]) } );
+                    //]]></script></div><div class="legal"><p>© 2014 All Rights Reserved - Elasticsearch </p><p>Apache Lucene and Lucene are trademarks of the Apache Software Foundation</p></div></div></div></footer><section id="cookie"><div class="container"><div class="eu">
+                Elasticsearch uses cookies to provide a better user experience to visitors of our website. Read more about our cookie policy <a href="/privacy-and-cookie-policy/">here.</a><a data-action="accept" class="cta">Accept cookies</a></div><div class="uk">
+                Elasticsearch uses cookies to provide a better user experience to visitors of our website. Read more about our cookie policy <a href="/privacy-and-cookie-policy/">here.</a><a data-action="dismiss" class="cta dismiss">X</a></div></div></section><script type="text/javascript">
+      if (window.aiModifyParent) aiModifyParent();
+      (function ($, $a, $title, $list) {
+        $a = $('[id^="js-api-method-index"]');
+        if (!$a.size()) return;
+        $('.guide_content').addClass('js-client-docs');
+        $list = $a.siblings('.itemizedlist').detach();
+        $title = $(document.createElement('h2')).text('api methods')
+        $a.parent().remove();
+        $('.toc').first().append($(document.createElement('div')).addClass('js-api-method-index').append($title).append($list));
+      }(jQuery));
+    </script><script type="text/javascript">if(window.aiModifyParent) {aiModifyParent();}</script><script type="text/javascript" src="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.js?ver=3.5.2"></script><script type="text/javascript" src="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/launch.js?ver=3.5.2"></script><script type="text/javascript" src="http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201413"></script><script type="text/javascript" src="http://www.elasticsearch.org/content/themes/elasticsearch-org/js/global.min.js?ver=1395082598"></script><script type="text/javascript" src="http://www.elasticsearch.org/content/themes/elasticsearch-org/js/froogaloop.min.js?ver=1"></script><script type="text/javascript">
+if(jQuery('body').data('cookie') != "eu" || jQuery.cookie('allowCookies')){
+    document.write(unescape("%3Cscript src='" + document.location.protocol +
+    "//munchkin.marketo.net/munchkin.js' type='text/javascript'%3E%3C/script%3E"));
+}
+</script><script>
+if(jQuery('body').data('cookie') != "eu" || jQuery.cookie('allowCookies')){
+    Munchkin.init('813-MAM-392');
+
+    // crazyegg
+    setTimeout(function(){var a=document.createElement("script");
+    var b=document.getElementsByTagName("script")[0];
+    a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0014/4686.js?"+Math.floor(new Date().getTime()/3600000);
+    a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+}
+</script></body></html>

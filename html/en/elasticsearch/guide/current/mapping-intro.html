@@ -210,7 +210,7 @@ by specifying one of the built-in analyzers, such as
         "analyzer": "english"
     }
 }</pre><p>In <a class="xref" href="custom-analyzers.html" title="Custom analyzers">Custom analyzers</a> we will show you how to define and use custom analyzers
-as well.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_updating_a_mapping"></a>Updating a mapping<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/052_Mapping_Analysis/45_Mapping.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>You can specify the mapping for a type when you first create an index.
+as well.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="updating-a-mapping"></a>Updating a mapping<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/052_Mapping_Analysis/45_Mapping.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>You can specify the mapping for a type when you first create an index.
 Alternatively, you can add the mapping for a new type (or update the mapping
 for an existing type) later, using the <code class="literal">/_mapping</code> endpoint.</p><div class="important admon"><div class="icon"><img alt="Important" src="images/icons/important.png" /></div><div class="admon_content"><p>While you can <span class="strong"><strong>add</strong></span> to an existing mapping, you can’t <span class="strong"><strong>change</strong></span> it.  If a field
 already exists in the mapping, then it probably means that data from that
