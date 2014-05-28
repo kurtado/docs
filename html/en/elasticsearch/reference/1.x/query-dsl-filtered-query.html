@@ -44,7 +44,65 @@ query maps to Lucene <code class="literal">FilteredQuery</code>.</p><pre class="
     }
 }</pre><p>The filter object can hold only filter elements, not queries. Filters
 can be much faster compared to queries since they don’t perform any
-scoring, especially when they are cached.</p></div><div class="navfooter"><span class="prev"><a href="query-dsl-dis-max-query.html">
+scoring, especially when they are cached.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_filter_strategy"></a>Filter strategy<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/filtered-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The filtered query allows to configure how to intersect the filter with the query:</p><pre class="programlisting prettyprint lang-js">{
+    "filtered" : {
+        "query" : {
+            // query definition
+        },
+        "filter" : {
+            // filter definition
+        },
+        "strategy": "leap_frog"
+    }
+}</pre><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
+<p>
+<code class="literal">leap_frog_query_first</code>
+</p>
+</td><td valign="top">
+<p>
+Look for the first document matching the query, and then alternatively advance the query and the filter to find common matches.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">leap_frog_filter_first</code>
+</p>
+</td><td valign="top">
+<p>
+Look for the first document matching the filter, and then alternatively advance the query and the filter to find common matches.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">leap_frog</code>
+</p>
+</td><td valign="top">
+<p>
+Same as <code class="literal">leap_frog_query_first</code>.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">query_first</code>
+</p>
+</td><td valign="top">
+<p>
+If the filter supports random access, then search for documents using the query, and then consult the filter to check whether there is a match. Otherwise fall back to <code class="literal">leap_frog_query_first</code>.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">random_access_${threshold}</code>
+</p>
+</td><td valign="top">
+<p>
+If the filter supports random access and if there is at least one matching document among the first <code class="literal">threshold</code> ones, then apply the filter first. Otherwise fall back to <code class="literal">leap_frog_query_first</code>. <code class="literal">${threshold}</code> must be greater than or equal to <code class="literal">1</code>.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">random_access_always</code>
+</p>
+</td><td valign="top">
+<p>
+Apply the filter first if it supports random access. Otherwise fall back to <code class="literal">leap_frog_query_first</code>.
+</p>
+</td></tr></tbody></table></div><p>The default strategy is to use <code class="literal">query_first</code> on filters that are not advanceable such as geo filters and script filters, and <code class="literal">random_access_100</code> on other filters.</p></div></div><div class="navfooter"><span class="prev"><a href="query-dsl-dis-max-query.html">
               « 
               Dis Max Query</a>
            
