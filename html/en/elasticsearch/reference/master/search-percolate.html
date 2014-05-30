@@ -213,11 +213,11 @@ here are several percolate actions, because there are multiple types of percolat
 <code class="literal">count</code> - Action for defining a count percolate request.
 </li></ul></div><p>Depending on the percolate action different parameters can be specified. For example the percolate and percolate existing
 document actions support different parameters.</p><div class="itemizedlist"><p class="title"><strong>The following endpoints are supported</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
-GET|POST /[index]/[type]/_mpercolate
+<code class="literal">GET|POST /[index]/[type]/_mpercolate</code>
 </li><li class="listitem">
-GET}POST /[index]/_mpercolate
+<code class="literal">GET|POST /[index]/_mpercolate</code>
 </li><li class="listitem">
-GET|POST /_mpercolate
+<code class="literal">GET|POST /_mpercolate</code>
 </li></ul></div><p>The <code class="literal">index</code> and <code class="literal">type</code> defined in the url path are the default index and type.</p><h4><a id="_example_4"></a>Example<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/percolate.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>Request:</p><pre class="programlisting prettyprint lang-js">curl -XGET 'localhost:9200/twitter/tweet/_mpercolate' --data-binary @requests.txt; echo</pre><p>The index twitter is the default index and the type tweet is the default type and will be used in the case a header
 doesn’t specify an index or type.</p><p>requests.txt:</p><pre class="programlisting prettyprint lang-js">{"percolate" : {"index" : twitter", "type" : "tweet"}}
 {"doc" : {"message" : "some text"}}
