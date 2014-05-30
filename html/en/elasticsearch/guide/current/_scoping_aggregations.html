@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Scoping Aggregations</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch" /><link rel="up" href="aggregations.html" title="Aggregations" /><link rel="prev" href="_extended_example.html" title="Extended Example" /><link rel="next" href="_global_bucket.html" title="Global Bucket" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Scoping Aggregations</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch" /><link rel="up" href="aggregations.html" title="Aggregations" /><link rel="prev" href="_extended_example.html" title="Extended Example" /><link rel="next" href="_filtering_queries_and_aggregations.html" title="Filtering Queries and Aggregations" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
       jQuery(function() {
         jQuery('div.navheader+div').css('minHeight',jQuery('div.toc').height()+'px');
         jQuery('article.guide_content a[id]').each(function() { this.href='#'+this.id });
@@ -26,7 +26,7 @@
            
         </span><span class="next">
            
-          <a href="_global_bucket.html">Global Bucket
+          <a href="_filtering_queries_and_aggregations.html">Filtering Queries and Aggregations
                »
             </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="_scoping_aggregations"></a>Scoping Aggregations<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/300_Aggregations/40_scope.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="_high_level_concepts.html">High-level concepts</a></span></dt><dt><span class="chapter"><a href="_aggregation_test_drive.html">Aggregation Test-drive</a></span></dt><dt><span class="chapter"><a href="_available_buckets_and_metrics.html">Available Buckets and Metrics</a></span></dt><dt><span class="chapter"><a href="_building_bar_charts.html">Building Bar Charts</a></span></dt><dt><span class="chapter"><a href="_looking_at_time.html">Looking at time</a></span></dt><dt><span class="chapter"><a href="_scoping_aggregations.html">Scoping Aggregations</a></span></dt><dt><span class="chapter"><a href="_filtering_queries_and_aggregations.html">Filtering Queries and Aggregations</a></span></dt><dt><span class="chapter"><a href="_sorting_multi_value_buckets.html">Sorting multi-value buckets</a></span></dt><dt><span class="chapter"><a href="_approximate_aggregations_todo.html">Approximate Aggregations (todo)</a></span></dt><dt><span class="chapter"><a href="_significant_terms_todo.html">Significant Terms (todo)</a></span></dt><dt><span class="chapter"><a href="_practical_considerations_todo.html">Practical Considerations (todo)</a></span></dt></dl></div><p>With all of the aggregation examples given so far, you may have noticed that we
 omitted a <code class="literal">query</code> from the search request.  The entire request was
@@ -122,13 +122,51 @@ results and the aggregation results:</p><pre class="programlisting prettyprint l
 You can transform any static dashboard into a real-time data exploration device
 by adding a search bar.  This allows the user to search for terms and see all
 of the graphs (which are powered by aggregations, and thus scoped to the query)
-update in real-time.  Try that with Hadoop!</p><p>when the search changes?</p></div><div class="navfooter"><span class="prev"><a href="_extended_example.html">
+update in real-time.  Try that with Hadoop!</p><p>when the search changes?</p><h3><a id="_global_bucket"></a>Global Bucket<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/300_Aggregations/40_scope.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>You’ll often want your aggregation to be scoped to your query.  But sometimes
+you’ll want to search for some subset of data, but aggregate across <span class="emphasis"><em>all</em></span> of
+your data.</p><p>For example, say you want to know the average price for Ford cars compared to the
+average price of <span class="emphasis"><em>all</em></span> cars. We can use a regular aggregation (scoped to the query)
+to get the first piece of information.  The second piece of information can be
+obtained by using a <code class="literal">global</code> bucket.</p><p>The global bucket will contain <span class="emphasis"><em>all</em></span> of your documents, regardless of the query
+scope; it bypasses the scope completely.  Because it is a bucket, you can nest
+aggregations inside of it like normal:</p><pre class="programlisting prettyprint lang-js">GET /cars/transactions/_search?search_type=count
+{
+    "query" : {
+        "match" : {
+            "make" : "ford"
+        }
+    },
+    "aggs" : {
+        "single_avg_price": {
+            "avg" : { "field" : "price" } <a id="CO138-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+        },
+        "all": {
+            "global" : {}, <a id="CO138-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+            "aggs" : {
+                "avg_price": {
+                    "avg" : { "field" : "price" } <a id="CO138-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+                }
+
+            }
+        }
+    }
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/40_scope.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO138-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+This aggregation operates in the query scope (e.g. all docs matching "ford")
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO138-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+The <code class="literal">global</code> bucket has no parameters
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO138-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+This aggregation operates on the all documents, regardless of the make
+</p></td></tr></table></div><p>The first <code class="literal">avg</code> metric calculates is based on all documents that fall under the
+query scope — all "ford" cars.  The second <code class="literal">avg</code> metric is nested under a
+<code class="literal">global</code> bucket, which means it ignores scoping entirely and calculates on
+all the documents.  The average returned for that aggregation represents
+the average price of all cars.</p></div><div class="navfooter"><span class="prev"><a href="_extended_example.html">
               « 
               Extended Example</a>
            
         </span><span class="next">
            
-          <a href="_global_bucket.html">Global Bucket
+          <a href="_filtering_queries_and_aggregations.html">Filtering Queries and Aggregations
                »
             </a></span></div></article></section></div></div></div><footer><div id="footer_container" class="full_wrapper"><div class="container"><nav role="navigation"><ul id="footer_nav" class="menu"><li id="menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36"><a target="_blank" href="http://elasticsearch.com">Company</a></li><li id="menu-item-74980" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74980"><a href="/resources/">Resources</a></li><li id="menu-item-3106" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3106"><a href="/terms-of-use/">Terms</a></li><li id="menu-item-3107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3107"><a href="/privacy-and-cookie-policy/">Privacy</a></li><li id="menu-item-3105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3105"><a href="/contact/">Contact</a></li><li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="/blog/">Blog</a></li></ul></nav><div id="social"><a href="https://twitter.com/elasticsearch" class="social_icons" target="_blank"><i class="twitter"></i></a><a href="https://www.facebook.com/elasticsearch" class="social_icons" target="_blank"><i class="facebook"></i></a></div><div id="footer_form"><label class="form_label">Sign up for updates!</label><div class="gf_browser_chrome gform_wrapper" id="gform_wrapper_4"><a id="gf_4" name="gf_4" class="gform_anchor"></a><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_4" id="gform_4" action="/empty-template/#gf_4"><div class="gform_body"><ul id="gform_fields_4" class="gform_fields top_label description_below"><li id="field_4_6" class="gfield               gfield_contains_required"><label class="gfield_label" for="input_4_6">enter you email<span class="gfield_required">*</span></label><div class="ginput_container"><input name="input_6" id="input_4_6" type="email" value="" class="medium" tabindex="50" /></div></li><li id="field_4_2" class="gfield     gform_hidden"><input name="input_2" id="input_4_2" type="hidden" class="gform_hidden" value="813-MAM-392" /></li><li id="field_4_3" class="gfield     gform_hidden"><input name="input_3" id="input_4_3" type="hidden" class="gform_hidden" value="WEB.org" /></li><li id="field_4_4" class="gfield     gform_hidden"><input name="input_4" id="input_4_4" type="hidden" class="gform_hidden" value="WEB.org - Footer - Updates" /></li></ul></div><script type="text/javascript">//<![CDATA[
             jQuery(function(){
