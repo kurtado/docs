@@ -102,13 +102,13 @@ IndexResponse response = client.prepareIndex("twitter", "tweet")
         .setSource(json)
         .execute()
         .actionGet();</pre><p><code class="literal">IndexResponse</code> object will give you report:</p><pre class="programlisting prettyprint lang-java">// Index name
-String _index = response.index();
+String _index = response.getIndex();
 // Type name
-String _type = response.type();
+String _type = response.getType();
 // Document ID (generated or not)
-String _id = response.id();
+String _id = response.getId();
 // Version (if it's the first time you index this document, you will get: 1)
-long _version = response.version();</pre><p>If you use percolation while indexing, <code class="literal">IndexResponse</code> object will give
+long _version = response.getVersion();</pre><p>If you use percolation while indexing, <code class="literal">IndexResponse</code> object will give
 you percolator that have matched:</p><pre class="programlisting prettyprint lang-java">IndexResponse response = client.prepareIndex("twitter", "tweet", "1")
         .setSource(json)
         .execute()
