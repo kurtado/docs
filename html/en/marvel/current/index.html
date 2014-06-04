@@ -38,7 +38,13 @@ thread pool rejection.</p><p><span class="inlinemediaobject"><img src="images/no
 dashboard, but it shows you all the metrics from the perspective of one or
 more indices. The metrics are per index, with data aggregated from all of the
 nodes in the cluster. For example, the <span class="emphasis"><em>'store size</em></span>' chart shows the total
-size of the index data across the whole cluster.</p><p><span class="inlinemediaobject"><img src="images/index_stats_thumb.png" alt="Index Statistics Dashboard" /></span></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_cluster_pulse"></a>Cluster Pulse</h2></div></div></div><p>The Cluster Pulse Dashboard allows you to see any event of interest in the cluster. Typical
+size of the index data across the whole cluster.</p><p><span class="inlinemediaobject"><img src="images/index_stats_thumb.png" alt="Index Statistics Dashboard" /></span></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_shard_allocation"></a>Shard Allocation</h2></div></div></div><p>The <span class="emphasis"><em>Shard Allocation</em></span> dashboard displays how the shards are allocated across nodes.
+The dashboard also shows the status of the shards. It has two perspectives, <span class="emphasis"><em>By Indices</em></span> and <span class="emphasis"><em>By Nodes</em></span>.
+The <span class="emphasis"><em>By Indices</em></span> view lists each index and shows you how it’s shards are
+distributed across nodes. The <span class="emphasis"><em>By Nodes</em></span> view lists each node and shows you which shards the node current host.</p><p>The viewer also has a playback feature which allows you to view the history of the shard allocation. You can rewind to each
+allocation event and then play back the history from any point in time. Hover on relocating shards to highlight both
+their previous and new location. The time line color changes based on the state of the cluster for
+each time period.</p><p><span class="inlinemediaobject"><img src="images/shard_allocation_thumb.png" alt="Shard Allocation Dashboard" /></span></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_cluster_pulse"></a>Cluster Pulse</h2></div></div></div><p>The Cluster Pulse Dashboard allows you to see any event of interest in the cluster. Typical
 events include nodes joining or leaving, master election, index creation, shard (re)allocation
 and more.</p><p><span class="inlinemediaobject"><img src="images/cluster_pulse_thumb.png" alt="Index Statistics Dashboard" /></span></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_sense"></a>Sense</h2></div></div></div><p><span class="emphasis"><em>Sense</em></span> is a lightweight developer console. The console is handy when you want
 to make an extra API call to check something or perhaps tweak a setting. The
@@ -106,7 +112,33 @@ allocation</a> before you restart your nodes to avoid unnecessary shard
 reallocation during the install process.</p></div></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="previous_versions"></a>Installing previous versions</h2></div></div></div><p>Previously released versions of Marvel are available by specifying an exact version. For example:</p><pre class="programlisting prettyprint lang-sh">bin/plugin -i elasticsearch/marvel/1.0.2</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="manual_download"></a>Manual download</h2></div></div></div><p>Elasticsearch’s <code class="literal">bin/plugin</code> script requires direct internet access for downloading
 and installing Marvel. If your server doesn’t have internet access, you can download
 the Marvel binaries from the following link: <a class="ulink" href="https://download.elasticsearch.org/elasticsearch/marvel/marvel-latest.zip" target="_top">https://download.elasticsearch.org/elasticsearch/marvel/marvel-latest.zip</a></p><p>Once you have transferred the zip file to your server, you can use the <code class="literal">bin/plugin</code>
-script to install it:</p><pre class="programlisting prettyprint lang-sh">bin/plugin -i marvel -u file://PATH_TO_MARVEL_ZIP_FILE</pre><p>After the script has finish, continue according to the standard installation procedure.</p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="configuration"></a>Configuration Options</h1></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="stats-export"></a>Statistics exporting</h2></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+script to install it:</p><pre class="programlisting prettyprint lang-sh">bin/plugin -i marvel -u file://PATH_TO_MARVEL_ZIP_FILE</pre><p>After the script has finish, continue according to the standard installation procedure.</p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="upgrade"></a>Upgrade</h1></div></div></div><p>Marvel must be upgraded on <span class="strong"><strong>every node in the cluster</strong></span>.  If a monitoring cluster is in use as well, Marvel must be upgraded on that cluster as well.  It is not necessary to fully shut down the production cluster in order to perform the upgrade.  A rolling upgrade of the production cluster is sufficient.  The monitoring cluster, if present, can be upgraded using a rolling upgrade, or it can be shut down and upgraded while offline.  The monitoring cluster should be upgraded before the production cluster.</p><p>In order to perform a rolling Marvel upgrade:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Disable shard reallocation (optional).  This is done to allow for a faster startup after cluster shutdown.  If this step is not performed, the nodes will immediately start trying to replicate shards to each other on startup and will spend a lot of time on wasted I/O.  With shard reallocation disabled, the nodes will join the cluster with their indices intact, without attempting to rebalance.  After startup is complete, reallocation will be turned back on.
+</p><p class="simpara">This syntax applies to Elasticsearch 1.0 and later:</p><pre class="programlisting prettyprint lang-sh">curl -XPUT localhost:9200/_cluster/settings -d '{
+  "transient" : {
+    "cluster.routing.allocation.enable" : "none"
+  }
+}'</pre></li><li class="listitem"><p class="simpara">
+On each node in the cluster, one at a time, do the following:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Stop Elasticsearch.
+</li><li class="listitem"><p class="simpara">
+Once the node stopped, remove the old version of the Marvel plugin:
+</p><pre class="programlisting prettyprint lang-sh">bin/plugin -r marvel</pre></li><li class="listitem"><p class="simpara">
+On the same node, install the latest version of the Marvel plugin:
+</p><pre class="programlisting prettyprint lang-sh">bin/plugin -i elasticsearch/marvel/latest</pre></li><li class="listitem">
+Start Elasticsearch and confirm that the node rejoins the cluster and that there are no errors in the logs.
+</li></ul></div></li><li class="listitem">
+Repeat the above for each node in the cluster, including dedicated master noded is used.
+</li><li class="listitem"><p class="simpara">
+When all nodes in the cluster are upgraded, re-enable shard allocation:
+</p><pre class="programlisting prettyprint lang-sh">curl -XPUT localhost:9200/_cluster/settings -d '{
+  "transient" : {
+      "cluster.routing.allocation.enable" : "all"
+  }
+}'</pre></li><li class="listitem">
+If you’re using a dedicated monitoring cluster, follow the same procedure to upgrade the production cluster.
+</li></ul></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="configuration"></a>Configuration Options</h1></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="stats-export"></a>Statistics exporting</h2></div></div></div><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 <code class="literal">marvel.agent.exporter.es.hosts</code>
 </span></dt><dd><p class="simpara">
 A list of hosts in <code class="literal">hostname:port</code> format to which statistics  and events will
@@ -180,7 +212,63 @@ important for the correct operation of the dashboards.</p></div></div><p>For ref
 }</pre></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="relevant-settings"></a>Other relevant Elasticsearch settings</h2></div></div></div><p>Marvel relies on Elasticsearch’s capability to automatically create new indices
 when indexing documents. Some people like to disable this feature to better
 protect against mistakes in production clusters. To do so but still allow the
-creation of Marvel indices you need to set the following:</p><pre class="programlisting prettyprint lang-yaml">action.auto_create_index: .marvel-*</pre><p>More information is available <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html#index-creation" target="_top">here</a></p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="change_list"></a>Change list</h1></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_1_1_1"></a>1.1.1</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+creation of Marvel indices you need to set the following:</p><pre class="programlisting prettyprint lang-yaml">action.auto_create_index: .marvel-*</pre><p>More information is available <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html#index-creation" target="_top">here</a></p></div></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="change_list"></a>Change list</h1></div></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_1_2_0"></a>1.2.0</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+New Shard Allocation Dashboard.
+</li><li class="listitem">
+Simplified navigation and dashboard customization.
+</li><li class="listitem"><p class="simpara">
+Sense:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Update the KB to the ES 1.2.0 API, adding the following:
+</li><li class="listitem">
+<code class="literal">_cat/plugins</code>
+</li><li class="listitem">
+<code class="literal">_cat/segments</code>
+</li><li class="listitem">
+<code class="literal">_search/template</code>
+</li><li class="listitem">
+<code class="literal">_count</code>
+</li><li class="listitem">
+<code class="literal">_snapshot</code>
+</li><li class="listitem">
+Alias support for index creation.
+</li><li class="listitem">
+Significant terms aggregation.
+</li><li class="listitem">
+Percentiles aggregation.
+</li><li class="listitem">
+Cardinality aggregation.
+</li><li class="listitem">
+Time_zone keyword to date_histogram facet/aggregation.
+</li><li class="listitem">
+Removed deprecated <code class="literal">custom_score</code> &amp; <code class="literal">custom_boost_factor</code> from the 1.0 API.
+</li><li class="listitem">
+Fixed a bug causing the query panel to loose focus after running a command.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+Charts and Dashboards changes:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Added an information icon next to the status information of Cluster Summary panel. Hovering on it will show a
+      short explanation of current status.
+</li><li class="listitem">
+The indices stats table in the Overview dashboard now shows an information icon next to red and yellow indices.
+      Hovering on it will show a short shard level summary.
+</li><li class="listitem">
+Marvel’s index template will now be automatically updated upon upgrade.
+</li><li class="listitem">
+Added field data &amp; filter cache eviction charts to Node Stats dashboard and Index Stats dashboard.
+</li><li class="listitem">
+Added field data circuit breaker charts to Node Stats dashboard.
+</li><li class="listitem">
+Added a registration &amp; purchasing form.
+</li><li class="listitem">
+Hidden indexes are now shown by default.
+</li><li class="listitem">
+Default cluster pulse default time span to 7 days.
+</li><li class="listitem">
+Fixed: Split brain detection algorithm didn’t fire in some configurations.
+</li></ul></div></li><li class="listitem">
+<code class="literal">marvel.agent.exporter.es.host</code> configuration option now defaults to port 9200.
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_1_1_1"></a>1.1.1</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Fixed: agent did not interpret timeout settings correctly, causing potential connectivity errors when shipping data.
 </li></ul></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_1_1_0"></a>1.1.0</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 Improved Sense’s autocomplete suggestions:
