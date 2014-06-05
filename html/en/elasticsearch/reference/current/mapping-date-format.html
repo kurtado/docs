@@ -43,7 +43,7 @@ for example, the <code class="literal">yyyy/MM/dd HH:mm:ss||yyyy/MM/dd</code> fo
 both <code class="literal">yyyy/MM/dd HH:mm:ss</code> and <code class="literal">yyyy/MM/dd</code>. The first format will also
 act as the one that converts back from milliseconds to a string
 representation.</p><h3><a id="date-math"></a>Date Math<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/mapping/date-format.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">date</code> type supports using date math expression when using it in a
-query/filter (mainly make sense in <code class="literal">range</code> query/filter).</p><p>The expression starts with an "anchor" date, which can be either <code class="literal">now</code>
+query/filter (mainly makes sense in <code class="literal">range</code> query/filter).</p><p>The expression starts with an "anchor" date, which can be either <code class="literal">now</code>
 or a date string (in the applicable format) ending with <code class="literal">||</code>. It can
 then follow by a math expression, supporting <code class="literal">+</code>, <code class="literal">-</code> and <code class="literal">/</code>
 (rounding). The units supported are <code class="literal">y</code> (year), <code class="literal">M</code> (month), <code class="literal">w</code> (week), <code class="literal">h</code> (hour),
