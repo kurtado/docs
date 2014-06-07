@@ -47,9 +47,10 @@ settings API:</p><div class="variablelist"><dl class="variablelist"><dt><span cl
 </span></dt><dd>
     The number of replicas each shard has.
 </dd><dt><span class="term">
-<code class="literal">index.auto_expand_replicas</code>
+<code class="literal">index.auto_expand_replicas</code> (string)
 </span></dt><dd>
-    Set to an actual value (like <code class="literal">0-all</code>) or <code class="literal">false</code> to disable it.
+    Set to a dash delimited lower and upper bound (e.g. <code class="literal">0-5</code>)
+    or one may use <code class="literal">all</code> as the upper bound (e.g. <code class="literal">0-all</code>), or <code class="literal">false</code> to disable it.
 </dd><dt><span class="term">
 <code class="literal">index.blocks.read_only</code>
 </span></dt><dd>
