@@ -77,7 +77,7 @@ more details.</p><p>The following analyzers support setting custom <code class="
           "stopwords":  "_arabic_" <a id="CO39-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "arabic_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO39-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "arabic_stemmer": {
@@ -114,7 +114,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_armenian_" <a id="CO40-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "armenian_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO40-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "armenian_stemmer": {
@@ -150,7 +150,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_basque_" <a id="CO41-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "basque_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO41-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "basque_stemmer": {
@@ -186,7 +186,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_brazilian_" <a id="CO42-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "brazilian_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO42-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "brazilian_stemmer": {
@@ -222,7 +222,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_bulgarian_" <a id="CO43-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "bulgarian_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO43-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "bulgarian_stemmer": {
@@ -262,7 +262,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_catalan_" <a id="CO44-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "catalan_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO44-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "catalan_stemmer": {
@@ -328,7 +328,7 @@ The default stopwords can be overridden with the <code class="literal">stopwords
           "stopwords":  "_czech_" <a id="CO46-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "czech_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO46-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "czech_stemmer": {
@@ -364,7 +364,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_danish_" <a id="CO47-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "danish_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO47-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "danish_stemmer": {
@@ -400,7 +400,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_dutch_" <a id="CO48-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "dutch_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO48-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "dutch_stemmer": {
@@ -446,8 +446,12 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_english_" <a id="CO49-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "english_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO49-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+        },
+        "english_stemmer": {
+          "type":       "stemmer",
+          "language":   "english"
         },
         "english_possessive_stemmer": {
           "type":       "stemmer",
@@ -462,7 +466,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
             "lowercase",
             "english_stop",
             "english_keywords",
-            "porter_stem"
+            "english_stemmer"
           ]
         }
       }
@@ -483,7 +487,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_finnish_" <a id="CO50-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "finnish_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO50-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "finnish_stemmer": {
@@ -526,7 +530,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_french_" <a id="CO51-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "french_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO51-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "french_stemmer": {
@@ -563,7 +567,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_galician_" <a id="CO52-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "galician_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO52-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "galician_stemmer": {
@@ -599,7 +603,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_german_" <a id="CO53-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "german_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO53-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "german_stemmer": {
@@ -640,7 +644,7 @@ The <code class="literal">german</code> analyzer actually uses the GermanNormali
           "stopwords":  "_greek_" <a id="CO54-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "greek_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO54-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "greek_stemmer": {
@@ -678,7 +682,7 @@ which are not yet exposed by Elasticsearch. Instead, see the <a class="xref" hre
           "stopwords":  "_hungarian_" <a id="CO55-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "hungarian_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO55-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "hungarian_stemmer": {
@@ -714,7 +718,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_indonesian_" <a id="CO56-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "indonesian_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO56-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "indonesian_stemmer": {
@@ -759,7 +763,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_italian_" <a id="CO57-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "italian_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO57-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "italian_stemmer": {
@@ -796,7 +800,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_norwegian_" <a id="CO58-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "norwegian_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO58-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "norwegian_stemmer": {
@@ -866,7 +870,7 @@ The default stopwords can be overridden with the <code class="literal">stopwords
           "stopwords":  "_portuguese_" <a id="CO60-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "portuguese_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO60-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "portuguese_stemmer": {
@@ -902,7 +906,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_romanian_" <a id="CO61-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "romanian_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO61-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "romanian_stemmer": {
@@ -938,7 +942,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_russian_" <a id="CO62-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "russian_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO62-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "russian_stemmer": {
@@ -974,7 +978,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_spanish_" <a id="CO63-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "spanish_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO63-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "spanish_stemmer": {
@@ -1010,7 +1014,7 @@ Words can be excluded from stemming with the <code class="literal">stem_exclusio
           "stopwords":  "_swedish_" <a id="CO64-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "swedish_keywords": {
-          "type":       "stop",
+          "type":       "keyword_marker",
           "keywords":   [] <a id="CO64-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         },
         "swedish_stemmer": {
