@@ -60,22 +60,30 @@ level settings, it can be set as well using the
 <code class="literal">index.store.throttle.max_bytes_per_sec</code>. The default value for the type
 is <code class="literal">node</code>, meaning it will throttle based on the node level settings and
 participate in the global throttling happening. Both settings can be set
-using the index update settings API dynamically.</p><p>The following sections lists all the different storage types supported.</p><h3><a id="file-system"></a>File System<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/store.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>File system based storage is the default storage used. There are
-different implementations or storage types. The best one for the
+using the index update settings API dynamically.</p><h3><a id="file-system"></a>File system storage types<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/store.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>File system based storage is the default storage used. There are
+different implementations or <span class="emphasis"><em>storage types</em></span>. The best one for the
 operating environment will be automatically chosen: <code class="literal">mmapfs</code> on
 Solaris/Linux/Windows 64bit, <code class="literal">simplefs</code> on Windows 32bit, and
-<code class="literal">niofs</code> for the rest.</p><p>The following are the different file system based storage types:</p><h4><a id="_simple_fs"></a>Simple FS<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/store.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">simplefs</code> type is a straightforward implementation of file system
+<code class="literal">niofs</code> for the rest.</p><p>This can be overridden for all indices by adding this to the
+<code class="literal">config/elasticsearch.yml</code> file:</p><pre class="programlisting prettyprint lang-yaml">index.store.type: niofs</pre><p>It can also be set on a per-index basis at index creation time:</p><pre class="programlisting prettyprint lang-json">curl -XPUT localhost:9200/my_index
+{
+    "settings": {
+        "index.store.type": "niofs"
+    }
+}</pre><p>The following sections lists all the different storage types supported.</p><h4><a id="simplefs"></a>Simple FS<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/store.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">simplefs</code> type is a straightforward implementation of file system
 storage (maps to Lucene <code class="literal">SimpleFsDirectory</code>) using a random access file.
 This implementation has poor concurrent performance (multiple threads
 will bottleneck). It is usually better to use the <code class="literal">niofs</code> when you need
-index persistence.</p><h4><a id="_nio_fs"></a>NIO FS<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/store.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">niofs</code> type stores the shard index on the file system (maps to
+index persistence.</p><h4><a id="niofs"></a>NIO FS<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/store.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">niofs</code> type stores the shard index on the file system (maps to
 Lucene <code class="literal">NIOFSDirectory</code>) using NIO. It allows multiple threads to read
 from the same file concurrently. It is not recommended on Windows
 because of a bug in the SUN Java implementation.</p><h4><a id="mmapfs"></a>MMap FS<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/store.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">mmapfs</code> type stores the shard index on the file system (maps to
 Lucene <code class="literal">MMapDirectory</code>) by mapping a file into memory (mmap). Memory
 mapping uses up a portion of the virtual memory address space in your
 process equal to the size of the file being mapped. Before using this
-class, be sure your have plenty of virtual address space.</p><h3><a id="store-memory"></a>Memory<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/store.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">memory</code> type stores the index in main memory.</p></div><div class="navfooter"><span class="prev"><a href="index-modules-merge.html">
+class, be sure your have plenty of virtual address space.
+See <a class="xref" href="setup-configuration.html#vm-max-map-count" title="Virtual memoryedit">the section called “Virtual memory<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/setup/configuration.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a>”</a></p><h3><a id="store-memory"></a>Memory<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/store.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">memory</code> type stores the index in main memory, using Lucene’s
+<code class="literal">RamIndexStore</code>.</p></div><div class="navfooter"><span class="prev"><a href="index-modules-merge.html">
               « 
               Merge</a>
            
