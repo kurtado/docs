@@ -109,7 +109,7 @@ execution value.</p><p>For example:</p><pre class="programlisting prettyprint la
             }
         }
     }
-}</pre><h4><a id="_caching_18"></a>Caching<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/filters/terms-filter.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The result of the filter is automatically cached by default. The
+}</pre><h4><a id="_caching_19"></a>Caching<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/filters/terms-filter.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The result of the filter is automatically cached by default. The
 <code class="literal">_cache</code> can be set to <code class="literal">false</code> to turn it off.</p><h4><a id="_terms_lookup_mechanism"></a>Terms lookup mechanism<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/filters/terms-filter.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>When it’s needed to specify a <code class="literal">terms</code> filter with a lot of terms it can
 be beneficial to fetch those term values from a document in an index. A
 concrete example would be to filter tweets tweeted by your followers.
