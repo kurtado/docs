@@ -37,7 +37,7 @@ docs that match with the rest of the query. An example of for what filter a post
 should be used for this reason is the <code class="literal">geo_distance</code> filter. The <code class="literal">geo_distance</code> filter is
 in general an expensive filter to execute and to reduce the execution time for this filter,
 one can choose to specify it as <code class="literal">post_filter</code>, so it runs on documents that are very likely
-to be end up as matching documents.</p><p>Another important reason is when doing things like facet navigation,
+to end up as matching documents.</p><p>Another important reason is when doing things like facet navigation,
 sometimes only the hits are needed to be filtered by the chosen facet,
 and all the facets should continue to be calculated based on the original query.
 The <code class="literal">post_filter</code> element within the search request can be used to accomplish it.</p><p>Note, this is different compared to creating a <code class="literal">filtered</code> query with the
