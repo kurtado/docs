@@ -101,7 +101,7 @@ term suggester’s score is based on the edit distance.</p><pre class="programli
 ]</pre><h3><a id="global-suggest"></a>Global suggest text<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/search/suggesters.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>To avoid repetition of the suggest text, it is possible to define a
 global text. In the example below the suggest text is defined globally
 and applies to the <code class="literal">my-suggest-1</code> and <code class="literal">my-suggest-2</code> suggestions.</p><pre class="programlisting prettyprint lang-js">"suggest" : {
-  "text" : "the amsterdma meetpu"
+  "text" : "the amsterdma meetpu",
   "my-suggest-1" : {
     "term" : {
       "field" : "title"
