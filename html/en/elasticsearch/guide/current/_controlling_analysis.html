@@ -102,8 +102,8 @@ the <code class="literal">standard</code> analyzer
 and the search time sequence.  The <code class="literal">_analyzer</code> field allows you to specify a
 default analyzer for each document (eg <code class="literal">english</code>, <code class="literal">french</code>, <code class="literal">spanish</code>) while
 the <code class="literal">analyzer</code> parameter in the query specifies which analyzer to use on the
-query string. This is one way of handling multiple languages in a single
-index. We will look at this technique in more detail in <a class="xref" href="languages.html" title="Dealing with human language">Dealing with human language </a>.</p></div><p>Occasionally, it makes sense to use a different analyzer at index and search
+query string. However, this is not the best way to handle multiple languages
+in a single index because of the pitfalls highlighted in <a class="xref" href="languages.html" title="Dealing with human language">Dealing with human language </a>.</p></div><p>Occasionally, it makes sense to use a different analyzer at index and search
 time. For instance, at index time we may want to index synonyms, eg for every
 occurrence of <code class="literal">quick</code> we also index <code class="literal">fast</code>, <code class="literal">rapid</code> and <code class="literal">speedy</code>. But at
 search time, we don’t need to search for all of these synonyms.  Instead we
