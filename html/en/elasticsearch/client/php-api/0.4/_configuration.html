@@ -103,7 +103,7 @@ $client = new Elasticsearch\Client($params);</pre><p>​</p></div><div class="se
 </p><pre class="programlisting prettyprint lang-php">$paramDefaults = array(
     'connectionClass'       =&gt; '\Elasticsearch\Connections\GuzzleConnection',
     'connectionFactoryClass'=&gt; '\Elasticsearch\Connections\ConnectionFactory',
-    'connectionPoolClass'   =&gt; '\Elasticsearch\ConnectionPool\StaticConnectionPool',
+    'connectionPoolClass'   =&gt; '\Elasticsearch\ConnectionPool\StaticNoPingConnectionPool',
     'selectorClass'         =&gt; '\Elasticsearch\ConnectionPool\Selectors\RoundRobinSelector',
     'serializerClass'       =&gt; '\Elasticsearch\Serializers\ArrayToJSONSerializer',
     'sniffOnStart'          =&gt; false,
