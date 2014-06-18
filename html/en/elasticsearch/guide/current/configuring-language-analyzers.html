@@ -30,7 +30,7 @@
                »
             </a></span></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="configuring-language-analyzers"></a>Configuring language analyzers<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/200_Language_intro/20_Configuring.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="using-language-analyzers.html">Using language analyzers</a></span></dt><dt><span class="section"><a href="configuring-language-analyzers.html">Configuring language analyzers</a></span></dt><dt><span class="section"><a href="language-pitfalls.html">Pitfalls of mixing languages</a></span></dt><dt><span class="section"><a href="one-lang-docs.html">One language per document</a></span></dt><dt><span class="section"><a href="one-lang-fields.html">One language per field</a></span></dt><dt><span class="section"><a href="mixed-lang-fields.html">Mixed language fields</a></span></dt><dt><span class="section"><a href="_conclusion_5.html">Conclusion</a></span></dt></dl></div><p>While the language analyzers can be used out of the box without any
 configuration, most of them do allow you to control aspects of their
-behaviour, specifically:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+behaviour, specifically:</p><div class="variablelist"><a id="stem-exclusion"></a><dl class="variablelist"><dt><span class="term">
 Stem word exclusion
 </span></dt><dd>Imagine, for instance, that users searching for the “World Health
 Organization” are instead getting results for “organ health”. The reason
@@ -75,8 +75,8 @@ Prevents <code class="literal">organization</code> and <code class="literal">org
 Specifies a custom list of stopwords.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO100-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Emits tokens <code class="literal">world</code>, <code class="literal">health</code>, <code class="literal">organization</code>, <code class="literal">doe</code>, <code class="literal">not</code>, <code class="literal">sell</code>, <code class="literal">organ</code>.
-</p></td></tr></table></div><p>We will discuss stemming and stopwords in much more detail in <a class="xref" href="stemming.html" title="Reducing words to their root form (TODO)"><em>Reducing words to their root form (TODO)</em></a> and
-<a class="xref" href="stopwords.html" title="Stopwords: performance vs precision (TODO)"><em>Stopwords: performance vs precision (TODO)</em></a> respectively.</p></div><div class="navfooter"><span class="prev"><a href="using-language-analyzers.html">
+</p></td></tr></table></div><p>We will discuss stemming and stopwords in much more detail in <a class="xref" href="stemming.html" title="Reducing words to their root form"><em>Reducing words to their root form</em></a> and
+<a class="xref" href="stopwords.html" title="Stopwords: performance vs precision"><em>Stopwords: performance vs precision</em></a> respectively.</p></div><div class="navfooter"><span class="prev"><a href="using-language-analyzers.html">
               « 
               Using language analyzers</a>
            

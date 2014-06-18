@@ -50,7 +50,7 @@ The <code class="literal">resellers</code> is an array that holds nested documen
 </p></td></tr></table></div><p>The following aggregations will return the minimum price products can be purchased in:</p><pre class="programlisting prettyprint lang-js">{
     "query" : {
         "match" : { "name" : "led tv" }
-    }
+    },
     "aggs" : {
         "resellers" : {
             "nested" : {
