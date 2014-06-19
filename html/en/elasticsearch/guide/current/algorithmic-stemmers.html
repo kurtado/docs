@@ -28,7 +28,7 @@
            
           <a href="dictionary-stemmers.html">Dictionary stemmers
                »
-            </a></span></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="algorithmic-stemmers"></a>Algorithmic stemmers<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/230_Stemming/10_Algorithmic_stemmers.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="algorithmic-stemmers.html">Algorithmic stemmers</a></span></dt><dt><span class="section"><a href="dictionary-stemmers.html">Dictionary stemmers</a></span></dt><dt><span class="section"><a href="hunspell.html">Hunspell stemmer</a></span></dt><dt><span class="section"><a href="controlling-stemming.html">Controlling stemming</a></span></dt><dt><span class="section"><a href="stemming-in-situ.html">Stemming in situ</a></span></dt></dl></div><p>Most of the stemmers available in Elasticsearch are algorithmic in that they
+            </a></span></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="algorithmic-stemmers"></a>Algorithmic stemmers<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/230_Stemming/10_Algorithmic_stemmers.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="algorithmic-stemmers.html">Algorithmic stemmers</a></span></dt><dt><span class="section"><a href="dictionary-stemmers.html">Dictionary stemmers</a></span></dt><dt><span class="section"><a href="hunspell.html">Hunspell stemmer</a></span></dt><dt><span class="section"><a href="choosing-a-stemmer.html">Choosing a stemmer</a></span></dt><dt><span class="section"><a href="controlling-stemming.html">Controlling stemming</a></span></dt><dt><span class="section"><a href="stemming-in-situ.html">Stemming in situ</a></span></dt></dl></div><p>Most of the stemmers available in Elasticsearch are algorithmic in that they
 apply a series of rules to a word in order to reduce it to its root form, such
 as stripping the final <code class="literal">s</code> or <code class="literal">es</code> from plurals.   They don’t have to know
 anything about individual words in order to stem them.</p><p>These algorithmic stemmers have the advantage that they are available out of
@@ -146,44 +146,7 @@ Replaced the <code class="literal">english</code> stemmer with the less aggressi
     <code class="literal">light_english</code> stemmer.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO125-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Added the <code class="literal">asciifolding</code> token filter.
-</p></td></tr></table></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_choosing_an_algorithmic_stemmer"></a>Choosing an algorithmic stemmer<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/230_Stemming/10_Algorithmic_stemmers.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The documentation for the
-<a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/analysis-stemmer-tokenfilter.html" target="_top"><code class="literal">stemmer</code> token filter</a>
-lists multiple stemmers for some languages.  For Portuguese we have:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-<code class="literal">portuguese</code>
-</li><li class="listitem">
-<code class="literal">light_portuguese</code>
-</li><li class="listitem">
-<code class="literal">minimal_portuguese</code>
-</li><li class="listitem">
-<code class="literal">portuguese_rslp</code>
-</li></ul></div><p>For English we have:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-<code class="literal">english</code>
-</li><li class="listitem">
-<code class="literal">light_english</code>
-</li><li class="listitem">
-<code class="literal">minimal_english</code>
-</li><li class="listitem">
-<code class="literal">lovins</code>
-</li><li class="listitem">
-<code class="literal">porter</code>
-</li><li class="listitem">
-<code class="literal">porter2</code>
-</li><li class="listitem">
-<code class="literal">possessive_english</code>
-</li></ul></div><p>One thing is for sure: whenever more than one solution exists for a problem,
-it means that none of the solutions solves the problem adequately. This
-certainly applies to stemming — each stemmer is based on a different
-algorithm which overstems and understems words to a different degree.</p><p>The <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/analysis-stemmer-tokenfilter.html" target="_top"><code class="literal">stemmer</code> token filter</a> reference
-documentation highlights the recommended choice for each language in bold,
-but the recommended stemmer may not be appropriate for all use cases. It is
-usually chosen because it offers a reasonable compromise between performance
-and accuracy.  You may find that, for your particular use case, the
-recommended stemmer is either too aggressive or not aggressive enough, in
-which case you may want to try a different stemmer.</p><p>The <code class="literal">light_</code> stemmers are less aggressive than the standard stemmers, and the
-<code class="literal">minimal_</code> stemmers are less aggressive still. The Snowball-based stemmers
-tend to be slower than the other hand-coded stemmers, although that very much
-depends upon the implementation.</p><p>Choosing the “best” stemmer is largely a case of trying each one out and
-selecting the one that seems to produce the best results for your documents.</p></div></div><div class="navfooter"><span class="prev"><a href="stemming.html">
+</p></td></tr></table></div></div></div><div class="navfooter"><span class="prev"><a href="stemming.html">
               « 
               Reducing words to their root form</a>
            

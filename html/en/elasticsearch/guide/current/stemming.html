@@ -28,7 +28,7 @@
            
           <a href="algorithmic-stemmers.html">Algorithmic stemmers
                »
-            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="stemming"></a>Reducing words to their root form<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/230_Stemming/00_Intro.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="algorithmic-stemmers.html">Algorithmic stemmers</a></span></dt><dt><span class="section"><a href="dictionary-stemmers.html">Dictionary stemmers</a></span></dt><dt><span class="section"><a href="hunspell.html">Hunspell stemmer</a></span></dt><dt><span class="section"><a href="controlling-stemming.html">Controlling stemming</a></span></dt><dt><span class="section"><a href="stemming-in-situ.html">Stemming in situ</a></span></dt></dl></div><p>Most languages of the world are <span class="strong"><strong>inflected</strong></span>, meaning that words can change
+            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="stemming"></a>Reducing words to their root form<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/230_Stemming/00_Intro.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="algorithmic-stemmers.html">Algorithmic stemmers</a></span></dt><dt><span class="section"><a href="dictionary-stemmers.html">Dictionary stemmers</a></span></dt><dt><span class="section"><a href="hunspell.html">Hunspell stemmer</a></span></dt><dt><span class="section"><a href="choosing-a-stemmer.html">Choosing a stemmer</a></span></dt><dt><span class="section"><a href="controlling-stemming.html">Controlling stemming</a></span></dt><dt><span class="section"><a href="stemming-in-situ.html">Stemming in situ</a></span></dt></dl></div><p>Most languages of the world are <span class="strong"><strong>inflected</strong></span>, meaning that words can change
 their form to express differences in:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
 <p>
 <span class="emphasis"><em>number</em></span>
@@ -113,9 +113,11 @@ sense</em></span> or meaning.  The same word may represent two different meaning
 try to distinguish these two word senses, stemming would incorrectly conflate
 them.</p><p>Lemmatisation is a much more complicated and expensive process that needs to
 understand the context in which words to appear in order to make decisions
-about what they mean. For now, stemmers are the best tools that we have
-available.</p></div><p>There are two types of stemmers available: algorithmic stemmers and dictionary
-stemmers.</p></div><div class="navfooter"><span class="prev"><a href="sorting-collations.html">
+about what they mean. In practice, stemming appears to be just as effective
+as lemmatisation, but with a much lower cost.</p></div><p>First we will discuss the two classes of stemmers available in Elasticsearch — <a class="xref" href="algorithmic-stemmers.html" title="Algorithmic stemmers">Algorithmic stemmers</a> and <a class="xref" href="dictionary-stemmers.html" title="Dictionary stemmers">Dictionary stemmers</a> — then look at how to
+choose the right stemmer for your needs in <a class="xref" href="choosing-a-stemmer.html" title="Choosing a stemmer">Choosing a stemmer</a>.  Finally,
+we will discuss options for tailoring stemming in <a class="xref" href="controlling-stemming.html" title="Controlling stemming">Controlling stemming</a> and
+<a class="xref" href="stemming-in-situ.html" title="Stemming in situ">Stemming in situ</a>.</p></div><div class="navfooter"><span class="prev"><a href="sorting-collations.html">
               « 
               Sorting and collations</a>
            
