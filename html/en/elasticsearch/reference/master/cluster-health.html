@@ -63,13 +63,14 @@ it will return at that point):</p><pre class="programlisting prettyprint lang-js
 </span></dt><dd>
     One of <code class="literal">green</code>, <code class="literal">yellow</code> or <code class="literal">red</code>. Will wait (until
     the timeout provided) until the status of the cluster changes to the one
-    provided. By default, will not wait for any status.
+    provided or better, i.e. <code class="literal">green</code> &gt; <code class="literal">yellow</code> &gt; <code class="literal">red</code>. By default, will not
+    wait for any status.
 </dd><dt><span class="term">
 <code class="literal">wait_for_relocating_shards</code>
 </span></dt><dd>
     A number controlling to how many relocating
     shards to wait for. Usually will be <code class="literal">0</code> to indicate to wait till all
-    relocation have happened. Defaults to not to wait.
+    relocations have happened. Defaults to not wait.
 </dd><dt><span class="term">
 <code class="literal">wait_for_nodes</code>
 </span></dt><dd>
