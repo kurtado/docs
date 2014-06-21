@@ -53,9 +53,13 @@ query, doing the matching up to the child doc for each document matched.</p><p>T
             }
         }
     }
-}</pre><h4><a id="_memory_considerations_9"></a>Memory considerations<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/query-dsl/filters/has-parent-filter.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>With the current implementation, all <code class="literal">_parent</code> field values and all <code class="literal">_id</code>
-field values of parent documents are loaded into memory (heap) via field data
-in order to support fast lookups, so make sure there is enough memory for it.</p><h4><a id="_caching_10"></a>Caching<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/query-dsl/filters/has-parent-filter.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">has_parent</code> filter cannot be cached in the filter cache. The <code class="literal">_cache</code>
+}</pre><h4><a id="_memory_considerations_9"></a>Memory Considerations<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/query-dsl/filters/has-parent-filter.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>In order to support parent-child joins, all of the (string) parent IDs
+must be resident in memory (in the <a class="link" href="index-modules-fielddata.html" title="Field data">field data cache</a>.
+Additionaly, every child document is mapped to its parent using a long
+value (approximately). It is advisable to keep the string parent ID short
+in order to reduce memory usage.</p><p>You can check how much memory is being used by the ID cache using the
+<a class="link" href="indices-stats.html" title="Indices Stats">indices stats</a> or <a class="link" href="cluster-nodes-stats.html" title="Nodes Stats">nodes stats</a>
+APIS, eg:</p><pre class="programlisting prettyprint lang-js">curl -XGET "http://localhost:9200/_stats/id_cache?pretty&amp;human"</pre><h4><a id="_caching_10"></a>Caching<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/query-dsl/filters/has-parent-filter.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">has_parent</code> filter cannot be cached in the filter cache. The <code class="literal">_cache</code>
 and <code class="literal">_cache_key</code> options are a no-op in this filter. Also any filter that
 wraps the <code class="literal">has_parent</code> filter either directly or indirectly will not be cached.</p></div><div class="navfooter"><span class="prev"><a href="query-dsl-has-child-filter.html">
               « 
