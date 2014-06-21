@@ -32,20 +32,72 @@
                »
             </a></span></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="analysis-stop-tokenfilter"></a>Stop Token Filter<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/analysis/tokenfilters/stop-tokenfilter.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="analysis-standard-tokenfilter.html">Standard Token Filter</a></span></dt><dt><span class="section"><a href="analysis-asciifolding-tokenfilter.html">ASCII Folding Token Filter</a></span></dt><dt><span class="section"><a href="analysis-length-tokenfilter.html">Length Token Filter</a></span></dt><dt><span class="section"><a href="analysis-lowercase-tokenfilter.html">Lowercase Token Filter</a></span></dt><dt><span class="section"><a href="analysis-uppercase-tokenfilter.html">Uppercase Token Filter</a></span></dt><dt><span class="section"><a href="analysis-ngram-tokenfilter.html">NGram Token Filter</a></span></dt><dt><span class="section"><a href="analysis-edgengram-tokenfilter.html">Edge NGram Token Filter</a></span></dt><dt><span class="section"><a href="analysis-porterstem-tokenfilter.html">Porter Stem Token Filter</a></span></dt><dt><span class="section"><a href="analysis-shingle-tokenfilter.html">Shingle Token Filter</a></span></dt><dt><span class="section"><a href="analysis-stop-tokenfilter.html">Stop Token Filter</a></span></dt><dt><span class="section"><a href="analysis-word-delimiter-tokenfilter.html">Word Delimiter Token Filter</a></span></dt><dt><span class="section"><a href="analysis-stemmer-tokenfilter.html">Stemmer Token Filter</a></span></dt><dt><span class="section"><a href="analysis-stemmer-override-tokenfilter.html">Stemmer Override Token Filter</a></span></dt><dt><span class="section"><a href="analysis-keyword-marker-tokenfilter.html">Keyword Marker Token Filter</a></span></dt><dt><span class="section"><a href="analysis-keyword-repeat-tokenfilter.html">Keyword Repeat Token Filter</a></span></dt><dt><span class="section"><a href="analysis-kstem-tokenfilter.html">KStem Token Filter</a></span></dt><dt><span class="section"><a href="analysis-snowball-tokenfilter.html">Snowball Token Filter</a></span></dt><dt><span class="section"><a href="analysis-phonetic-tokenfilter.html">Phonetic Token Filter</a></span></dt><dt><span class="section"><a href="analysis-synonym-tokenfilter.html">Synonym Token Filter</a></span></dt><dt><span class="section"><a href="analysis-compound-word-tokenfilter.html">Compound Word Token Filter</a></span></dt><dt><span class="section"><a href="analysis-reverse-tokenfilter.html">Reverse Token Filter</a></span></dt><dt><span class="section"><a href="analysis-elision-tokenfilter.html">Elision Token Filter</a></span></dt><dt><span class="section"><a href="analysis-truncate-tokenfilter.html">Truncate Token Filter</a></span></dt><dt><span class="section"><a href="analysis-unique-tokenfilter.html">Unique Token Filter</a></span></dt><dt><span class="section"><a href="analysis-pattern-capture-tokenfilter.html">Pattern Capture Token Filter</a></span></dt><dt><span class="section"><a href="analysis-pattern_replace-tokenfilter.html">Pattern Replace Token Filter</a></span></dt><dt><span class="section"><a href="analysis-trim-tokenfilter.html">Trim Token Filter</a></span></dt><dt><span class="section"><a href="analysis-limit-token-count-tokenfilter.html">Limit Token Count Token Filter</a></span></dt><dt><span class="section"><a href="analysis-hunspell-tokenfilter.html">Hunspell Token Filter</a></span></dt><dt><span class="section"><a href="analysis-common-grams-tokenfilter.html">Common Grams Token Filter</a></span></dt><dt><span class="section"><a href="analysis-normalization-tokenfilter.html">Normalization Token Filter</a></span></dt><dt><span class="section"><a href="analysis-cjk-width-tokenfilter.html">CJK Width Token Filter</a></span></dt><dt><span class="section"><a href="analysis-cjk-bigram-tokenfilter.html">CJK Bigram Token Filter</a></span></dt><dt><span class="section"><a href="analysis-delimited-payload-tokenfilter.html">Delimited Payload Token Filter</a></span></dt><dt><span class="section"><a href="analysis-keep-words-tokenfilter.html">Keep Words Token Filter</a></span></dt></dl></div><p>A token filter of type <code class="literal">stop</code> that removes stop words from token
 streams.</p><p>The following are settings that can be set for a <code class="literal">stop</code> token filter
-type:</p><div class="informaltable"><table cellpadding="4px" border="1"><colgroup><col class="col_1" /><col class="col_2" /></colgroup><thead><tr><th align="left" valign="top">Setting </th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top"><p><code class="literal">stopwords</code></p></td><td align="left" valign="top"><p>A list of stop words to use. Defaults to english stop
-words.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">stopwords_path</code></p></td><td align="left" valign="top"><p>A path (either relative to <code class="literal">config</code> location, or
-absolute) to a stopwords file configuration. Each stop word should be in
-its own "line" (separated by a line break). The file must be UTF-8
-encoded.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">ignore_case</code></p></td><td align="left" valign="top"><p>Set to <code class="literal">true</code> to lower case all words first. Defaults to
-<code class="literal">false</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">remove_trailing</code></p></td><td align="left" valign="top"><p>Set to <code class="literal">false</code> in order to not ignore the last term of
-a search if it is a stop word. This is very useful for the completion
-suggester as a query like <code class="literal">green a</code> can be extended to <code class="literal">green apple</code> even
-though you remove stop words in general. Defaults to <code class="literal">true</code>.</p></td></tr></tbody></table></div><p>stopwords allow for custom language specific expansion of default
-stopwords. It follows the <code class="literal">_lang_</code> notation and supports: arabic,
-armenian, basque, brazilian, bulgarian, catalan, czech, danish, dutch,
-english, finnish, french, galician, german, greek, hindi, hungarian,
-indonesian, italian, norwegian, persian, portuguese, romanian, russian,
-spanish, swedish, turkish.</p></div><div class="navfooter"><span class="prev"><a href="analysis-shingle-tokenfilter.html">
+type:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
+<p>
+<code class="literal">stopwords</code>
+</p>
+</td><td valign="top">
+<p>
+    A list of stop words to use. Defaults to <code class="literal">_english_</code> stop words.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">stopwords_path</code>
+</p>
+</td><td valign="top">
+<p>
+    A path (either relative to <code class="literal">config</code> location, or absolute) to a stopwords
+    file configuration. Each stop word should be in its own "line" (separated
+    by a line break). The file must be UTF-8 encoded.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">ignore_case</code>
+</p>
+</td><td valign="top">
+<p>
+    Set to <code class="literal">true</code> to lower case all words first. Defaults to <code class="literal">false</code>.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">remove_trailing</code>
+</p>
+</td><td valign="top">
+<p>
+    Set to <code class="literal">false</code> in order to not ignore the last term of a search if it is a
+    stop word. This is very useful for the completion suggester as a query
+    like <code class="literal">green a</code> can be extended to <code class="literal">green apple</code> even though you remove
+    stop words in general. Defaults to <code class="literal">true</code>.
+</p>
+</td></tr></tbody></table></div><p>The <code class="literal">stopwords</code> parameter accepts either an array of stopwords:</p><pre class="programlisting prettyprint lang-json">PUT /my_index
+{
+    "settings": {
+        "analysis": {
+            "filter": {
+                "my_stop": {
+                    "type":       "stop",
+                    "stopwords": ["and", "is", "the"]
+                }
+            }
+        }
+    }
+}</pre><p>or a predefined language-specific list:</p><pre class="programlisting prettyprint lang-json">PUT /my_index
+{
+    "settings": {
+        "analysis": {
+            "filter": {
+                "my_stop": {
+                    "type":       "stop",
+                    "stopwords":  "_english_"
+                }
+            }
+        }
+    }
+}</pre><p>Elasticsearch provides the following predefined list of languages:</p><p><code class="literal">_arabic_</code>, <code class="literal">_armenian_</code>, <code class="literal">_basque_</code>, <code class="literal">_brazilian_</code>, <code class="literal">_bulgarian_</code>,
+<code class="literal">_catalan_</code>, <code class="literal">_czech_</code>, <code class="literal">_danish_</code>, <code class="literal">_dutch_</code>, <code class="literal">_english_</code>, <code class="literal">_finnish_</code>,
+<code class="literal">_french_</code>, <code class="literal">_galician_</code>, <code class="literal">_german_</code>, <code class="literal">_greek_</code>, <code class="literal">_hindi_</code>, <code class="literal">_hungarian_</code>,
+<code class="literal">_indonesian_</code>, <code class="literal">_italian_</code>, <code class="literal">_norwegian_</code>, <code class="literal">_persian_</code>, <code class="literal">_portuguese_</code>,
+<code class="literal">_romanian_</code>, <code class="literal">_russian_</code>, <code class="literal">_spanish_</code>, <code class="literal">_swedish_</code>, <code class="literal">_turkish_</code>.</p><p>For the empty stopwords list (to disable stopwords) use: <code class="literal">_none_</code>.</p></div><div class="navfooter"><span class="prev"><a href="analysis-shingle-tokenfilter.html">
               « 
               Shingle Token Filter</a>
            
