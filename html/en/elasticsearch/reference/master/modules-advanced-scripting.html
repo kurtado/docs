@@ -179,9 +179,9 @@ as well as all statistics:</p><pre class="literallayout">`_index['FIELD'].get('T
     The payload of the term converted to string. If the current position has
     no payload, <code class="literal">null</code> will be returned. Call this only if you know that your
     payloads are strings.
-</dd></dl></div><p>Example: sums up all payloads for the term <code class="literal">foo</code>.</p><pre class="programlisting prettyprint lang-mvel">termInfo = _index['my_field'].get('foo',_PAYLOADS);
+</dd></dl></div><p>Example: sums up all payloads for the term <code class="literal">foo</code>.</p><pre class="programlisting prettyprint lang-groovy">termInfo = _index['my_field'].get('foo',_PAYLOADS);
 score = 0;
-for (pos : termInfo) {
+for (pos in termInfo) {
     score = score + pos.payloadAsInt(0);
 }
 return score;</pre><h3><a id="_term_vectors"></a>Term vectors:<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/advanced-scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">_index</code> variable can only be used to gather statistics for single terms. If you want to use information on all terms in a field, you must store the term vectors (set <code class="literal">term_vector</code> in the mapping as described in the <a class="link" href="mapping-core-types.html" title="Core Types">mapping documentation</a>). To access them, call
