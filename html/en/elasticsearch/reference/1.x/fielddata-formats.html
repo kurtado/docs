@@ -37,10 +37,10 @@ time and storing them on disk. Although it will make the index larger and may
 be slightly slower, this implementation will be more near-realtime-friendly
 and will require much less memory from the JVM than other implementations.</p><p>Here is an example of how to configure the <code class="literal">tag</code> field to use the <code class="literal">fst</code> field
 data format.</p><pre class="programlisting prettyprint lang-js">{
-    tag: {
-        type:      "string",
-        fielddata: {
-            format: "fst"
+    "tag": {
+        "type":      "string",
+        "fielddata": {
+            "format": "fst"
         }
     }
 }</pre><p>It is possible to change the field data format (and the field data settings
@@ -106,17 +106,17 @@ requires them is executed. However, this can make the first requests that
 follow a merge operation quite slow since fielddata loading is a heavy
 operation.</p><p>It is possible to force field data to be loaded and cached eagerly through the
 <code class="literal">loading</code> setting of fielddata:</p><pre class="programlisting prettyprint lang-js">{
-    category: {
-        type:      "string",
-        fielddata: {
-            loading: "eager"
+    "category": {
+        "type":      "string",
+        "fielddata": {
+            "loading": "eager"
         }
     }
 }</pre><p>Global ordinals can also be eagerly loaded:</p><pre class="programlisting prettyprint lang-js">{
-    category: {
-        type:      "string",
-        fielddata: {
-            loading: "eager_global_ordinals"
+    "category": {
+        "type":      "string",
+        "fielddata": {
+            "loading": "eager_global_ordinals"
         }
     }
 }</pre><p>With the above setting both field data and global ordinals for a specific field
@@ -126,10 +126,10 @@ used for full-text search only. In order to disable field data loading, just
 change the field data format to <code class="literal">disabled</code>. When disabled, all requests that
 will try to load field data, e.g. when they include aggregations and/or sorting,
 will return an error.</p><pre class="programlisting prettyprint lang-js">{
-    text: {
-        type:      "string",
-        fielddata: {
-            format: "disabled"
+    "text": {
+        "type":      "string",
+        "fielddata": {
+            "format": "disabled"
         }
     }
 }</pre><p>The <code class="literal">disabled</code> format is supported by all field types.</p><h3><a id="field-data-filtering"></a>Filtering fielddata<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/index-modules/fielddata.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>It is possible to control which field values are loaded into memory,
@@ -145,14 +145,14 @@ number or as a percentage (eg <code class="literal">0.01</code> is <code class="
 <span class="strong"><strong>per segment</strong></span>. Percentages are based on the number of docs which have a
 value for the field, as opposed to all docs in the segment.</p><p>Small segments can be excluded completely by specifying the minimum
 number of docs that the segment should contain with <code class="literal">min_segment_size</code>:</p><pre class="programlisting prettyprint lang-js">{
-    tag: {
-        type:      "string",
-        fielddata: {
-            filter: {
-                frequency: {
-                    min:              0.001,
-                    max:              0.1,
-                    min_segment_size: 500
+    "tag": {
+        "type":      "string",
+        "fielddata": {
+            "filter": {
+                "frequency": {
+                    "min":              0.001,
+                    "max":              0.1,
+                    "min_segment_size": 500
                 }
             }
         }
@@ -162,30 +162,30 @@ match the regular expression are loaded. Note: the regular expression is
 applied to each term in the field, not to the whole field value. For
 instance, to only load hashtags from a tweet, we can use a regular
 expression which matches terms beginning with <code class="literal">#</code>:</p><pre class="programlisting prettyprint lang-js">{
-    tweet: {
-        type:      "string",
-        analyzer:  "whitespace"
-        fielddata: {
-            filter: {
-                regex: {
-                    pattern: "^#.*"
+    "tweet": {
+        "type":      "string",
+        "analyzer":  "whitespace"
+        "fielddata": {
+            "filter": {
+                "regex": {
+                    "pattern": "^#.*"
                 }
             }
         }
     }
 }</pre><h4><a id="_combining_filters"></a>Combining filters<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/index-modules/fielddata.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">frequency</code> and <code class="literal">regex</code> filters can be combined:</p><pre class="programlisting prettyprint lang-js">{
-    tweet: {
-        type:      "string",
-        analyzer:  "whitespace"
-        fielddata: {
-            filter: {
-                regex: {
-                    pattern:          "^#.*",
+    "tweet": {
+        "type":      "string",
+        "analyzer":  "whitespace"
+        "fielddata": {
+            "filter": {
+                "regex": {
+                    "pattern":          "^#.*",
                 },
-                frequency: {
-                    min:              0.001,
-                    max:              0.1,
-                    min_segment_size: 500
+                "frequency": {
+                    "min":              0.001,
+                    "max":              0.1,
+                    "min_segment_size": 500
                 }
             }
         }
