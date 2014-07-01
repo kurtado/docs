@@ -48,7 +48,7 @@ make it more readable. The <code class="literal">_source</code> field, however, 
 the document was found.  If we were to request a document that doesn’t exist,
 we would still get a JSON response, but <code class="literal">found</code> would be set to <code class="literal">false</code>.</p><p>Also, the HTTP response code would be <code class="literal">'404 Not Found'</code> instead of <code class="literal">'200 OK'</code>.
 We can see this by passing the <code class="literal">-i</code> argument to <code class="literal">curl</code>, which causes it to
-display the response headers:</p><pre class="programlisting prettyprint lang-sh">curl -i -XGET /website/blog/124?pretty</pre><a class="sense_widget" href="sense_widget.html?snippets/030_Data/15_Get_document.json" target="sense">View in Sense</a><p>The response now looks like this:</p><pre class="programlisting prettyprint lang-js">HTTP/1.1 404 Not Found
+display the response headers:</p><pre class="programlisting prettyprint lang-sh">curl -i -XGET http://localhost:9200/website/blog/124?pretty</pre><a class="sense_widget" href="sense_widget.html?snippets/030_Data/15_Get_document.json" target="sense">View in Sense</a><p>The response now looks like this:</p><pre class="programlisting prettyprint lang-js">HTTP/1.1 404 Not Found
 Content-Type: application/json; charset=UTF-8
 Content-Length: 83
 

@@ -39,7 +39,7 @@ will call the <code class="literal">autocomplete_filter</code>:</p><pre class="p
             "max_gram": 20
         }
     }
-}</pre><p>This configuration says that, for any term that this token filter it receives,
+}</pre><p>This configuration says that, for any term that this token filter receives,
 it should produce an n-gram anchored to the start of the word of minimum
 length 1 and maximum length 20.</p><p>Then we need to use this token filter in a custom analyzer, which we will call
 the <code class="literal">autocomplete</code> analyzer:</p><pre class="programlisting prettyprint lang-js">{

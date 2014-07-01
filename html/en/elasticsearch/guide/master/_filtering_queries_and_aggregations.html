@@ -51,7 +51,7 @@ for those cars, we can simply use a <code class="literal">filtered</code> query:
 query like we discussed in the last section.  The query (which happens to include
 a filter) returns a certain subset of documents, and the aggregation operates
 on those documents.</p><h3><a id="_filter_bucket"></a>Filter bucket<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/300_Aggregations/45_filtering.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>But what if you would like to filter just the aggregation results?  Imagine we
-have are building the search page for our car dealership.  We want to display
+are building the search page for our car dealership.  We want to display
 search results according to what the user searches for.  But we also want
 to enrich the page by including the average price of cars (matching the search)
 which were sold in the last month.</p><p>We can’t use simple scoping here, since there are two different criteria.  The
