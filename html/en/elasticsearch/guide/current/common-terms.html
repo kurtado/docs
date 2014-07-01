@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Divide and conquer</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch" /><link rel="up" href="stopwords.html" title="Stopwords: performance vs precision" /><link rel="prev" href="stopwords-performance.html" title="Stopwords and performance" /><link rel="next" href="stopwords-phrases.html" title="Stopwords and phrase queries" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
+      jQuery(function() {
+        jQuery('div.navheader+div').css('minHeight',jQuery('div.toc').height()+'px');
+        jQuery('article.guide_content a[id]').each(function() { this.href='#'+this.id });
+      });
+    </script><link rel="stylesheet" type="text/css" href="styles.css?3" /></head><body class="single single-guide"><img src="http://ad.retargeter.com/seg?add=1235131&amp;t=2" width="1" height="1" style="position:absolute; visibility:hidden;" /><script type="text/javascript">
+        if(jQuery('body').data('cookie') != "eu" || jQuery.cookie('allowCookies')){
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-12395217-2']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    }</script><!--[if lt IE 8]>
+        <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+      <![endif]--><header><nav role="navigation" id="mobile-nav-container" class="off-canvas-nav"><ul id="mobile-nav" class="menu"><li id="menu-item-75892" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75892"><a href="/overview/">Overview</a><ul class="sub-menu"><li id="menu-item-75895" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75895"><a href="/overview/">Overview</a></li><li id="menu-item-68760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68760"><a href="/overview/elasticsearch/">Elasticsearch</a></li><li id="menu-item-75894" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75894"><a href="/overview/marvel/">Marvel</a></li><li id="menu-item-68758" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68758"><a href="/overview/kibana/">Kibana</a></li><li id="menu-item-68756" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68756"><a href="/overview/kibana/installation/">Kibana Installation</a></li><li id="menu-item-68757" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68757"><a href="/overview/kibana/support/">Kibana Support</a></li><li id="menu-item-68759" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68759"><a href="/overview/logstash/">Logstash</a></li><li id="menu-item-74019" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74019"><a href="/overview/hadoop/">Hadoop</a></li><li id="menu-item-75893" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75893"><a href="/overview/elkdownloads/">ELK Downloads</a></li></ul></li><li id="menu-item-55" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55"><a href="/resources/">Resources</a><ul class="sub-menu"><li id="menu-item-76342" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-76342"><a href="/guide/">Guide</a></li><li id="menu-item-4843" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4843"><a href="/videos/">Videos</a></li></ul></li><li id="menu-item-657" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-657"><a href="/community/">Community</a></li><li id="menu-item-68802" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68802"><a href="/case-studies/">Case Studies</a></li><li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="/blog/">Blog</a></li><li id="menu-item-12" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12"><a target="_blank" href="http://elasticsearch.com">Company</a></li></ul><ul class="add-on"><li><a href="/overview/elkdownloads/">Download</a></li></ul></nav><div class="container"><div id="header-inner"><h1 id="header-logo"><a class="faux" href="http://www.elasticsearch.org">Elasticsearch</a></h1><nav role="navigation" id="main-nav-container" class="main-nav"><ul id="top-nav" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75892"><a href="/overview/">Overview</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-53 current_page_item menu-item-55"><a href="/resources/">Resources</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-657"><a href="/community/">Community</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68802"><a href="/case-studies/">Case Studies</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="/blog/">Blog</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12"><a target="_blank" href="http://elasticsearch.com">Company</a></li></ul><ul class="add-on"><li><a class="btn btn-primary" href="/overview/elkdownloads/">Download</a></li></ul></nav><div class="slide-trigger navigation" id="nav-trigger" aria-hidden="true"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div><hr /><ul id="sub_nav"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-76342"><a href="/guide/">Guide</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4843"><a href="/videos/">Videos</a></li></ul></div></div></header><div class="global_wrapper"><div class="page_content"><div class="container"><section id="search_container" class="active"><form id="blog_search" role="search" action="/" method="get"><div class="blog_search_wrapper"><input id="s" name="s" class="search_term" type="text" placeholder="search" autocomplete="off" tabindex="1" /><input type="submit" class="search_submit" value=" " /><ul id="results"></ul></div></form></section><section class="full_width guide"><article class="guide_content"><div class="breadcrumbs"><span class="breadcrumb-link"><a href="index.html">Elasticsearch</a></span> » <span class="breadcrumb-link"><a href="languages.html">Dealing with human language </a></span> » <span class="breadcrumb-link"><a href="stopwords.html">Stopwords: performance vs precision</a></span> » <span class="breadcrumb-node">Divide and conquer</span></div><div class="navheader"><span class="prev"><a href="stopwords-performance.html">
+              « 
+              Stopwords and performance</a>
+           
+        </span><span class="next">
+           
+          <a href="stopwords-phrases.html">Stopwords and phrase queries
+               »
+            </a></span></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="common-terms"></a>Divide and conquer<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/240_Stopwords/40_Divide_and_conquer.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="using-stopwords.html">Using stopwords</a></span></dt><dt><span class="section"><a href="stopwords-performance.html">Stopwords and performance</a></span></dt><dt><span class="section"><a href="common-terms.html">Divide and conquer</a></span></dt><dt><span class="section"><a href="stopwords-phrases.html">Stopwords and phrase queries</a></span></dt><dt><span class="section"><a href="common-grams.html"><code class="literal">common_grams</code> token filter</a></span></dt><dt><span class="section"><a href="stopwords-relavance.html">Stopwords and relevance</a></span></dt></dl></div><p>The terms in a query string can be divided into more important (low frequency)
+and less important (high frequency) terms. Documents that match only the less
+important terms are probably of very little interest.  Really, we want
+documents that match as many of the more important terms as possible.</p><p>The <code class="literal">match</code> query accepts a <code class="literal">cutoff_frequency</code> parameter, which allows it to
+divide the terms in the query string into a low frequency and high frequency
+group. The low frequency group (more important terms) form the bulk of the
+query, while the high frequency group (less important terms) is used only for
+scoring, not for matching. By treating these two groups differently, we can
+gain a real boost of speed on previously slow queries.</p><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Domain specific stopwords</strong></p></div></div></div><p>One of the benefits of <code class="literal">cutoff_frequency</code> is that you get <span class="emphasis"><em>domain specific</em></span>
+stopwords for free. For instance, a website about movies may use the words
+“movie”, “color”, “black” and “white” so often that they could be
+considered almost meaningless.  With the <code class="literal">stop</code> token filter, these domain
+specific terms would have to be added to the stopwords list manually. However,
+because the <code class="literal">cutoff_frequency</code> looks at the actual frequency of terms in the
+index,  these words would be classified as <span class="emphasis"><em>high frequency</em></span> automatically.</p></div><p>Take this query as an example:</p><pre class="programlisting prettyprint lang-json">{
+  "match": {
+    "text": {
+      "query": "Quick and the dead",
+      "cutoff_frequency": 0.01 <a id="CO142-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+    }
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO142-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+Any term that occurs in more than 1% of documents is considered to be high
+    frequency. The <code class="literal">cutoff_frequency</code> can be specified as a fraction (<code class="literal">0.01</code>)
+    or as an absolute number (<code class="literal">5</code>).
+</p></td></tr></table></div><p>This query uses the <code class="literal">cutoff_frequency</code> to first divide the query terms into a
+low frequency group: (<code class="literal">quick</code>, <code class="literal">dead</code>), and a high frequency group: (<code class="literal">and</code>,
+<code class="literal">the</code>). Then, the query is rewritten to produce the following <code class="literal">bool</code> query:</p><pre class="programlisting prettyprint lang-json">{
+  "bool": {
+    "must": { <a id="CO143-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+      "bool": {
+        "should": [
+          { "term": { "text": "quick" }},
+          { "term": { "text": "dead"  }}
+        ]
+      }
+    },
+    "should": { <a id="CO143-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+      "bool": {
+        "should": [
+          { "term": { "text": "and" }},
+          { "term": { "text": "the" }}
+        ]
+      }
+    }
+  }
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO143-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+At least one low frequency / high importance term <span class="strong"><strong>must</strong></span> match.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO143-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+High frequency / low importance terms are entirely optional.
+</p></td></tr></table></div><p>The <code class="literal">must</code> clause means that at least one of the low frequency terms — <code class="literal">quick</code> or <code class="literal">dead</code> — <span class="strong"><strong>must</strong></span> be present for a document to be considered a
+match. All other documents are excluded.  The <code class="literal">should</code> clause then looks for
+the high frequency terms <code class="literal">and</code> and <code class="literal">the</code>,  but only in the documents collected
+by the <code class="literal">must</code> clause. The sole job of the <code class="literal">should</code> clause is to score a
+document like “Quick <span class="strong"><strong>AND THE</strong></span> dead” higher than “<span class="strong"><strong>THE</strong></span> quick but
+dead”.  This approach greatly reduces the number of documents that need to be
+examined and scored.</p><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong><code class="literal">and</code> query</strong></p></div></div></div><p>Setting the operator parameter to <code class="literal">and</code> would simply make all low and high
+frequency terms required.  As we saw in <a class="xref" href="stopwords-performance.html#stopwords-and" title="and operator"><code class="literal">and</code> operator</a>, this is already an
+efficient query.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_controlling_precision_2"></a>Controlling precision<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/240_Stopwords/40_Divide_and_conquer.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The <code class="literal">minimum_should_match</code> parameter can be combined with <code class="literal">cutoff_frequency</code>
+but it only applies to the low frequency terms.  This query:</p><pre class="programlisting prettyprint lang-json">{
+  "match": {
+    "text": {
+      "query": "Quick and the dead",
+      "cutoff_frequency": 0.01,
+      "minimum_should_match": "75%"
+    }
+}</pre><p>would be rewritten as:</p><pre class="programlisting prettyprint lang-json">{
+  "bool": {
+    "must": {
+      "bool": {
+        "should": [
+          { "term": { "text": "quick" }},
+          { "term": { "text": "dead"  }}
+        ],
+        "minimum_should_match": 1 <a id="CO144-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+      }
+    },
+    "should": { <a id="CO144-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+      "bool": {
+        "should": [
+          { "term": { "text": "and" }},
+          { "term": { "text": "the" }}
+        ]
+      }
+    }
+  }
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO144-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+Because there are only two terms, the original 75% is rounded down
+    to <code class="literal">1</code>, that is: “1 out of 2 low frequency terms must match”.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO144-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+The high frequency terms are still optional and used only for scoring.
+</p></td></tr></table></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_only_high_frequency_terms"></a>Only high frequency terms<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/240_Stopwords/40_Divide_and_conquer.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>An <code class="literal">or</code> query for high frequency terms only — “To be or not to be” — is
+the worst case for performance. It is pointless to score <span class="strong"><strong>all</strong></span> of the
+documents that contain only one of these terms in order to return just the top
+ten matches. We are really only interested in documents where they all occur
+together, so in the case where there are no low frequency terms, the query is
+rewritten to make all high frequency terms required:</p><pre class="programlisting prettyprint lang-json">{
+  "bool": {
+    "must": [
+      { "term": { "text": "to" }},
+      { "term": { "text": "be" }},
+      { "term": { "text": "or" }},
+      { "term": { "text": "not" }},
+      { "term": { "text": "to" }},
+      { "term": { "text": "be" }}
+    ]
+  }
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_more_control_with_literal_common_literal_terms"></a>More control with <code class="literal">common</code> terms<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/240_Stopwords/40_Divide_and_conquer.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>While the high/low frequency functionality in the <code class="literal">match</code> query is useful,
+sometimes you want more control over how the high and low frequency groups
+should be handled.  The <code class="literal">match</code> query just exposes a subset of the
+functionality available in the <code class="literal">common</code> terms query.</p><p>For instance, we could make all low frequency terms, and 75% of high
+frequency terms required with a query like this:</p><pre class="programlisting prettyprint lang-json">{
+  "common": {
+    "text": {
+      "query":                  "Quick and the dead",
+      "cutoff_frequency":       0.01,
+      "low_freq_operator":      "and",
+      "minimum_should_match": {
+        "high_freq":            "75%"
+      }
+    }
+  }
+}</pre><p>See the <a class="ulink" href="http://foo.com/query-dsl-common-terms-query.html" target="_top"><code class="literal">common</code> terms query</a> reference
+page for more options.</p></div></div><div class="navfooter"><span class="prev"><a href="stopwords-performance.html">
+              « 
+              Stopwords and performance</a>
+           
+        </span><span class="next">
+           
+          <a href="stopwords-phrases.html">Stopwords and phrase queries
+               »
+            </a></span></div></article></section></div></div></div><footer><div id="footer_container" class="full_wrapper"><div class="container"><nav role="navigation"><ul id="footer_nav" class="menu"><li id="menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36"><a target="_blank" href="http://elasticsearch.com">Company</a></li><li id="menu-item-74980" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74980"><a href="/resources/">Resources</a></li><li id="menu-item-3106" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3106"><a href="/terms-of-use/">Terms</a></li><li id="menu-item-3107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3107"><a href="/privacy-and-cookie-policy/">Privacy</a></li><li id="menu-item-3105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3105"><a href="/contact/">Contact</a></li><li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="/blog/">Blog</a></li></ul></nav><div id="social"><a href="https://twitter.com/elasticsearch" class="social_icons" target="_blank"><i class="twitter"></i></a><a href="https://www.facebook.com/elasticsearch" class="social_icons" target="_blank"><i class="facebook"></i></a></div><div id="footer_form"><label class="form_label">Sign up for updates!</label><div class="gf_browser_chrome gform_wrapper" id="gform_wrapper_4"><a id="gf_4" name="gf_4" class="gform_anchor"></a><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_4" id="gform_4" action="/empty-template/#gf_4"><div class="gform_body"><ul id="gform_fields_4" class="gform_fields top_label description_below"><li id="field_4_6" class="gfield               gfield_contains_required"><label class="gfield_label" for="input_4_6">enter you email<span class="gfield_required">*</span></label><div class="ginput_container"><input name="input_6" id="input_4_6" type="email" value="" class="medium" tabindex="50" /></div></li><li id="field_4_2" class="gfield     gform_hidden"><input name="input_2" id="input_4_2" type="hidden" class="gform_hidden" value="813-MAM-392" /></li><li id="field_4_3" class="gfield     gform_hidden"><input name="input_3" id="input_4_3" type="hidden" class="gform_hidden" value="WEB.org" /></li><li id="field_4_4" class="gfield     gform_hidden"><input name="input_4" id="input_4_4" type="hidden" class="gform_hidden" value="WEB.org - Footer - Updates" /></li></ul></div><script type="text/javascript">//<![CDATA[
+            jQuery(function(){
+                jQuery('#gform_submit_button_4').click( function() {
+                    if(window["gf_submitting_4"]){
+                        return false;
+                    }
+                    if( !jQuery("#gform_4")[0].checkValidity || jQuery("#gform_4")[0].checkValidity()){
+                        window["gf_submitting_4"]=true;
+                    }
+                });
+            });
+            //]]></script><div class="gform_footer top_label"><input type="submit" id="gform_submit_button_4" class="button gform_button" value="Submit" tabindex="51" /><input type="hidden" name="gform_ajax" value="form_id=4&amp;title=&amp;description=" /><input type="hidden" class="gform_hidden" name="is_submit_4" value="1" /><input type="hidden" class="gform_hidden" name="gform_submit" value="4" /><input type="hidden" class="gform_hidden" name="gform_unique_id" value="" /><input type="hidden" class="gform_hidden" name="state_4" value="WyJhOjA6e30iLCJmMjE2MmM2ZjUxYmQ4M2Q3ZmMzNzVlNmY2ODYyZTI2NCJd" /><input type="hidden" class="gform_hidden" name="gform_target_page_number_4" id="gform_target_page_number_4" value="0" /><input type="hidden" class="gform_hidden" name="gform_source_page_number_4" id="gform_source_page_number_4" value="1" /><input type="hidden" name="gform_field_values" value="" /></div></form></div><iframe style="display:none;width:0px; height:0px;" src="about:blank" name="gform_ajax_frame_4" id="gform_ajax_frame_4"></iframe><script type="text/javascript">//<![CDATA[
+                    function gformInitSpinner_4(){jQuery('#gform_4').submit(function(){if(jQuery('#gform_ajax_spinner_4').length == 0){jQuery('#gform_submit_button_4, #gform_wrapper_4 .gform_next_button, #gform_wrapper_4 .gform_image_button').after('<' + 'img id="gform_ajax_spinner_4"  class="gform_ajax_spinner" src="http://www.elasticsearch.org/content/plugins/gravityforms/images/spinner.gif" alt="" />'); }} );}jQuery(document).ready(function($){gformInitSpinner_4();jQuery('#gform_ajax_frame_4').load( function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_4');var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = !(form_content.length <= 0 || is_redirect);if(is_form){jQuery('#gform_wrapper_4').html(form_content.html());jQuery(document).scrollTop(jQuery('#gform_wrapper_4').offset().top);if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_4').val();gformInitSpinner_4();jQuery(document).trigger('gform_page_loaded', [4, current_page]);window['gf_submitting_4'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('#gforms_confirmation_message').html();if(!confirmation_content){confirmation_content = contents;}setTimeout(function(){jQuery('#gform_wrapper_4').replaceWith('<' + 'div id=\'gforms_confirmation_message\' class=\'gform_confirmation_message_4\'' + '>' + confirmation_content + '<' + '/div' + '>');jQuery(document).scrollTop(jQuery('#gforms_confirmation_message').offset().top);jQuery(document).trigger('gform_confirmation_loaded', [4]);window['gf_submitting_4'] = false;}, 50);}else{jQuery('#gform_4').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger('gform_post_render', [4, current_page]);} );} );</script><script type='text/javascript'> jQuery(document).ready(function(){jQuery(document).trigger('gform_post_render', [4, 1]) } );
+                    //]]></script></div><div class="legal"><p>© 2014 All Rights Reserved - Elasticsearch </p><p>Apache Lucene and Lucene are trademarks of the Apache Software Foundation</p></div></div></div></footer><section id="cookie"><div class="container"><div class="eu">
+                Elasticsearch uses cookies to provide a better user experience to visitors of our website. Read more about our cookie policy <a href="/privacy-and-cookie-policy/">here.</a><a data-action="accept" class="cta">Accept cookies</a></div><div class="uk">
+                Elasticsearch uses cookies to provide a better user experience to visitors of our website. Read more about our cookie policy <a href="/privacy-and-cookie-policy/">here.</a><a data-action="dismiss" class="cta dismiss">X</a></div></div></section><script type="text/javascript">
+      if (window.aiModifyParent) aiModifyParent();
+      (function ($, $a, $title, $list) {
+        $a = $('[id^="js-api-method-index"]');
+        if (!$a.size()) return;
+        $('.guide_content').addClass('js-client-docs');
+        $list = $a.siblings('.itemizedlist').detach();
+        $title = $(document.createElement('h2')).text('api methods')
+        $a.parent().remove();
+        $('.toc').first().append($(document.createElement('div')).addClass('js-api-method-index').append($title).append($list));
+      }(jQuery));
+    </script><script type="text/javascript">if(window.aiModifyParent) {aiModifyParent();}</script><script type="text/javascript" src="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.js?ver=3.5.2"></script><script type="text/javascript" src="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/launch.js?ver=3.5.2"></script><script type="text/javascript" src="http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201413"></script><script type="text/javascript" src="http://www.elasticsearch.org/content/themes/elasticsearch-org/js/global.min.js?ver=1395082598"></script><script type="text/javascript" src="http://www.elasticsearch.org/content/themes/elasticsearch-org/js/froogaloop.min.js?ver=1"></script><script type="text/javascript">
+if(jQuery('body').data('cookie') != "eu" || jQuery.cookie('allowCookies')){
+    document.write(unescape("%3Cscript src='" + document.location.protocol +
+    "//munchkin.marketo.net/munchkin.js' type='text/javascript'%3E%3C/script%3E"));
+}
+</script><script>
+if(jQuery('body').data('cookie') != "eu" || jQuery.cookie('allowCookies')){
+    Munchkin.init('813-MAM-392');
+
+    // crazyegg
+    setTimeout(function(){var a=document.createElement("script");
+    var b=document.getElementsByTagName("script")[0];
+    a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0014/4686.js?"+Math.floor(new Date().getTime()/3600000);
+    a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+}
+</script></body></html>

@@ -72,17 +72,10 @@ sky skies skiing skis <a id="CO132-1"></a><span><img src="images/icons/callouts/
 Returns: <code class="literal">sky</code>, <code class="literal">skies</code>, <code class="literal">ski</code>, <code class="literal">ski</code>
 </p></td></tr></table></div><div class="tip admon"><div class="icon"><img alt="Tip" src="images/icons/tip.png" /></div><div class="admon_content"><h4>Specifying keywords in a file</h4><a id="keyword-path"></a><p>While the language analyzers only allow us to specify an array of words in the
 <code class="literal">stem_exclusion</code> parameter, the <code class="literal">keyword_marker</code> token filter also accepts a
-<code class="literal">keyword_path</code> parameter which allows us to store all of our keywords in a
+<code class="literal">keywords_path</code> parameter which allows us to store all of our keywords in a
 file. The file should contain one word per line, and must be present on every
-node in the cluster.</p><p>This file can be updated later on, adding or removing keywords.  However, it
-is important to note that:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-changes to the file will not take effect until either each node has been
-    restarted, or the index has been closed and reopened.
-    (see <a class="ulink" href="http://foo.com/indices-open-close.html" target="_top">open/close index</a>)
-</li><li class="listitem">
-changing the file will not have any effect on documents that have already
-    been indexed.
-</li></ul></div></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="customizing-stemming"></a>Customizing stemming<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/230_Stemming/50_Controlling_stemming.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>In the example above, we prevented <code class="literal">skies</code> from being stemmed, but perhaps we
+node in the cluster. See <a class="xref" href="using-stopwords.html#updating-stopwords" title="Updating stopwords">Updating stopwords</a> for tips on how to update this
+file.</p></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="customizing-stemming"></a>Customizing stemming<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/230_Stemming/50_Controlling_stemming.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>In the example above, we prevented <code class="literal">skies</code> from being stemmed, but perhaps we
 would prefer it to be stemmed to <code class="literal">sky</code> instead.  The
 <a class="ulink" href="http://foo.com/analysis-stemmer-override-tokenfilter.html" target="_top"><code class="literal">stemmer_override</code></a> token
 filter allows us to specify our own custom stemming rules. At the same time,

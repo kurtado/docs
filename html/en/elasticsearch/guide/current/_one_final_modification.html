@@ -44,19 +44,19 @@ max price for each make:</p><pre class="programlisting prettyprint lang-js">GET 
                 "terms" : {
                     "field" : "make"
                 },
-                "aggs" : { <a id="CO144-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
-                    "min_price" : { "min": { "field": "price"} }, <a id="CO144-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
-                    "max_price" : { "max": { "field": "price"} } <a id="CO144-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+                "aggs" : { <a id="CO156-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+                    "min_price" : { "min": { "field": "price"} }, <a id="CO156-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+                    "max_price" : { "max": { "field": "price"} } <a id="CO156-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
                 }
             }
          }
       }
    }
-}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/20_basic_example.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO144-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/20_basic_example.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO156-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 We need to add another "aggs" level for nesting
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO144-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO156-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Then we include a <code class="literal">min</code> metric
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO144-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO156-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 And a <code class="literal">max</code> metric
 </p></td></tr></table></div><p>Which gives us the following output (again, truncated):</p><pre class="programlisting prettyprint lang-js">{
 ...
@@ -72,10 +72,10 @@ And a <code class="literal">max</code> metric
                         "key": "honda",
                         "doc_count": 3,
                         "min_price": {
-                           "value": 10000 <a id="CO145-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+                           "value": 10000 <a id="CO157-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
                         },
                         "max_price": {
-                           "value": 20000 <a id="CO145-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+                           "value": 20000 <a id="CO157-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
                         }
                      },
                      {
@@ -94,7 +94,7 @@ And a <code class="literal">max</code> metric
                   "value": 32500
                }
             },
-...</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO145-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> <a href="#CO145-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+...</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO157-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> <a href="#CO157-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">min</code> and <code class="literal">max</code> metrics that we added now appear under each "make"
 </p></td></tr></table></div><p>With those two buckets, we’ve expanded the information derived from this query
 to include:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">

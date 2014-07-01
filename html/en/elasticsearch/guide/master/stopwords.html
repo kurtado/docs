@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Stopwords: performance vs precision</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch" /><link rel="up" href="languages.html" title="Dealing with human language" /><link rel="prev" href="stemming-in-situ.html" title="Stemming in situ" /><link rel="next" href="synonyms.html" title="Synonyms" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Stopwords: performance vs precision</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch" /><link rel="up" href="languages.html" title="Dealing with human language" /><link rel="prev" href="stemming-in-situ.html" title="Stemming in situ" /><link rel="next" href="using-stopwords.html" title="Using stopwords" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
       jQuery(function() {
         jQuery('div.navheader+div').css('minHeight',jQuery('div.toc').height()+'px');
         jQuery('article.guide_content a[id]').each(function() { this.href='#'+this.id });
@@ -26,17 +26,68 @@
            
         </span><span class="next">
            
-          <a href="synonyms.html">Synonyms
+          <a href="using-stopwords.html">Using stopwords
                »
-            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="stopwords"></a>Stopwords: performance vs precision<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/240_Stopwords.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="language-intro.html">Getting started with languages</a></span></dt><dt><span class="chapter"><a href="identifying-words.html">Identifying words</a></span></dt><dt><span class="chapter"><a href="token-normalization.html">Normalizing tokens</a></span></dt><dt><span class="chapter"><a href="stemming.html">Reducing words to their root form</a></span></dt><dt><span class="chapter"><a href="stopwords.html">Stopwords: performance vs precision</a></span></dt><dt><span class="chapter"><a href="synonyms.html">Synonyms</a></span></dt><dt><span class="chapter"><a href="fuzzy-matching.html">Fuzzy matching (TODO)</a></span></dt><dt><span class="chapter"><a href="suggesters.html">Suggesters</a></span></dt></dl></div><p>stop token filter
-elision token filter</p><p>common terms query
-common grams token filter</p></div><div class="navfooter"><span class="prev"><a href="stemming-in-situ.html">
+            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="stopwords"></a>Stopwords: performance vs precision<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/240_Stopwords/10_Intro.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="using-stopwords.html">Using stopwords</a></span></dt><dt><span class="section"><a href="stopwords-performance.html">Stopwords and performance</a></span></dt><dt><span class="section"><a href="common-terms.html">Divide and conquer</a></span></dt><dt><span class="section"><a href="stopwords-phrases.html">Stopwords and phrase queries</a></span></dt><dt><span class="section"><a href="common-grams.html"><code class="literal">common_grams</code> token filter</a></span></dt><dt><span class="section"><a href="stopwords-relavance.html">Stopwords and relevance</a></span></dt></dl></div><p>Back in the early days of information retrieval,  disk space and memory were
+limited to a tiny fraction of what we are accustomed to today. It was
+essential to make your index as small as possible.  Every kilobyte saved meant
+a significant improvement in performance. Stemming (see <a class="xref" href="stemming.html" title="Reducing words to their root form"><em>Reducing words to their root form</em></a>) was
+important, not just for making searches broader and increasing retrieval in
+the same way that we use it today, but also as a tool for compressing index
+size.</p><p>Another way to reduce index size is simply to <span class="strong"><strong>index fewer words</strong></span>.  For search
+purposes, some words are more important than others. A significant reduction
+in index size can be achieved by only indexing the more important terms.</p><p>So which terms can be left out?  We can divide terms roughly into two groups:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+Low frequency terms
+</span></dt><dd>
+Words that appear in relatively few documents in the corpus.  Because of their
+rarity, they have a high value or <span class="emphasis"><em>weight</em></span>.
+</dd><dt><span class="term">
+High frequency terms
+</span></dt><dd>
+Common words that appear in many documents in the index, like <code class="literal">the</code>, <code class="literal">and</code> and
+<code class="literal">is</code>. These words  have a low weight and contribute little to the relevance
+score.
+</dd></dl></div><div class="sidebar"><div class="titlepage"></div><p>Of course, frequency is really a scale rather than just two points labelled
+<span class="emphasis"><em>low</em></span> and <span class="emphasis"><em>high</em></span>. We just draw a line at some arbitrary point and say that any
+terms below that line are low frequency and above the line are high frequency.</p></div><p>Which terms are low or high frequency depend on the documents themselves.  The
+word <code class="literal">and</code> may be a low frequency term if all of the documents are in Chinese.
+In a collection of documents about databases, the word <code class="literal">database</code> may be a
+high frequency term with little value as a search term for that particular
+corpus.</p><p>That said, for any language there are a number of words which occur very
+commonly and which seldom add value to a search.  The default English
+stopwords used in Elasticsearch are:</p><pre class="literallayout">a, an, and, are, as, at, be, but, by, for, if, in, into, is, it,
+no, not, of, on, or, such, that, the, their, then, there, these,
+they, this, to, was, will, with</pre><p>These <span class="emphasis"><em>stopwords</em></span> can usually be filtered out before indexing with little
+negative impact on retrieval. But is it a good idea to do so?</p><h3><a id="pros-cons-stopwords"></a>Pros and cons of stopwords<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/240_Stopwords/10_Intro.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>We have more disk space, more RAM, and better compression algorithms than
+existed back in the day. Excluding the above 33 common words from the index
+will only save about 4MB per million documents.  Using stopwords for the sake
+of reducing index size is no longer a valid reason. (Although, there is one
+caveat to this statement which we will discuss in <a class="xref" href="stopwords-phrases.html" title="Stopwords and phrase queries">Stopwords and phrase queries</a>.)</p><p>On top of that, by removing words from the index we are reducing our ability
+to perform certain types of search.  Filtering out the words listed above
+prevents us from:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+distinguishing “happy” from “not happy”.
+</li><li class="listitem">
+searching for the band “The The”.
+</li><li class="listitem">
+finding Shakespeare’s play “To be or not to be”.
+</li><li class="listitem">
+using the country code for Norway: <code class="literal">no</code>.
+</li></ul></div><p>The primary advantage of removing stopwords is performance.  Imagine that we
+search an index with 1 million documents for the word <code class="literal">fox</code>.  Perhaps <code class="literal">fox</code>
+appears in only 20 of them, which means that Elastisearch has to calculate the
+relevance <code class="literal">_score</code> for 20 documents in order to return the top 10. Now, we
+change that to a search for <code class="literal">the OR fox</code>. The word <code class="literal">the</code> probably occurs in
+almost all of the documents, which means that Elasticsearch has to calculate
+the <code class="literal">_score</code> for all 1 million documents.  This second query simply cannot
+perform as well as the first.</p><p>Fortunately, there are techniques which we can use to keep common words
+searchable, while still maintaining good performance. First, we’ll start with
+how to use stopwords.</p></div><div class="navfooter"><span class="prev"><a href="stemming-in-situ.html">
               « 
               Stemming in situ</a>
            
         </span><span class="next">
            
-          <a href="synonyms.html">Synonyms
+          <a href="using-stopwords.html">Using stopwords
                »
             </a></span></div></article></section></div></div></div><footer><div id="footer_container" class="full_wrapper"><div class="container"><nav role="navigation"><ul id="footer_nav" class="menu"><li id="menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36"><a target="_blank" href="http://elasticsearch.com">Company</a></li><li id="menu-item-74980" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74980"><a href="/resources/">Resources</a></li><li id="menu-item-3106" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3106"><a href="/terms-of-use/">Terms</a></li><li id="menu-item-3107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3107"><a href="/privacy-and-cookie-policy/">Privacy</a></li><li id="menu-item-3105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3105"><a href="/contact/">Contact</a></li><li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="/blog/">Blog</a></li></ul></nav><div id="social"><a href="https://twitter.com/elasticsearch" class="social_icons" target="_blank"><i class="twitter"></i></a><a href="https://www.facebook.com/elasticsearch" class="social_icons" target="_blank"><i class="facebook"></i></a></div><div id="footer_form"><label class="form_label">Sign up for updates!</label><div class="gf_browser_chrome gform_wrapper" id="gform_wrapper_4"><a id="gf_4" name="gf_4" class="gform_anchor"></a><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_4" id="gform_4" action="/empty-template/#gf_4"><div class="gform_body"><ul id="gform_fields_4" class="gform_fields top_label description_below"><li id="field_4_6" class="gfield               gfield_contains_required"><label class="gfield_label" for="input_4_6">enter you email<span class="gfield_required">*</span></label><div class="ginput_container"><input name="input_6" id="input_4_6" type="email" value="" class="medium" tabindex="50" /></div></li><li id="field_4_2" class="gfield     gform_hidden"><input name="input_2" id="input_4_2" type="hidden" class="gform_hidden" value="813-MAM-392" /></li><li id="field_4_3" class="gfield     gform_hidden"><input name="input_3" id="input_4_3" type="hidden" class="gform_hidden" value="WEB.org" /></li><li id="field_4_4" class="gfield     gform_hidden"><input name="input_4" id="input_4_4" type="hidden" class="gform_hidden" value="WEB.org - Footer - Updates" /></li></ul></div><script type="text/javascript">//<![CDATA[
             jQuery(function(){
