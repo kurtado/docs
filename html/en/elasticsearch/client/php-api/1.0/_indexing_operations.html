@@ -86,7 +86,7 @@ $responses = $client-&gt;bulk($params);</pre><p>
     );
 
     $params['body'][] = array(
-        'doc_as_upsert' =&gt; 'true'
+        'doc_as_upsert' =&gt; 'true',
         'doc' =&gt; array(
             'my_field' =&gt; 'my_value',
             'second_field' =&gt; 'some more values'
