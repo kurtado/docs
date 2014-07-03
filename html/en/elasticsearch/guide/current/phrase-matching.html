@@ -39,7 +39,7 @@ when you want to find words that are near to each other:</p><pre class="programl
     }
 }</pre><a class="sense_widget" href="sense_widget.html?snippets/120_Proximity_Matching/05_Match_phrase_query.json" target="sense">View in Sense</a><p>Like the <code class="literal">match</code> query, the <code class="literal">match_phrase</code> query first analyzes the query
 string to produce a list of terms. It then searches for all the terms, but
-only keeps documents  which contains <span class="strong"><strong>all</strong></span> of the search terms in the same
+only keeps documents which contain <span class="strong"><strong>all</strong></span> of the search terms in the same
 <span class="strong"><strong>positions</strong></span>, relative to each other.  A query for the phrase <code class="literal">"quick fox"</code>
 would not match any of our documents because no document contains the word
 <code class="literal">"quick"</code> immediately followed by <code class="literal">"fox"</code>.</p><div class="sidebar"><div class="titlepage"></div><p>The <code class="literal">match_phrase</code> query can also be written as a <code class="literal">match</code> query with type

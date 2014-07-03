@@ -40,7 +40,7 @@ worry about cache expiry.</p><div class="section"><div class="titlepage"><div><d
 used. If two different queries use the same filter, the same filter bitset
 will be reused.  Likewise, if a single query uses the same filter in multiple
 places, only one bitset is calculated and then reused.</p><p>Let’s look at this example query which looks for emails that are either:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-in the inbox and have been read
+in the inbox and have not been read
 </li><li class="listitem">
 or are <span class="strong"><strong>not</strong></span> in the inbox but have been marked as important
 </li></ul></div><pre class="programlisting prettyprint lang-js">"bool": {

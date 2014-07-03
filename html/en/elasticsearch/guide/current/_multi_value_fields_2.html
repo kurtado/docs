@@ -64,10 +64,10 @@ PUT /my_index/_mapping/groups <a id="CO78-2"></a><span><img src="images/icons/ca
         }
     }
 }</pre><a class="sense_widget" href="sense_widget.html?snippets/120_Proximity_Matching/15_Multi_value_fields.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO78-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-First delete the <code class="literal">group</code> mapping and and documents of that type.
+First delete the <code class="literal">groups</code> mapping and all documents of that type.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO78-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-Then create a new <code class="literal">group</code> mapping with the correct values.
-</p></td></tr></table></div><p>The <code class="literal">position_offset_gap</code> settings tells Elasticsearch that it should increase
+Then create a new <code class="literal">groups</code> mapping with the correct values.
+</p></td></tr></table></div><p>The <code class="literal">position_offset_gap</code> setting tells Elasticsearch that it should increase
 the current term <code class="literal">position</code> by the specified value for every new array
 element.  So now, when we index the array of names, the terms are emitted with
 the following positions:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">

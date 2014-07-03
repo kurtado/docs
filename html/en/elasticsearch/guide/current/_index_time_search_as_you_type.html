@@ -161,7 +161,7 @@ doc contains neither <code class="literal">brown</code> nor <code class="literal
     }
 }</pre><a class="sense_widget" href="sense_widget.html?snippets/130_Partial_Matching/35_Search_as_you_type.json" target="sense">View in Sense</a><p>The <code class="literal">explanation</code> shows us that the query is looking for edge n-grams of every
 word in the query string:</p><pre class="literallayout">name:b name:br name:bro name:brow name:brown name:f name:fo</pre><p>The <code class="literal">name:f</code> condition is satisfied by the second document because
-“Furballs” has been indexed as <code class="literal">f</code>, <code class="literal">fu</code>, <code class="literal">fur</code>, etc.  In retrospect, this
+“furballs” has been indexed as <code class="literal">f</code>, <code class="literal">fu</code>, <code class="literal">fur</code>, etc.  In retrospect, this
 is not surprising.  The same <code class="literal">autocomplete</code> analyzer is being applied both at
 index time and at search time which, in most situations, is the right thing to
 do. This is one of the few occasions when it makes sense to break this rule.</p><p>We want to ensure that our inverted index contains edge n-grams of every word
@@ -226,7 +226,7 @@ the <code class="literal">postcode</code> field would need to be <code class="li
 you could use the <code class="literal">keyword</code> tokenizer to treat the postcodes as if they were
 <code class="literal">not_analyzed</code>.</p><div class="sidebar"><div class="titlepage"></div><p>The <code class="literal">keyword</code> tokenizer is the NOOP tokenizer, the tokenizer which does
 nothing.  Whatever string it receives as input, it emits exactly the same
-string a single token.  It can therefore be used for values that we would
+string as a single token.  It can therefore be used for values that we would
 normally treat as <code class="literal">not_analyzed</code> but which require some other analysis
 transformation such as lowercasing.</p></div><pre class="programlisting prettyprint lang-js">{
     "analysis": {
