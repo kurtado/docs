@@ -210,6 +210,22 @@ default locale.</p><p>Here is a sample settings:</p><pre class="programlisting p
             }
         }
     }
+}</pre><h3><a id="_icu_normalization_charfilter"></a>ICU Normalization CharFilter<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/analysis/icu-plugin.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Normalizes characters as explained <a class="ulink" href="http://userguide.icu-project.org/transforms/normalization" target="_top">here</a>.
+It registers itself by default under <code class="literal">icu_normalizer</code> or <code class="literal">icuNormalizer</code> using the default settings.
+Allows for the name parameter to be provided which can include the following values: <code class="literal">nfc</code>, <code class="literal">nfkc</code>, and <code class="literal">nfkc_cf</code>.
+Allows for the mode parameter to be provided which can include the following values: <code class="literal">compose</code> and <code class="literal">decompose</code>.
+Use <code class="literal">decompose</code> with <code class="literal">nfc</code> or <code class="literal">nfkc</code>, to get <code class="literal">nfd</code> or <code class="literal">nfkd</code>, respectively.
+Here is a sample settings:</p><pre class="programlisting prettyprint lang-js">{
+    "index" : {
+        "analysis" : {
+            "analyzer" : {
+                "collation" : {
+                    "tokenizer" : "keyword",
+                    "char_filter" : ["icu_normalizer"]
+                }
+            }
+        }
+    }
 }</pre></div><div class="navfooter"><span class="prev"><a href="analysis-pattern-replace-charfilter.html">
               « 
               Pattern Replace Char Filter</a>
