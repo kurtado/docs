@@ -110,61 +110,61 @@ we wanted to run a <code class="literal">match</code> query on the <code class="
 to filter by line numbers, where <code class="literal">start</code> and <code class="literal">end</code> are optional.</p><p>The <code class="literal">params</code> would look like:</p><pre class="programlisting prettyprint lang-js">{
     "params": {
         "text":      "words to search for",
-        "line_no": { <a id="CO1-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
-            "start": 10, <a id="CO1-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
-            "end":   20  <a id="CO1-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+        "line_no": { <a id="CO4-2"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+            "start": 10, <a id="CO4-3"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+            "end":   20  <a id="CO4-4"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
         }
     }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> <a href="#CO1-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> <a href="#CO1-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO4-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> <a href="#CO4-2"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> <a href="#CO4-3"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> <a href="#CO4-4"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 All three of these elements are optional.
 </p></td></tr></table></div><p>We could write the query as:</p><pre class="programlisting prettyprint lang-js">{
     "filtered": {
       "query": {
         "match": {
-          "line": "{{text}}" <a id="CO2-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+          "line": "{{text}}" <a id="CO5-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         }
       },
       "filter": {
-        {{#line_no}} <a id="CO2-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+        {{#line_no}} <a id="CO5-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
           "range": {
             "line_no": {
-              {{#start}} <a id="CO2-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
-                "gte": "{{start}}" <a id="CO2-4"></a><span><img src="images/icons/callouts/4.png" alt="" /></span>
-                {{#end}},{{/end}} <a id="CO2-5"></a><span><img src="images/icons/callouts/5.png" alt="" /></span>
-              {{/start}} <a id="CO2-6"></a><span><img src="images/icons/callouts/6.png" alt="" /></span>
-              {{#end}} <a id="CO2-7"></a><span><img src="images/icons/callouts/7.png" alt="" /></span>
-                "lte": "{{end}}" <a id="CO2-8"></a><span><img src="images/icons/callouts/8.png" alt="" /></span>
+              {{#start}} <a id="CO5-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+                "gte": "{{start}}" <a id="CO5-4"></a><span><img src="images/icons/callouts/4.png" alt="" /></span>
+                {{#end}},{{/end}} <a id="CO5-5"></a><span><img src="images/icons/callouts/5.png" alt="" /></span>
+              {{/start}} <a id="CO5-6"></a><span><img src="images/icons/callouts/6.png" alt="" /></span>
+              {{#end}} <a id="CO5-7"></a><span><img src="images/icons/callouts/7.png" alt="" /></span>
+                "lte": "{{end}}" <a id="CO5-8"></a><span><img src="images/icons/callouts/8.png" alt="" /></span>
               {{/end}} &lt;/6&gt;
             }
           }
-        {{/line_no}} <a id="CO2-9"></a><span><img src="images/icons/callouts/9.png" alt="" /></span>
+        {{/line_no}} <a id="CO5-9"></a><span><img src="images/icons/callouts/9.png" alt="" /></span>
       }
     }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO5-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Fill in the value of param <code class="literal">text</code>
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> <a href="#CO2-9"><span><img src="images/icons/callouts/9.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO5-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> <a href="#CO5-9"><span><img src="images/icons/callouts/9.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Include the <code class="literal">range</code> filter only if <code class="literal">line_no</code> is specified
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> <a href="#CO2-6"><span><img src="images/icons/callouts/6.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO5-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> <a href="#CO5-6"><span><img src="images/icons/callouts/6.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Include the <code class="literal">gte</code> clause only if <code class="literal">line_no.start</code> is specified
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-4"><span><img src="images/icons/callouts/4.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO5-4"><span><img src="images/icons/callouts/4.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Fill in the value of param <code class="literal">line_no.start</code>
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-5"><span><img src="images/icons/callouts/5.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO5-5"><span><img src="images/icons/callouts/5.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Add a comma after the <code class="literal">gte</code> clause only if <code class="literal">line_no.start</code>
     AND <code class="literal">line_no.end</code> are specified
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-7"><span><img src="images/icons/callouts/7.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO5-7"><span><img src="images/icons/callouts/7.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Include the <code class="literal">lte</code> clause only if <code class="literal">line_no.end</code> is specified
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO2-8"><span><img src="images/icons/callouts/8.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO5-8"><span><img src="images/icons/callouts/8.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Fill in the value of param <code class="literal">line_no.end</code>
 </p></td></tr></table></div><p>As written above, this template is not valid JSON because it includes the
 <span class="emphasis"><em>section</em></span> markers like <code class="literal">{{#line_no}}</code>.  For this reason, the template
 can only be written as a string.</p><h5><a id="_pre_registered_template"></a>Pre-registered template<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/search/search-template.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h5><p>You can register search templates by storing it in the <code class="literal">config/scripts</code> directory, in a file using the <code class="literal">.mustache</code> extension.
 In order to execute the stored template, reference it by it’s name under the <code class="literal">template</code> key:</p><pre class="programlisting prettyprint lang-js">GET /_search/template
 {
-    "template": "storedTemplate" <a id="CO3-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>,
+    "template": "storedTemplate" <a id="CO6-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>,
     "params": {
         "query_string": "search for these words"
     }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO3-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO6-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Name of the the query template in <code class="literal">config/scripts/</code>, i.e., <code class="literal">storedTemplate.mustache</code>.
 </p></td></tr></table></div></div><div class="navfooter"><span class="prev"><a href="search-request-named-queries-and-filters.html">
               « 
