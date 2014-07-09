@@ -94,17 +94,19 @@ available online have malformed rules in the <code class="literal">.aff</code> f
 will throw an exception if it can’t parse an affix rule. If you need to deal
 with a broken affix file, you can set <code class="literal">strict_affix_parsing</code> to <code class="literal">false</code> to tell
 Lucene to just ignore the broken rules.
-</dd></dl></div><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Custom dictionaries</strong></p></div></div></div><p>If multiple dictionaries (<code class="literal">.dic</code>/<code class="literal">.aff</code> pairs) are placed in the same
+</dd></dl></div><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Custom dictionaries</strong></p></div></div></div><p>If multiple dictionaries (<code class="literal">.dic</code> files) are placed in the same
 directory, they will be merged together at load time. This allows you to
 tailor the downloaded dictionaries with your own custom word lists:</p><pre class="programlisting prettyprint lang-txt">config/
   └ hunspell/
       └ en_US/  <a id="CO127-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
           ├ en_US.dic
-          ├ en_US.aff
+          ├ en_US.aff <a id="CO127-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
           ├ custom.dic
-          ├ custom.aff
           └ settings.yml</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO127-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">custom</code> and <code class="literal">en_US</code> dictionaries will be merged together.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO127-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+Multiple <code class="literal">.aff</code> files are not allowed, as they could use
+    conflicting rules.
 </p></td></tr></table></div><p>The format of the <code class="literal">.dic</code> and <code class="literal">.aff</code> files is discussed in
 <a class="xref" href="hunspell.html#hunspell-dictionary-format" title="Hunspell dictionary format">Hunspell dictionary format</a>.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_creating_a_hunspell_token_filter"></a>Creating a Hunspell token filter<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/230_Stemming/30_Hunspell_stemmer.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Once your dictionaries are installed on all nodes, you can define a <code class="literal">hunspell</code>
 token filter which uses them:</p><pre class="programlisting prettyprint lang-json">PUT /my_index
