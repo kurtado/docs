@@ -162,7 +162,6 @@ contents:
             branches:   [master]
             current:    master
             abbr:       ruby
-            single:     1
 
           -
             title:      Rivers
