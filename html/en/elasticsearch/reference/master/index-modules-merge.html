@@ -156,9 +156,10 @@ further merges will wait until a merge thread becomes available.  The merge
 scheduler supports this setting:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 <code class="literal">index.merge.scheduler.max_thread_count</code>
 </span></dt><dd>
-The maximum number of concurrent merge threads that may run at once. Defaults
-to <code class="literal">1</code> which works best with spinning-magnets disks.  If you are using
-a good solid-state disk (SSD) instead then try setting this to <code class="literal">3</code>.
+The maximum number of threads that may be merging at once. Defaults to
+<code class="literal">Math.max(1, Math.min(3, Runtime.getRuntime().availableProcessors() / 2))</code>,
+which works well for a good solid-state-disk (SSD).  If your index is on
+spinning platter drives instead, decrease this to 1.
 </dd></dl></div><h4><a id="_serialmergescheduler"></a>SerialMergeScheduler<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/merge.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>A merge scheduler that simply does each merge sequentially using the
 calling thread (blocking the operations that triggered the merge or the
 index operation). This merge scheduler has a merge thread pool that
