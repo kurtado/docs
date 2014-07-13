@@ -51,24 +51,24 @@ transactions: the car model, manufacturer, sale price, when it sold, etc.</p><p>
 { "index": {}}
 { "price" : 25000, "color" : "blue", "make" : "ford", "sold" : "2014-02-12" }</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/20_basic_example.json" target="sense">View in Sense</a><p>Now that we have some data, let’s construct our first aggregation.  A car dealer
 may want to know which color car sells the best.  This is easily accomplished
-using a simple aggregation.  We will do this using a <code class="literal">terms</code> bucket:</p><pre class="programlisting prettyprint lang-js">GET /cars/transactions/_search?search_type=count <a id="CO150-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+using a simple aggregation.  We will do this using a <code class="literal">terms</code> bucket:</p><pre class="programlisting prettyprint lang-js">GET /cars/transactions/_search?search_type=count <a id="CO153-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
 {
-    "aggs" : { <a id="CO150-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
-        "popular_colors" : { <a id="CO150-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+    "aggs" : { <a id="CO153-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+        "popular_colors" : { <a id="CO153-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
             "terms" : {
-              "field" : "color" <a id="CO150-4"></a><span><img src="images/icons/callouts/4.png" alt="" /></span>
+              "field" : "color" <a id="CO153-4"></a><span><img src="images/icons/callouts/4.png" alt="" /></span>
             }
         }
     }
-}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/20_basic_example.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO150-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/20_basic_example.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO153-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Because we don’t care about search results, we are going to use the <code class="literal">count</code>
 <a class="link" href="_search_options.html#search-type" title="search_type">search_type</a>, which will be faster.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO150-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO153-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Aggregations are placed under the top-level <code class="literal">"aggs"</code> parameter (the longer <code class="literal">"aggregations"</code>
 will also work if you prefer that)
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO150-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO153-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 We then name the aggregation whatever we want — "popular_colors" in this example
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO150-4"><span><img src="images/icons/callouts/4.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO153-4"><span><img src="images/icons/callouts/4.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Finally, we define a single bucket of type <code class="literal">terms</code>
 </p></td></tr></table></div><p>Aggregations are executed in the context of search results, which means it is
 just another top-level parameter in a search request (e.g. using the <code class="literal">/_search</code>
@@ -81,14 +81,14 @@ bucket for every unique term it encounters.  Since we are telling it to use the
 "color" field, the <code class="literal">terms</code> bucket will dynamically create a new bucket for each color.</p><p>Let’s execute that aggregation and take a look at the results:</p><pre class="programlisting prettyprint lang-js">{
 ...
    "hits": {
-      "hits": [] <a id="CO151-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+      "hits": [] <a id="CO154-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
    },
    "aggregations": {
-      "colors": { <a id="CO151-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+      "colors": { <a id="CO154-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
          "buckets": [
             {
-               "key": "red", <a id="CO151-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
-               "doc_count": 4 <a id="CO151-4"></a><span><img src="images/icons/callouts/4.png" alt="" /></span>
+               "key": "red", <a id="CO154-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+               "doc_count": 4 <a id="CO154-4"></a><span><img src="images/icons/callouts/4.png" alt="" /></span>
             },
             {
                "key": "blue",
@@ -101,14 +101,14 @@ bucket for every unique term it encounters.  Since we are telling it to use the
          ]
       }
    }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO151-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO154-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 No search hits are returned because we used the <code class="literal">search_type=count</code> param
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO151-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO154-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Our "colors" aggregation is returned as part of the "aggregations" field
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO151-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO154-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The key to each bucket corresponds to a unique term found in the "color" field.
 It also always includes <code class="literal">doc_count</code> which tells us how many docs contained the term
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO151-4"><span><img src="images/icons/callouts/4.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO154-4"><span><img src="images/icons/callouts/4.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The count of each bucket represents the number of documents with this color
 </p></td></tr></table></div><p>The response contains a list of buckets, each corresponding to a unique color
 (red, green, etc). Each bucket also includes a count of how many documents

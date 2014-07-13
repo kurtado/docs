@@ -63,7 +63,7 @@ aggregations even further.  All of our previous examples calculated statistics
 about <span class="emphasis"><em>all</em></span> of the data: top selling cars, average price of all cars, most sales
 per month, etc.</p><p>With scope, we can ask questions like "How many colors are Ford cars are
 available in?".  We do this by simply adding a query to the request (in this case
-a <code class="literal">match</code> query):</p><pre class="programlisting prettyprint lang-js">GET /cars/transactions/_search  <a id="CO162-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+a <code class="literal">match</code> query):</p><pre class="programlisting prettyprint lang-js">GET /cars/transactions/_search  <a id="CO165-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
 {
     "query" : {
         "match" : {
@@ -77,7 +77,7 @@ a <code class="literal">match</code> query):</p><pre class="programlisting prett
             }
         }
     }
-}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/40_scope.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO162-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/40_scope.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO165-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 We are omitting <code class="literal">search_type=count</code> so that search hits are returned too
 </p></td></tr></table></div><p>By omitting the <code class="literal">search_type=count</code> this time, we can see both the search
 results and the aggregation results:</p><pre class="programlisting prettyprint lang-js">{
@@ -138,23 +138,23 @@ aggregations inside of it like normal:</p><pre class="programlisting prettyprint
     },
     "aggs" : {
         "single_avg_price": {
-            "avg" : { "field" : "price" } <a id="CO163-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+            "avg" : { "field" : "price" } <a id="CO166-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
         "all": {
-            "global" : {}, <a id="CO163-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+            "global" : {}, <a id="CO166-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
             "aggs" : {
                 "avg_price": {
-                    "avg" : { "field" : "price" } <a id="CO163-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+                    "avg" : { "field" : "price" } <a id="CO166-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
                 }
 
             }
         }
     }
-}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/40_scope.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO163-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/40_scope.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO166-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 This aggregation operates in the query scope (e.g. all docs matching "ford")
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO163-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO166-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">global</code> bucket has no parameters
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO163-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO166-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 This aggregation operates on the all documents, regardless of the make
 </p></td></tr></table></div><p>The first <code class="literal">avg</code> metric calculates is based on all documents that fall under the
 query scope — all "ford" cars.  The second <code class="literal">avg</code> metric is nested under a
