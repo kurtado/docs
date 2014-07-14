@@ -109,8 +109,10 @@ explained below.</p><div class="section"><div class="titlepage"><div><div><h4 cl
 search terms, but it is possible to specify other fields in the query syntax:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 where the <code class="literal">status</code> field contains <code class="literal">active</code>
 </p><pre class="literallayout">status:active</pre></li><li class="listitem"><p class="simpara">
-where the <code class="literal">title</code> field contains <code class="literal">quick</code> or <code class="literal">brown</code>
-</p><pre class="literallayout">title:(quick brown)</pre></li><li class="listitem"><p class="simpara">
+where the <code class="literal">title</code> field contains <code class="literal">quick</code> or <code class="literal">brown</code>.
+  If you omit the OR operator the default operator will be used
+</p><pre class="literallayout">title:(quick OR brown)
+title:(quick brown)</pre></li><li class="listitem"><p class="simpara">
 where the <code class="literal">author</code> field contains the exact phrase <code class="literal">"john smith"</code>
 </p><pre class="literallayout">author:"John Smith"</pre></li><li class="listitem"><p class="simpara">
 where any of the fields <code class="literal">book.title</code>, <code class="literal">book.content</code> or <code class="literal">book.date</code> contains
