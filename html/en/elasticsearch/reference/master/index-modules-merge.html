@@ -160,19 +160,9 @@ The maximum number of threads that may be merging at once. Defaults to
 <code class="literal">Math.max(1, Math.min(3, Runtime.getRuntime().availableProcessors() / 2))</code>
 which works well for a good solid-state-disk (SSD).  If your index is on
 spinning platter drives instead, decrease this to 1.
-</dd></dl></div><h4><a id="_serialmergescheduler"></a>SerialMergeScheduler<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/merge.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>A merge scheduler that simply does each merge sequentially using the
-calling thread (blocking the operations that triggered the merge or the
-index operation). This merge scheduler has a merge thread pool that
-explicitly schedules merges, and it makes sure that merges are serial
-within a shard, yet concurrent across multiple shards.</p><p>The scheduler supports the following settings:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
-<code class="literal">index.merge.scheduler.max_merge_at_once</code>
-</span></dt><dd>
-The maximum number of merges a single merge run performs. This setting prevents
-executing unlimited amount of merges in a loop until another shards has a
-chance to get a merge thread from the pool. If this limit is reached the
-merge thread returns to the pool and continues once the the call to a single
-shards is executed. The default is <code class="literal">5</code>
-</dd></dl></div></div><div class="navfooter"><span class="prev"><a href="index-modules-slowlog.html">
+</dd></dl></div><h4><a id="_serialmergescheduler"></a>SerialMergeScheduler<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/index-modules/merge.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>This is accepted for backwards compatibility, but just uses
+ConcurrentMergeScheduler with index.merge.scheduler.max_thread_count
+set to 1 so that only 1 merge may run at a time.</p></div><div class="navfooter"><span class="prev"><a href="index-modules-slowlog.html">
               « 
               Index Slow Log</a>
            
