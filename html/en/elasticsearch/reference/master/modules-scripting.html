@@ -40,8 +40,8 @@ different languages. Currently supported plugins are <code class="literal">lang-
 for JavaScript, <code class="literal">lang-mvel</code> for Mvel, and <code class="literal">lang-python</code> for Python.
 All places where a <code class="literal">script</code> parameter can be used, a <code class="literal">lang</code> parameter
 (on the same level) can be provided to define the language of the
-script. The <code class="literal">lang</code> options are <code class="literal">groovy</code>, <code class="literal">js</code>, <code class="literal">mvel</code>, <code class="literal">python</code>, and
-<code class="literal">native</code>.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><h4>Added in 1.2.0.</h4><p> Dynamic scripting is disabled for non-sandboxed languages by default since version 1.2.0.</p></div></div><p>To increase security, Elasticsearch does not allow you to specify scripts for
+script. The <code class="literal">lang</code> options are <code class="literal">groovy</code>, <code class="literal">js</code>, <code class="literal">mvel</code>, <code class="literal">python</code>,
+<code class="literal">expression</code> and <code class="literal">native</code>.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><h4>Added in 1.2.0.</h4><p> Dynamic scripting is disabled for non-sandboxed languages by default since version 1.2.0.</p></div></div><p>To increase security, Elasticsearch does not allow you to specify scripts for
 non-sandboxed languages with a request. Instead, scripts must be placed in the
 <code class="literal">scripts</code> directory inside the configuration directory (the directory where
 elasticsearch.yml is). Scripts placed into this directory will automatically be
@@ -134,9 +134,26 @@ register a script named <code class="literal">my</code>. Another option is in a 
 <code class="literal">ScriptModule</code> and call <code class="literal">registerScript</code> on it.</p><p>Executing the script is done by specifying the <code class="literal">lang</code> as <code class="literal">native</code>, and
 the name of the script as the <code class="literal">script</code>.</p><p>Note, the scripts need to be in the classpath of elasticsearch. One
 simple way to do it is to create a directory under plugins (choose a
-descriptive name), and place the jar / classes files there, they will be
-automatically loaded.</p><h3><a id="_score"></a>Score<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>In all scripts that can be used in facets, allow to access the current
-doc score using <code class="literal">doc.score</code>.</p><h3><a id="_computing_scores_based_on_terms_in_scripts"></a>Computing scores based on terms in scripts<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>see <a class="link" href="modules-advanced-scripting.html" title="Text scoring in scripts">advanced scripting documentation</a></p><h3><a id="_document_fields"></a>Document Fields<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Most scripting revolve around the use of specific document fields data.
+descriptive name), and place the jar / classes files there. They will be
+automatically loaded.</p><h3><a id="_lucene_expressions_scripts"></a>Lucene Expressions Scripts<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><p>This feature is <span class="strong"><strong>experimental</strong></span> and subject to change in future versions.</p></div></div><p>Lucene’s expressions module provides a mechanism to compile a
+<code class="literal">javascript</code> expression to bytecode.  This allows very fast execution,
+as if you had written a <code class="literal">native</code> script.  Expression scripts can be
+used in <code class="literal">script_score</code>, <code class="literal">script_fields</code>, sort scripts and numeric aggregation scripts.</p><p>See the <a class="ulink" href="http://lucene.apache.org/core/4_9_0/expressions/index.html?org/apache/lucene/expressions/js/package-summary.html" target="_top">expressions module documentation</a>
+for details on what operators and functions are available.</p><p>Variables in <code class="literal">expression</code> scripts are available to access:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Single valued document fields, e.g. <code class="literal">doc['myfield'].value</code>
+</li><li class="listitem">
+Parameters passed into the script, e.g. <code class="literal">mymodifier</code>
+</li><li class="listitem">
+The current document’s score, <code class="literal">_score</code> (only available when used in a <code class="literal">script_score</code>)
+</li></ul></div><p>There are a few limitations relative to other script languages:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Only numeric fields may be accessed
+</li><li class="listitem">
+Stored fields are not available
+</li><li class="listitem">
+If a field is sparse (only some documents contain a value), documents missing the field will have a value of <code class="literal">0</code>
+</li></ul></div><h3><a id="_score"></a>Score<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>In all scripts that can be used in facets, the current
+document’s score is accessible in <code class="literal">doc.score</code>.  When using a <code class="literal">script_score</code>,
+the current score is available in <code class="literal">_score</code>.</p><h3><a id="_computing_scores_based_on_terms_in_scripts"></a>Computing scores based on terms in scripts<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>see <a class="link" href="modules-advanced-scripting.html" title="Text scoring in scripts">advanced scripting documentation</a></p><h3><a id="_document_fields"></a>Document Fields<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Most scripting revolve around the use of specific document fields data.
 The <code class="literal">doc['field_name']</code> can be used to access specific field data within
 a document (the document in question is usually derived by the context
 the script is used). Document fields are very fast to access since they
