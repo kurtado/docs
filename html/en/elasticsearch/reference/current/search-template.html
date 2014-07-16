@@ -160,12 +160,42 @@ Fill in the value of param <code class="literal">line_no.end</code>
 can only be written as a string.</p><h5><a id="_pre_registered_template"></a>Pre-registered template<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/search/search-template.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h5><p>You can register search templates by storing it in the <code class="literal">config/scripts</code> directory, in a file using the <code class="literal">.mustache</code> extension.
 In order to execute the stored template, reference it by it’s name under the <code class="literal">template</code> key:</p><pre class="programlisting prettyprint lang-js">GET /_search/template
 {
-    "template": "storedTemplate" <a id="CO6-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>,
+    "template": {
+        "file": "storedTemplate" <a id="CO6-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>,
+    },
     "params": {
         "query_string": "search for these words"
     }
 }</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO6-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Name of the the query template in <code class="literal">config/scripts/</code>, i.e., <code class="literal">storedTemplate.mustache</code>.
+</p></td></tr></table></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Added in 1.3.0.</p></div></div><p>You can also register search templates by storing it in the elasticsearch cluster in a special index named <code class="literal">.scripts</code>.
+There are REST APIs to manage these indexed templates.</p><pre class="programlisting prettyprint lang-js">POST /_search/template/&lt;templatename&gt;
+{
+    "template": {
+        "query": {
+            "match": {
+                "title": "{{query_string}}"
+            }
+        }
+    }
+}</pre><p>This template can be retrieved by</p><pre class="programlisting prettyprint lang-js">GET /_search/template/&lt;templatename&gt;</pre><p>which is rendered as:</p><pre class="programlisting prettyprint lang-js">{
+    "template": {
+        "query": {
+            "match": {
+                "title": "{{query_string}}"
+            }
+        }
+    }
+}</pre><p>This template can be deleted by</p><pre class="programlisting prettyprint lang-js">DELETE /_search/template/&lt;templatename&gt;</pre><p>To use an indexed template at search time use:</p><pre class="programlisting prettyprint lang-js">GET /_search/template
+{
+    "template": {
+        "id": "templateName" <a id="CO7-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>,
+    },
+    "params": {
+        "query_string": "search for these words"
+    }
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO7-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+Name of the the query template stored in the .scripts index.
 </p></td></tr></table></div></div><div class="navfooter"><span class="prev"><a href="search-request-named-queries-and-filters.html">
               « 
               Named Queries and Filters</a>
