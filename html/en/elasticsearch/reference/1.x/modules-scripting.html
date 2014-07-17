@@ -33,28 +33,27 @@
             </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="modules-scripting"></a>Scripting<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="modules-cluster.html">Cluster</a></span></dt><dt><span class="chapter"><a href="modules-discovery.html">Discovery</a></span></dt><dt><span class="chapter"><a href="modules-gateway.html">Gateway</a></span></dt><dt><span class="chapter"><a href="modules-http.html">HTTP</a></span></dt><dt><span class="chapter"><a href="modules-indices.html">Indices</a></span></dt><dt><span class="chapter"><a href="modules-memcached.html">memcached</a></span></dt><dt><span class="chapter"><a href="modules-network.html">Network Settings</a></span></dt><dt><span class="chapter"><a href="modules-node.html">Node</a></span></dt><dt><span class="chapter"><a href="modules-tribe.html">Tribe node</a></span></dt><dt><span class="chapter"><a href="modules-plugins.html">Plugins</a></span></dt><dt><span class="chapter"><a href="modules-scripting.html">Scripting</a></span></dt><dt><span class="chapter"><a href="modules-advanced-scripting.html">Text scoring in scripts</a></span></dt><dt><span class="chapter"><a href="modules-threadpool.html">Thread Pool</a></span></dt><dt><span class="chapter"><a href="modules-thrift.html">Thrift</a></span></dt><dt><span class="chapter"><a href="modules-transport.html">Transport</a></span></dt><dt><span class="chapter"><a href="modules-snapshots.html">Snapshot And Restore</a></span></dt></dl></div><p>The scripting module allows to use scripts in order to evaluate custom
 expressions. For example, scripts can be used to return "script fields"
 as part of a search request, or can be used to evaluate a custom score
-for a query and so on.</p><p>The scripting module uses by default <a class="ulink" href="http://mvel.codehaus.org/" target="_top">mvel</a> as
-the scripting language with some extensions. mvel is used since it is
-extremely fast and very simple to use, and in most cases, simple
-expressions are needed (for example, mathematical equations).</p><p>Additional <code class="literal">lang</code> plugins are provided to allow to execute scripts in
+for a query and so on.</p><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><h4>Deprecated in 1.3.0.</h4><p>Groovy has replaced Mvel as the default scripting language.</p></div></div><p>The scripting module uses by default <a class="ulink" href="http://groovy.codehaus.org/" target="_top">groovy</a>
+(previously <a class="ulink" href="http://mvel.codehaus.org/" target="_top">mvel</a>) as the scripting language with some
+extensions. Groovy is used since it is extremely fast and very simple to use.</p><p>Additional <code class="literal">lang</code> plugins are provided to allow to execute scripts in
 different languages. Currently supported plugins are <code class="literal">lang-javascript</code>
-for JavaScript, <code class="literal">lang-groovy</code> for Groovy, and <code class="literal">lang-python</code> for Python.
+for JavaScript, <code class="literal">lang-mvel</code> for Mvel, and <code class="literal">lang-python</code> for Python.
 All places where a <code class="literal">script</code> parameter can be used, a <code class="literal">lang</code> parameter
 (on the same level) can be provided to define the language of the
-script. The <code class="literal">lang</code> options are <code class="literal">mvel</code>, <code class="literal">js</code>, <code class="literal">groovy</code>, <code class="literal">python</code>,
-<code class="literal">expression</code>, and <code class="literal">native</code>.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><h4>Added in 1.2.0.</h4><p> Dynamic scripting is disabled by default since version 1.2.0.</p></div></div><p>To increase security, Elasticsearch does not allow you to specify scripts with a
-request. Instead, scripts must be placed in the <code class="literal">scripts</code> directory inside the
-configuration directory (the directory where elasticsearch.yml is). Scripts
-placed into this directory will automatically be picked up and be available to
-be used. Once a script has been placed in this directory, it can be referenced
-by name. For example, a script called <code class="literal">calculate-score.mvel</code> can be referenced
-in a request like this:</p><pre class="programlisting prettyprint lang-sh">$ tree config
+script. The <code class="literal">lang</code> options are <code class="literal">groovy</code>, <code class="literal">js</code>, <code class="literal">mvel</code>, <code class="literal">expression</code>, <code class="literal">python</code>,
+and <code class="literal">native</code>.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><h4>Added in 1.2.0.</h4><p> Dynamic scripting is disabled for non-sandboxed languages by default since version 1.2.0.</p></div></div><p>To increase security, Elasticsearch does not allow you to specify scripts for
+non-sandboxed languages with a request. Instead, scripts must be placed in the
+<code class="literal">scripts</code> directory inside the configuration directory (the directory where
+elasticsearch.yml is). Scripts placed into this directory will automatically be
+picked up and be available to be used. Once a script has been placed in this
+directory, it can be referenced by name. For example, a script called
+<code class="literal">calculate-score.groovy</code> can be referenced in a request like this:</p><pre class="programlisting prettyprint lang-sh">$ tree config
 config
 ├── elasticsearch.yml
 ├── logging.yml
 └── scripts
-    └── calculate-score.mvel</pre><pre class="programlisting prettyprint lang-sh">$ cat config/scripts/calculate-score.mvel
-Math.log(_score * 2) + my_modifier</pre><pre class="programlisting prettyprint lang-js">curl -XPOST localhost:9200/_search -d '{
+    └── calculate-score.groovy</pre><pre class="programlisting prettyprint lang-sh">$ cat config/scripts/calculate-score.groovy
+log(_score * 2) + my_modifier</pre><pre class="programlisting prettyprint lang-js">curl -XPOST localhost:9200/_search -d '{
   "query": {
     "function_score": {
       "query": {
@@ -77,43 +76,11 @@ Math.log(_score * 2) + my_modifier</pre><pre class="programlisting prettyprint l
 }'</pre><p>The name of the script is derived from the hierarchy of directories it
 exists under, and the file name without the lang extension. For example,
 a script placed under <code class="literal">config/scripts/group1/group2/test.py</code> will be
-named <code class="literal">group1_group2_test</code>.</p><h3><a id="_default_scripting_language"></a>Default Scripting Language<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The default scripting language (assuming no <code class="literal">lang</code> parameter is
-provided) is <code class="literal">mvel</code>. In order to change it set the <code class="literal">script.default_lang</code>
-to the appropriate language.</p><h3><a id="_indexed_scripts"></a>Indexed Scripts<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>If dynamic scripting is enabled, Elasticsearch allows you to store scripts
-in an internal index known as <code class="literal">.scripts</code> and reference them by id. There are
-REST endpoints to manage indexed scripts as follows:</p><p>Requests to the scripts endpoint look like :</p><pre class="programlisting prettyprint lang-js">/_scripts/{lang}/{id}</pre><p>Where the <code class="literal">lang</code> part is the language the script is in and the <code class="literal">id</code> part is the id
-of the script. In the <code class="literal">.scripts</code> index the type of the document will be set to the <code class="literal">lang</code>.</p><pre class="programlisting prettyprint lang-js">curl -XPOST localhost:9200/_scripts/mvel/indexedCalculateScore -d '{
-     "script": "log(_score * 2) + my_modifier"
-}'</pre><p>This will create a document with id: <code class="literal">indexedCalculateScore</code> and type: <code class="literal">mvel</code> in the
-<code class="literal">.scripts</code> index. The type of the document is the language used by the script.</p><p>This script can be accessed at query time by appending <code class="literal">_id</code> to
-the script parameter and passing the script id. So <code class="literal">script</code> becomes <code class="literal">script_id</code>.:</p><pre class="programlisting prettyprint lang-js">curl -XPOST localhost:9200/_search -d '{
-  "query": {
-    "function_score": {
-      "query": {
-        "match": {
-          "body": "foo"
-        }
-      },
-      "functions": [
-        {
-          "script_score": {
-            "script_id": "indexedCalculateScore",
-            "params": {
-              "my_modifier": 8
-            }
-          }
-        }
-      ]
-    }
-  }
-}'</pre><p>Note that you must have dynamic scripting enabled to use indexed scripts
-at query time.</p><p>The script can be viewed by:</p><pre class="programlisting prettyprint lang-js">curl -XGET localhost:9200/_scripts/mvel/calculate-score</pre><p>This is rendered as:</p><pre class="programlisting prettyprint lang-js">'{
-     "script": "log(_score * 2) + my_modifier"
-}'</pre><p>Indexed scripts can be deleted by:</p><pre class="programlisting prettyprint lang-js">curl -XDELETE localhost:9200/_scripts/mvel/calculate-score</pre><h3><a id="_enabling_dynamic_scripting"></a>Enabling dynamic scripting<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>We recommend running Elasticsearch behind an application or proxy,
-which protects Elasticsearch from the outside world. If users are
-allowed to run dynamic scripts (even in a search request), then they
-have the same access to your box as the user that Elasticsearch is
-running as. For this reason dynamic scripting is disabled by default.</p><p>First, you should not run Elasticsearch as the <code class="literal">root</code> user, as this would allow
+named <code class="literal">group1_group2_test</code>.</p><h3><a id="_enabling_dynamic_scripting"></a>Enabling dynamic scripting<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>We recommend running Elasticsearch behind an application or proxy, which
+protects Elasticsearch from the outside world. If users are allowed to run
+dynamic scripts (even in a search request), then they have the same access to
+your box as the user that Elasticsearch is running as. For this reason dynamic
+scripting is allowed only for sandboxed languages by default.</p><p>First, you should not run Elasticsearch as the <code class="literal">root</code> user, as this would allow
 a script to access or do <span class="strong"><strong>anything</strong></span> on your server, without limitations. Second,
 you should not expose Elasticsearch directly to users, but instead have a proxy
 application inbetween. If you <span class="strong"><strong>do</strong></span> intend to expose Elasticsearch directly to
@@ -122,12 +89,40 @@ on your box or not. If you do, you can enable dynamic scripting by adding the
 following setting to the <code class="literal">config/elasticsearch.yml</code> file on every node:</p><pre class="programlisting prettyprint lang-yaml">script.disable_dynamic: false</pre><p>While this still allows execution of named scripts provided in the config, or
 <span class="emphasis"><em>native</em></span> Java scripts registered through plugins, it also allows users to run
 arbitrary scripts via the API. Instead of sending the name of the file as the
-script, the body of the script can be sent instead.</p><h3><a id="_automatic_script_reloading"></a>Automatic Script Reloading<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">config/scripts</code> directory is scanned periodically for changes.
+script, the body of the script can be sent instead.</p><p>There are three possible configuration values for the <code class="literal">script.disable_dynamic</code>
+setting, the default value is <code class="literal">sandbox</code>:</p><div class="informaltable"><table cellpadding="4px" border="1"><colgroup><col class="col_1" /><col class="col_2" /></colgroup><thead><tr><th align="left" valign="top">Value </th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top"><p><code class="literal">true</code></p></td><td align="left" valign="top"><p>all dynamic scripting is disabled, scripts must be placed in the <code class="literal">config/scripts</code> directory.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">false</code></p></td><td align="left" valign="top"><p>all dynamic scripting is enabled, scripts may be sent as strings in requests.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">sandbox</code></p></td><td align="left" valign="top"><p>scripts may be sent as strings for languages that are sandboxed.</p></td></tr></tbody></table></div><h3><a id="_default_scripting_language"></a>Default Scripting Language<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The default scripting language (assuming no <code class="literal">lang</code> parameter is provided) is
+<code class="literal">groovy</code>. In order to change it, set the <code class="literal">script.default_lang</code> to the
+appropriate language.</p><h3><a id="_groovy_sandboxing"></a>Groovy Sandboxing<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Elasticsearch sandboxes Groovy scripts that are compiled and executed in order
+to ensure they don’t perform unwanted actions. There are a number of options
+that can be used for configuring this sandbox:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+<code class="literal">script.groovy.sandbox.receiver_whitelist</code>
+</span></dt><dd>
+    Comma-separated list of string classes for objects that may have methods
+    invoked.
+</dd><dt><span class="term">
+<code class="literal">script.groovy.sandbox.package_whitelist</code>
+</span></dt><dd>
+    Comma-separated list of packages under which new objects may be constructed.
+</dd><dt><span class="term">
+<code class="literal">script.groovy.sandbox.class_whitelist</code>
+</span></dt><dd>
+    Comma-separated list of classes that are allowed to be constructed.
+</dd><dt><span class="term">
+<code class="literal">script.groovy.sandbox.method_blacklist</code>
+</span></dt><dd>
+    Comma-separated list of methods that are never allowed to be invoked,
+    regardless of target object.
+</dd><dt><span class="term">
+<code class="literal">script.groovy.sandbox.enabled</code>
+</span></dt><dd>
+    Flag to disable the sandbox (defaults to <code class="literal">true</code> meaning the sandbox is
+    enabled).
+</dd></dl></div><h3><a id="_automatic_script_reloading"></a>Automatic Script Reloading<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">config/scripts</code> directory is scanned periodically for changes.
 New and changed scripts are reloaded and deleted script are removed
 from preloaded scripts cache. The reload frequency can be specified
 using <code class="literal">watcher.interval</code> setting, which defaults to <code class="literal">60s</code>.
 To disable script reloading completely set <code class="literal">script.auto_reload_enabled</code>
-to <code class="literal">false</code>.</p><h3><a id="_native_java_scripts"></a>Native (Java) Scripts<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Even though <code class="literal">mvel</code> is pretty fast, this allows to register native Java based
+to <code class="literal">false</code>.</p><h3><a id="_native_java_scripts"></a>Native (Java) Scripts<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Even though <code class="literal">groovy</code> is pretty fast, this allows to register native Java based
 scripts for faster execution.</p><p>In order to allow for scripts, the <code class="literal">NativeScriptFactory</code> needs to be
 implemented that constructs the script that will be executed. There are
 two main types, one that extends <code class="literal">AbstractExecutableScript</code> and one that
@@ -194,8 +189,8 @@ field can be accessed, for example <code class="literal">_source.obj2.obj1.field
 but the data is not loaded into memory. For a single field access <code class="literal">_fields</code> may be
 faster than using <code class="literal">_source</code> due to the extra overhead of potentially parsing large documents.
 However, <code class="literal">_source</code> may be faster if you access multiple fields or if the source has already been
-loaded for other purposes.</p><h3><a id="_mvel_built_in_functions"></a>mvel Built In Functions<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>There are several built in functions that can be used within scripts.
-They include:</p><div class="informaltable"><table cellpadding="4px" border="1"><colgroup><col class="col_1" /><col class="col_2" /></colgroup><thead><tr><th align="left" valign="top">Function </th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top"><p><code class="literal">time()</code></p></td><td align="left" valign="top"><p>The current time in milliseconds.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">sin(a)</code></p></td><td align="left" valign="top"><p>Returns the trigonometric sine of an angle.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">cos(a)</code></p></td><td align="left" valign="top"><p>Returns the trigonometric cosine of an angle.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">tan(a)</code></p></td><td align="left" valign="top"><p>Returns the trigonometric tangent of an angle.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">asin(a)</code></p></td><td align="left" valign="top"><p>Returns the arc sine of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">acos(a)</code></p></td><td align="left" valign="top"><p>Returns the arc cosine of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">atan(a)</code></p></td><td align="left" valign="top"><p>Returns the arc tangent of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">toRadians(angdeg)</code></p></td><td align="left" valign="top"><p>Converts an angle measured in degrees to an
+loaded for other purposes.</p><h3><a id="_groovy_built_in_functions"></a>Groovy Built In Functions<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>There are several built in functions that can be used within scripts.
+They include:</p><div class="informaltable"><table cellpadding="4px" border="1"><colgroup><col class="col_1" /><col class="col_2" /></colgroup><thead><tr><th align="left" valign="top">Function </th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top"><p><code class="literal">sin(a)</code></p></td><td align="left" valign="top"><p>Returns the trigonometric sine of an angle.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">cos(a)</code></p></td><td align="left" valign="top"><p>Returns the trigonometric cosine of an angle.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">tan(a)</code></p></td><td align="left" valign="top"><p>Returns the trigonometric tangent of an angle.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">asin(a)</code></p></td><td align="left" valign="top"><p>Returns the arc sine of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">acos(a)</code></p></td><td align="left" valign="top"><p>Returns the arc cosine of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">atan(a)</code></p></td><td align="left" valign="top"><p>Returns the arc tangent of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">toRadians(angdeg)</code></p></td><td align="left" valign="top"><p>Converts an angle measured in degrees to an
 approximately equivalent angle measured in radians</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">toDegrees(angrad)</code></p></td><td align="left" valign="top"><p>Converts an angle measured in radians to an
 approximately equivalent angle measured in degrees.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">exp(a)</code></p></td><td align="left" valign="top"><p>Returns Euler’s number <span class="emphasis"><em>e</em></span> raised to the power of value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">log(a)</code></p></td><td align="left" valign="top"><p>Returns the natural logarithm (base <span class="emphasis"><em>e</em></span>) of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">log10(a)</code></p></td><td align="left" valign="top"><p>Returns the base 10 logarithm of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">sqrt(a)</code></p></td><td align="left" valign="top"><p>Returns the correctly rounded positive square root of a
 value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">cbrt(a)</code></p></td><td align="left" valign="top"><p>Returns the cube root of a double value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">IEEEremainder(f1, f2)</code></p></td><td align="left" valign="top"><p>Computes the remainder operation on two
@@ -207,7 +202,12 @@ mathematical integer.</p></td></tr><tr><td align="left" valign="top"><p><code cl
 and is equal to a mathematical integer.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">atan2(y, x)</code></p></td><td align="left" valign="top"><p>Returns the angle <span class="emphasis"><em>theta</em></span> from the conversion of
 rectangular coordinates (<span class="emphasis"><em>x</em></span>, <span class="emphasis"><em>y</em></span>) to polar coordinates (r,<span class="emphasis"><em>theta</em></span>).</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">pow(a, b)</code></p></td><td align="left" valign="top"><p>Returns the value of the first argument raised to the
 power of the second argument.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">round(a)</code></p></td><td align="left" valign="top"><p>Returns the closest <span class="emphasis"><em>int</em></span> to the argument.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">random()</code></p></td><td align="left" valign="top"><p>Returns a random <span class="emphasis"><em>double</em></span> value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">abs(a)</code></p></td><td align="left" valign="top"><p>Returns the absolute value of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">max(a, b)</code></p></td><td align="left" valign="top"><p>Returns the greater of two values.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">min(a, b)</code></p></td><td align="left" valign="top"><p>Returns the smaller of two values.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">ulp(d)</code></p></td><td align="left" valign="top"><p>Returns the size of an ulp of the argument.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">signum(d)</code></p></td><td align="left" valign="top"><p>Returns the signum function of the argument.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">sinh(x)</code></p></td><td align="left" valign="top"><p>Returns the hyperbolic sine of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">cosh(x)</code></p></td><td align="left" valign="top"><p>Returns the hyperbolic cosine of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">tanh(x)</code></p></td><td align="left" valign="top"><p>Returns the hyperbolic tangent of a value.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">hypot(x, y)</code></p></td><td align="left" valign="top"><p>Returns sqrt(<span class="emphasis"><em>x2</em></span> + <span class="emphasis"><em>y2</em></span>) without intermediate overflow
-or underflow.</p></td></tr></tbody></table></div><h3><a id="_arithmetic_precision_in_mvel"></a>Arithmetic precision in MVEL<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>When dividing two numbers using MVEL based scripts, the engine tries to
+or underflow.</p></td></tr></tbody></table></div><h3><a id="_floating_point_numbers_in_groovy"></a>Floating point numbers in Groovy<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>When using floating-point literals in Groovy scripts, Groovy will automatically
+use BigDecimal instead of a floating point equivalent to support the
+<span class="emphasis"><em>least-surprising</em></span> approach to literal math operations. To use a floating-point
+number instead, use the specific suffix on the number (ie, instead of 1.2, use
+1.2f). See the <a class="ulink" href="http://groovy.codehaus.org/Groovy+Math" target="_top">Groovy Math</a> page for more
+information.</p><h3><a id="_arithmetic_precision_in_mvel"></a>Arithmetic precision in MVEL<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>When dividing two numbers using MVEL based scripts, the engine tries to
 be smart and adheres to the default behaviour of java. This means if you
 divide two integers (you might have configured the fields as integer in
 the mapping), the result will also be an integer. This means, if a
