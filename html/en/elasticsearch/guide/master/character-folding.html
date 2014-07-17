@@ -52,7 +52,7 @@ form <code class="literal">nfkc_cf</code> automatically, so the <code class="lit
 }
 
 GET /my_index/_analyze?analyzer=my_folder
-١٢٣٤٥ <a id="CO118-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span></pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO118-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+١٢٣٤٥ <a id="CO120-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span></pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO120-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The Arabic numerals <code class="literal">١٢٣٤٥</code> are folded to their Latin equivalent: <code class="literal">12345</code>.
 </p></td></tr></table></div><p>If there are particular characters that you would like to protect from
 folding, you can use a
@@ -66,24 +66,24 @@ representing all Unicode characters, except for those letters: <code class="lite
   "settings": {
     "analysis": {
       "filter": {
-        "swedish_folding": { <a id="CO119-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+        "swedish_folding": { <a id="CO121-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
           "type": "icu_folding",
           "unicodeSetFilter": "[^åäöÅÄÖ]"
         }
       },
       "analyzer": {
-        "swedish_analyzer": { <a id="CO119-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+        "swedish_analyzer": { <a id="CO121-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
           "tokenizer": "icu_tokenizer",
           "filter":  [ "swedish_folding", "lowercase" ]
         }
       }
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO119-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO121-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">swedish_folding</code> token filter customizes the
     <code class="literal">icu_folding</code> token filter to exclude Swedish letters,
     both upper case and lower case.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO119-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO121-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">swedish</code> analyzer first tokenizes words, then folds
     each token using the <code class="literal">swedish_folding</code> filter, then
     lower cases each token in case it includes some of

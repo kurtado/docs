@@ -41,15 +41,15 @@ us to sort on the exact value of the original string.  However, we <span class="
 analyzers to achieve other sort orders, as long as our chosen analyzer only
 ever emits a single token for each string value.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="case-insensitive-sorting"></a>Case insensitive sorting<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/220_Token_normalization/60_Sorting_and_collations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Imagine that we have three <code class="literal">user</code> documents whose <code class="literal">name</code> field contain <code class="literal">Boffey</code>,
 <code class="literal">BROWN</code>, and <code class="literal">bailey</code> respectively.  First we will apply the technique
-described in <a class="xref" href="multi-fields.html" title="String sorting and multi-fields">String sorting and multi-fields</a> of using a <code class="literal">not_indexed</code> field for sorting:</p><pre class="programlisting prettyprint lang-js">PUT /my_index
+described in <a class="xref" href="multi-fields.html" title="String sorting and multi-fields">String sorting and multi-fields</a> of using a <code class="literal">not_analyzed</code> field for sorting:</p><pre class="programlisting prettyprint lang-js">PUT /my_index
 {
   "mappings": {
     "user": {
       "properties": {
-        "name": { <a id="CO120-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+        "name": { <a id="CO122-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
           "type": "string",
           "fields": {
-            "raw": { <a id="CO120-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+            "raw": { <a id="CO122-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
               "type":  "string",
               "index": "not_analyzed"
             }
@@ -58,9 +58,9 @@ described in <a class="xref" href="multi-fields.html" title="String sorting and 
       }
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO120-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO122-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">analyzed</code> <code class="literal">name</code> field is used for search.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO120-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO122-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">not_analyzed</code> <code class="literal">name.raw</code> field is used for sorting
 </p></td></tr></table></div><p>We can index some documents and try sorting:</p><pre class="programlisting prettyprint lang-js">PUT /my_index/user/1
 { "name": "Boffey" }
@@ -84,16 +84,16 @@ their byte ordering corresponds to the sort order that we want.</p><p>In other w
     "analysis": {
       "analyzer": {
         "case_insensitive_sort": {
-          "tokenizer": "keyword",    <a id="CO121-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
-          "filter":  [ "lowercase" ] <a id="CO121-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+          "tokenizer": "keyword",    <a id="CO123-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+          "filter":  [ "lowercase" ] <a id="CO123-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
         }
       }
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO121-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO123-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">keyword</code> tokenizer emits the original input string
     as a single unchanged token.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO121-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO123-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">lowercase</code> token filter lower cases the token.
 </p></td></tr></table></div><p>With the <code class="literal">case_insentive_sort</code> analyzer in place, we can now use it in our
 multi-field:</p><pre class="programlisting prettyprint lang-js">PUT /my_index/_mapping/user
@@ -102,7 +102,7 @@ multi-field:</p><pre class="programlisting prettyprint lang-js">PUT /my_index/_m
     "name": {
       "type": "string",
       "fields": {
-        "lower_case_sort": { <a id="CO122-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+        "lower_case_sort": { <a id="CO124-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
           "type":     "string",
           "analyzer": "case_insensitive_sort"
         }
@@ -120,7 +120,7 @@ PUT /my_index/user/2
 PUT /my_index/user/3
 { "name": "bailey" }
 
-GET /my_index/user/_search?sort=name.lower_case_sort</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO122-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+GET /my_index/user/_search?sort=name.lower_case_sort</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO124-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">name.lower_case_sort</code> field will provide us with
     case-insentive sorting.
 </p></td></tr></table></div><p>The above search request returns our documents in the order that we expect:
@@ -204,17 +204,17 @@ search on so we use the same multi-field approach as we used in
           "type": "string",
           "fields": {
             "sort": {
-              "type":   "icu_collation", <a id="CO123-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
-              "length": 20 <a id="CO123-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+              "type":   "icu_collation", <a id="CO125-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+              "length": 20 <a id="CO125-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
             }
           }
         }
       }
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO123-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO125-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">icu_collation</code> field defaults to using the DUCET collation.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO123-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO125-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Truncate the sort key to the first <code class="literal">20</code> bytes.
 </p></td></tr></table></div><p>With this mapping, the <code class="literal">name.sort</code> field will contain a binary sort key
 which will be used only for sorting.  We haven’t specified a language, so

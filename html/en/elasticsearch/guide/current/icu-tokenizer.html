@@ -33,7 +33,7 @@
 using a dictionary-based approach to identify words in Thai, Lao, Chinese,
 Japanese, and Korean, and using custom rules to break Myanmar and Khmer text
 into syllables.</p><p>For instance, compare the tokens produced by the <code class="literal">standard</code> and
-<code class="literal">icu_tokenizers</code> respectively when tokenizing “Hello. I am from Bangkok” in
+<code class="literal">icu_tokenizers</code> respectively when tokenizing “Hello. I am from Bangkok.” in
 Thai:</p><pre class="programlisting prettyprint lang-js">GET /_analyze?tokenizer=standard
 สวัสดี ผมมาจากกรุงเทพฯ</pre><p>The <code class="literal">standard</code> tokenizer produces two tokens, one for each sentence: <code class="literal">สวัสดี</code>,
 <code class="literal">ผมมาจากกรุงเทพฯ</code>.  That is only useful if you want to search for the whole

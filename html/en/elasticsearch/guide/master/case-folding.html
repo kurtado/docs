@@ -48,7 +48,7 @@ uses <span class="emphasis"><em>compatibility</em></span> mode to convert charac
 </li></ul></div><p>But also:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 <span class="emphasis"><em>case-folds</em></span> characters into a form suitable for case comparison
 </li></ul></div><p>In other words, <code class="literal">nfkc_cf</code> is the equivalent of the <code class="literal">lowercase</code> token filter,
-but suitable for use with all languages. The “on-steriods” equivalent of the
+but suitable for use with all languages. The “on-steroids” equivalent of the
 <code class="literal">standard</code> analyzer would be the following:</p><pre class="programlisting prettyprint lang-js">PUT /my_index
 {
   "settings": {
@@ -56,22 +56,22 @@ but suitable for use with all languages. The “on-steriods” equivalent of the
       "analyzer": {
         "my_lowercaser": {
           "tokenizer": "icu_tokenizer",
-          "filter":  [ "icu_normalizer" ] <a id="CO116-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+          "filter":  [ "icu_normalizer" ] <a id="CO118-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         }
       }
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO116-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO118-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">icu_normalizer</code> defaults to the <code class="literal">nfkc_cf</code> form.
 </p></td></tr></table></div><p>We can compare the results of running “Weißkopfseeadler” and
 “WEISSKOPFSEEADLER” (the upper case equivalent) through the <code class="literal">standard</code>
-analyzer and through our Unicode-aware analyzer:</p><pre class="programlisting prettyprint lang-js">GET /_analyze?analyzer=standard <a id="CO117-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+analyzer and through our Unicode-aware analyzer:</p><pre class="programlisting prettyprint lang-js">GET /_analyze?analyzer=standard <a id="CO119-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
 Weißkopfseeadler WEISSKOPFSEEADLER
 
-GET /my_index/_analyze?analyzer=my_lowercaser <a id="CO117-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
-Weißkopfseeadler WEISSKOPFSEEADLER</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO117-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+GET /my_index/_analyze?analyzer=my_lowercaser <a id="CO119-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+Weißkopfseeadler WEISSKOPFSEEADLER</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO119-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Emits tokens: <code class="literal">weißkopfseeadler</code>, <code class="literal">weisskopfseeadler</code>
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO117-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO119-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Emits tokens: <code class="literal">weisskopfseeadler</code>, <code class="literal">weisskopfseeadler</code>
 </p></td></tr></table></div><p>The <code class="literal">standard</code> analyzer emits two different, incomparable tokens, while our
 custom analyzer produces tokens that are comparable, regardless of the

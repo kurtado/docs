@@ -175,7 +175,7 @@ PUT /my_store <a id="CO38-2"></a><span><img src="images/icons/callouts/2.png" al
 Deleting the index first is required, since we cannot change mappings that
     already exist.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO38-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-With the index deleted, we can recreate it with out custom mapping.
+With the index deleted, we can recreate it with our custom mapping.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO38-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Here we explicitly say that we don’t want <code class="literal">productID</code> to be analyzed.
 </p></td></tr></table></div><p>Now we can go ahead and reindex our documents:</p><pre class="programlisting prettyprint lang-js">POST /my_store/products/_bulk
