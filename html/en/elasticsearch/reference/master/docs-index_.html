@@ -179,7 +179,7 @@ specified using the <code class="literal">routing</code> parameter.</p><h3><a id
 <code class="literal">timestamp</code> value of a document can be set using the <code class="literal">timestamp</code>
 parameter. For example:</p><pre class="programlisting prettyprint lang-js">$ curl -XPUT localhost:9200/twitter/tweet/1?timestamp=2009-11-15T14%3A12%3A12 -d '{
     "user" : "kimchy",
-    "message" : "trying out Elasticsearch",
+    "message" : "trying out Elasticsearch"
 }'</pre><p>If the <code class="literal">timestamp</code> value is not provided externally or in the <code class="literal">_source</code>,
 the <code class="literal">timestamp</code> will be automatically set to the date the document was
 processed by the indexing chain. More information can be found on the
