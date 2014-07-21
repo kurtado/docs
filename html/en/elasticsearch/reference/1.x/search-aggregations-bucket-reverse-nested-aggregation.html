@@ -36,7 +36,7 @@ which allows nesting other aggregations that aren’t part of the nested object 
 <code class="literal">path</code> - Which defines to what nested object field should be joined back. The default is empty,
 which means that it joins back to the root / main document level. The path cannot contain a reference to
 a nested object field that falls outside the <code class="literal">nested</code> aggregation’s nested structure a <code class="literal">reverse_nested</code> is in.
-</li></ul></div><p>For example, lets say we have an index for a ticket system which issues and comments. The comments are inlined into
+</li></ul></div><p>For example, lets say we have an index for a ticket system with issues and comments. The comments are inlined into
 the issue documents as nested documents. The mapping could look like:</p><pre class="programlisting prettyprint lang-js">{
     ...
 
@@ -55,7 +55,7 @@ the issue documents as nested documents. The mapping could look like:</p><pre cl
 }</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO20-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">comments</code> is an array that holds nested documents under the <code class="literal">issue</code> object.
 </p></td></tr></table></div><p>The following aggregations will return the top commenters' username that have commented and per top commenter the top
-tags that issues have the commenter has commented to:</p><pre class="programlisting prettyprint lang-js">{
+tags of the issues the user has commented on:</p><pre class="programlisting prettyprint lang-js">{
     "query" : {
         "match" : { "name" : "led tv" }
     }
