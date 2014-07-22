@@ -76,7 +76,16 @@ example:</p><pre class="programlisting prettyprint lang-js">curl -XPOST 'localho
         "name" : "new_name"
     }
 }'</pre><p>If both <code class="literal">doc</code> and <code class="literal">script</code> is specified, then <code class="literal">doc</code> is ignored. Best is
-to put your field pairs of the partial document in the script itself.</p><p>There is also support for <code class="literal">upsert</code>. If the document does
+to put your field pairs of the partial document in the script itself.</p><p>By default if <code class="literal">doc</code> is specified then the document is always updated even
+if the merging process doesn’t cause any changes.  Specifying <code class="literal">detect_noop</code>
+as <code class="literal">true</code> will cause Elasticsearch to check if there are changes and, if
+there aren’t, turn the update request into a noop. For example:</p><pre class="programlisting prettyprint lang-js">curl -XPOST 'localhost:9200/test/type1/1/_update' -d '{
+    "doc" : {
+        "name" : "new_name"
+    },
+    "detect_noop": true
+}'</pre><p>If <code class="literal">name</code> was <code class="literal">new_name</code> before the request was sent then the entire update
+request is ignored.</p><p>There is also support for <code class="literal">upsert</code>. If the document does
 not already exists, the content of the <code class="literal">upsert</code> element will be used to
 index the fresh doc:</p><pre class="programlisting prettyprint lang-js">curl -XPOST 'localhost:9200/test/type1/1/_update' -d '{
     "script" : "ctx._source.counter += count",
