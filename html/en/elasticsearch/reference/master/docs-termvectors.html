@@ -45,7 +45,7 @@ start and end offsets (<code class="literal">offsets</code> : true)
 term payloads (<code class="literal">payloads</code> : true), as base64 encoded bytes
 </li></ul></div><p>If the requested information wasn’t stored in the index, it will be
 computed on the fly if possible. See <a class="link" href="mapping-types.html" title="Types">type mapping</a>
-for how to configure your index to store term vectors.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><h4>Coming in 1.4.0.</h4><p>The ability to computed term vectors on the fly is only available from 1.4.0 onwards (see below).</p></div></div><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><p>Start and end offsets assume UTF-16 encoding is being used. If you want to use
+for how to configure your index to store term vectors.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><h4>Added in 1.4.0.</h4><p>The ability to computed term vectors on the fly is only available from 1.4.0 onwards (see below).</p></div></div><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><p>Start and end offsets assume UTF-16 encoding is being used. If you want to use
 these offsets in order to get the original text that produced this token, you
 should make sure that the string you are taking a sub-string of is also encoded
 using UTF-16.</p></div></div><h4><a id="_term_statistics"></a>Term statistics<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/docs/termvectors.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>Setting <code class="literal">term_statistics</code> to <code class="literal">true</code> (default is <code class="literal">false</code>) will
@@ -175,9 +175,9 @@ curl -XPUT 'http://localhost:9200/twitter/tweet/2?pretty=true' -d '{
             }
         }
     }
-}</pre><h3><a id="_example_2_phrase_revisionflag_changed_revision_coming_in_1_4_0_coming_in_1_4_0_phrase"></a>Example 2 <span class="coming">
-      [<span class="version">coming in 1.4.0</span>]
-      <span class="detail">Coming in 1.4.0.</span></span><a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/docs/termvectors.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Additionally, term vectors which are not explicitly stored in the index are automatically
+}</pre><h3><a id="_example_2_phrase_revisionflag_added_revision_1_4_0_added_in_1_4_0_phrase"></a>Example 2 <span class="added">
+      [<span class="version">1.4.0</span>]
+      <span class="detail">Added in 1.4.0.</span></span><a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/docs/termvectors.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Additionally, term vectors which are not explicitly stored in the index are automatically
 computed on the fly. The following request returns all information and statistics for the
 fields in document <code class="literal">1</code>, even though the terms haven’t been explicitly stored in the index.
 Note that for the field <code class="literal">text</code>, the terms are not re-generated.</p><pre class="programlisting prettyprint lang-js">curl -XGET 'http://localhost:9200/twitter/tweet/1/_termvector?pretty=true' -d '{
