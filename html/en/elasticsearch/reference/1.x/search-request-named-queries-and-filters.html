@@ -47,7 +47,7 @@
             }
         }
     }
-}</pre><p>The search response will include for each hit the <code class="literal">matched_filters</code> it matched on. The tagging of queries and filters
+}</pre><p>The search response will include for each hit the <code class="literal">matched_queries</code> it matched on. The tagging of queries and filters
 only make sense for compound queries and filters (such as <code class="literal">bool</code> query and filter, <code class="literal">or</code> and <code class="literal">and</code> filter, <code class="literal">filtered</code> query etc.).</p><p>Note, the query filter had to be enhanced in order to support this. In
 order to set a name, the <code class="literal">fquery</code> filter should be used, which wraps a
 query (just so there will be a place to set a name for it), for example:</p><pre class="programlisting prettyprint lang-js">{
