@@ -258,7 +258,7 @@ from the desired location.</p><p>In the second example, documents with a field v
 Normal decay, computed as:
 </p>
 <p><span class="inlinemediaobject"><img src="images/Gaussian.png" alt="images/Gaussian.png" /></span></p>
-</td></tr><tr><td valign="top">
+</td></tr></tbody></table></div><p>where <span class="inlinemediaobject"><img src="images/sigma.png" alt="images/sigma.png" /></span> is computed to assure that the score takes the value <code class="literal">decay</code> at distance <code class="literal">scale</code> from <code class="literal">origin</code>+-<code class="literal">offset</code></p><p><span class="inlinemediaobject"><img src="images/sigma_calc.png" alt="images/sigma_calc.png" /></span></p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
 <p>
 <code class="literal">exp</code>
 </p>
@@ -267,7 +267,7 @@ Normal decay, computed as:
 Exponential decay, computed as:
 </p>
 <p><span class="inlinemediaobject"><img src="images/Exponential.png" alt="images/Exponential.png" /></span></p>
-</td></tr><tr><td valign="top">
+</td></tr></tbody></table></div><p>where again the parameter <span class="inlinemediaobject"><img src="images/lambda.png" alt="images/lambda.png" /></span> is computed to assure that the score takes the value <code class="literal">decay</code> at distance <code class="literal">scale</code> from <code class="literal">origin</code>+-<code class="literal">offset</code></p><p><span class="inlinemediaobject"><img src="images/lambda_calc.png" alt="images/lambda_calc.png" /></span></p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
 <p>
 <code class="literal">linear</code>
 </p>
@@ -276,10 +276,9 @@ Exponential decay, computed as:
 Linear decay, computed as:
 </p>
 <p><span class="inlinemediaobject"><img src="images/Linear.png" alt="images/Linear.png" /></span>.</p>
-<p>In contrast to the normal and exponential decay, this function actually
+</td></tr></tbody></table></div><p>where again the parameter <code class="literal">s</code> is computed to assure that the score takes the value <code class="literal">decay</code> at distance <code class="literal">scale</code> from <code class="literal">origin</code>+-<code class="literal">offset</code></p><p><span class="inlinemediaobject"><img src="images/s_calc.png" alt="images/s_calc.png" /></span></p><p>In contrast to the normal and exponential decay, this function actually
 sets the score to 0 if the field value exceeds twice the user given
-scale value.</p>
-</td></tr></tbody></table></div></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_multiple_values"></a>Multiple values:<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>If a field used for computing the decay contains multiple values, per default the value closest to the origin is chosen for determining the distance.
+scale value.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_multiple_values"></a>Multiple values:<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/query-dsl/queries/function-score-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><p>If a field used for computing the decay contains multiple values, per default the value closest to the origin is chosen for determining the distance.
 This can be changed by setting <code class="literal">multi_value_mode</code>.</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
 <p>
 <code class="literal">min</code>
