@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Quickstart</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch-PHP [1.0]" /><link rel="up" href="index.html" title="Elasticsearch-PHP [1.0]" /><link rel="prev" href="_overview.html" title="Overview" /><link rel="next" href="_installation_2.html" title="Installation" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Dealing with JSON Arrays and Objects in PHP</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Elasticsearch-PHP [1.0]" /><link rel="up" href="index.html" title="Elasticsearch-PHP [1.0]" /><link rel="prev" href="_configuration.html" title="Configuration" /><link rel="next" href="_index_operations.html" title="Index Operations" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
       jQuery(function() {
         jQuery('div.navheader+div').css('minHeight',jQuery('div.toc').height()+'px');
         jQuery('article.guide_content a[id]').each(function() { this.href='#'+this.id });
@@ -22,54 +22,126 @@
         <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
       <![endif]--><header><nav role="navigation" id="mobile-nav-container" class="off-canvas-nav"><ul id="mobile-nav" class="menu"><li id="menu-item-75892" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75892"><a href="/overview/">Overview</a><ul class="sub-menu"><li id="menu-item-75895" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75895"><a href="/overview/">Overview</a></li><li id="menu-item-68760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68760"><a href="/overview/elasticsearch/">Elasticsearch</a></li><li id="menu-item-75894" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75894"><a href="/overview/marvel/">Marvel</a></li><li id="menu-item-68758" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68758"><a href="/overview/kibana/">Kibana</a></li><li id="menu-item-68756" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68756"><a href="/overview/kibana/installation/">Kibana Installation</a></li><li id="menu-item-68757" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68757"><a href="/overview/kibana/support/">Kibana Support</a></li><li id="menu-item-68759" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68759"><a href="/overview/logstash/">Logstash</a></li><li id="menu-item-74019" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74019"><a href="/overview/hadoop/">Hadoop</a></li><li id="menu-item-75893" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75893"><a href="/overview/elkdownloads/">ELK Downloads</a></li></ul></li><li id="menu-item-55" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55"><a href="/resources/">Resources</a><ul class="sub-menu"><li id="menu-item-76342" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-76342"><a href="/guide/">Guide</a></li><li id="menu-item-4843" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4843"><a href="/videos/">Videos</a></li></ul></li><li id="menu-item-657" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-657"><a href="/community/">Community</a></li><li id="menu-item-68802" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68802"><a href="/case-studies/">Case Studies</a></li><li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="/blog/">Blog</a></li><li id="menu-item-12" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12"><a target="_blank" href="http://elasticsearch.com">Company</a></li></ul><ul class="add-on"><li><a href="/overview/elkdownloads/">Download</a></li></ul></nav><div class="container"><div id="header-inner"><h1 id="header-logo"><a class="faux" href="http://www.elasticsearch.org">Elasticsearch</a></h1><nav role="navigation" id="main-nav-container" class="main-nav"><ul id="top-nav" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75892"><a href="/overview/">Overview</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-53 current_page_item menu-item-55"><a href="/resources/">Resources</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-657"><a href="/community/">Community</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68802"><a href="/case-studies/">Case Studies</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="/blog/">Blog</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12"><a target="_blank" href="http://elasticsearch.com">Company</a></li></ul><ul class="add-on"><li><a class="btn btn-primary" href="/overview/elkdownloads/">Download</a></li></ul></nav><div class="slide-trigger navigation" id="nav-trigger" aria-hidden="true"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div><hr /><ul id="sub_nav"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-76342"><a href="/guide/">Guide</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4843"><a href="/videos/">Videos</a></li></ul></div></div></header><div class="global_wrapper"><div class="page_content"><div class="container"><section id="search_container" class="active"><form id="blog_search" role="search" action="/" method="get"><div class="blog_search_wrapper"><input id="s" name="s" class="search_term" type="text" placeholder="search" autocomplete="off" tabindex="1" /><input type="submit" class="search_submit" value=" " /><ul id="results"></ul></div></form></section><section class="full_width guide"><article class="guide_content"><div class="breadcrumbs"><span class="breadcrumb-link"><a href="index.html">Elasticsearch-PHP
       [1.0]
-    </a></span> » <span class="breadcrumb-node">Quickstart</span></div><div class="navheader"><span class="prev"><a href="_overview.html">
+    </a></span> » <span class="breadcrumb-node">Dealing with JSON Arrays and Objects in PHP</span></div><div class="navheader"><span class="prev"><a href="_configuration.html">
               « 
-              Overview</a>
+              Configuration</a>
            
         </span><span class="next">
            
-          <a href="_installation_2.html">Installation
+          <a href="_index_operations.html">Index Operations
                »
-            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="_quickstart"></a>Quickstart<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/quickstart.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h1></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="_overview.html">Overview</a></span></dt><dt><span class="chapter"><a href="_quickstart.html">Quickstart</a></span></dt><dt><span class="chapter"><a href="_installation_2.html">Installation</a></span></dt><dt><span class="chapter"><a href="_configuration.html">Configuration</a></span></dt><dt><span class="chapter"><a href="_dealing_with_json_arrays_and_objects_in_php.html">Dealing with JSON Arrays and Objects in PHP</a></span></dt><dt><span class="chapter"><a href="_index_operations.html">Index Operations</a></span></dt><dt><span class="chapter"><a href="_indexing_operations.html">Indexing Operations</a></span></dt><dt><span class="chapter"><a href="_search_operations.html">Search Operations</a></span></dt><dt><span class="chapter"><a href="_namespaces.html">Namespaces</a></span></dt><dt><span class="chapter"><a href="_the_connection_pool.html">The Connection Pool</a></span></dt><dt><span class="chapter"><a href="_serializers.html">Serializers</a></span></dt><dt><span class="chapter"><a href="_php_version_requirement.html">PHP Version Requirement</a></span></dt></dl></div><p>This section will give you a quick overview of the client and how the major functions work.</p><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_installation"></a>Installation<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/quickstart.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Include elasticsearch-php in your <code class="literal">composer.json</code> file:
-</p><pre class="programlisting prettyprint lang-json">{
-    "require": {
-        "elasticsearch/elasticsearch": "~1.0"
+            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a id="_dealing_with_json_arrays_and_objects_in_php"></a>Dealing with JSON Arrays and Objects in PHP<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/php_json_objects.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h1></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="_overview.html">Overview</a></span></dt><dt><span class="chapter"><a href="_quickstart.html">Quickstart</a></span></dt><dt><span class="chapter"><a href="_installation_2.html">Installation</a></span></dt><dt><span class="chapter"><a href="_configuration.html">Configuration</a></span></dt><dt><span class="chapter"><a href="_dealing_with_json_arrays_and_objects_in_php.html">Dealing with JSON Arrays and Objects in PHP</a></span></dt><dt><span class="chapter"><a href="_index_operations.html">Index Operations</a></span></dt><dt><span class="chapter"><a href="_indexing_operations.html">Indexing Operations</a></span></dt><dt><span class="chapter"><a href="_search_operations.html">Search Operations</a></span></dt><dt><span class="chapter"><a href="_namespaces.html">Namespaces</a></span></dt><dt><span class="chapter"><a href="_the_connection_pool.html">The Connection Pool</a></span></dt><dt><span class="chapter"><a href="_serializers.html">Serializers</a></span></dt><dt><span class="chapter"><a href="_php_version_requirement.html">PHP Version Requirement</a></span></dt></dl></div><p>A common source of confusion with the client revolves around JSON arrays and objects, and how to specify them in PHP.
+In particular, problems are caused by empty objects and arrays of objects.  This page will show you some common patterns
+used in Elasticsearch JSON API, and how to convert that to a PHP representation</p><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_empty_objects"></a>Empty Objects<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/php_json_objects.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>The Elasticsearch API uses empty JSON objects in several locations, and this can cause problems for PHP.  Unlike other
+languages, PHP does not have a "short" notation for empty objects and so many developers are unaware how to specify
+an empty object.</p><p>Consider adding a Highlight to a query:</p><pre class="programlisting prettyprint lang-json">{
+    "query" : {
+        "match" : {
+            "content" : "quick brown fox"
+        }
+    },
+    "highlight" : {
+        "fields" : {
+            "content" : {} <a id="CO3-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+        }
     }
-}</pre></li><li class="listitem"><p class="simpara">
-Install the client with composer:
-</p><pre class="programlisting prettyprint lang-shell">curl -s http://getcomposer.org/installer | php
-php composer.phar install</pre></li><li class="listitem"><p class="simpara">
-Include the autoloader in your main project (if you haven’t already), and instantiate a new client :
-</p><pre class="programlisting prettyprint lang-php">require 'vendor/autoload.php';
-
-$client = new Elasticsearch\Client();</pre></li></ul></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_index_a_document"></a>Index a document<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/quickstart.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>In elasticsearch-php, almost everything is configured by associative arrays.  The REST endpoint, document and optional parameters - everything is an associative array.</p><p>To index a document, we simply specify a <code class="literal">body</code> that contains the document that we wish to index.  Each field in the document is represented by a different key/value pair in the associative array.</p><p>The index, type and ID are also specified in the parameters assoc. array:</p><pre class="programlisting prettyprint lang-php">$params = array();
-$params['body']  = array('testField' =&gt; 'abc');
-$params['index'] = 'my_index';
-$params['type']  = 'my_type';
-$params['id']    = 'my_id';
-$ret = $client-&gt;index($params);</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_get_a_document"></a>Get a document<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/quickstart.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>Let’s get the document that we just indexed:</p><pre class="programlisting prettyprint lang-php">$getParams = array();
-$getParams['index'] = 'my_index';
-$getParams['type']  = 'my_type';
-$getParams['id']    = 'my_id';
-$retDoc = $client-&gt;get($getParams);</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_search_for_a_document"></a>Search for a document<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/quickstart.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>Searching is a hallmark of elasticsearch, so let’s perform a search.  We are going to use the Match query as a demonstration:</p><pre class="programlisting prettyprint lang-php">$searchParams['index'] = 'my_index';
-$searchParams['type']  = 'my_type';
-$searchParams['body']['query']['match']['testField'] = 'abc';
-$retDoc = $client-&gt;search($searchParams);</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_delete_a_document"></a>Delete a document<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/quickstart.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>Alright, let’s go ahead and delete the document that we added previously:</p><pre class="programlisting prettyprint lang-php">$deleteParams = array();
-$deleteParams['index'] = 'my_index';
-$deleteParams['type'] = 'my_type';
-$deleteParams['id'] = 'my_id';
-$retDelete = $client-&gt;delete($deleteParams);</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_delete_an_index"></a>Delete an index<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/quickstart.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>Due to the dynamic nature of elasticsearch, the first document we added automatically built an index with some default settings.  Let’s delete that index because we want to specify our own settings later:</p><pre class="programlisting prettyprint lang-php">$deleteParams['index'] = 'my_index';
-$client-&gt;indices()-&gt;delete($deleteParams);</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_create_an_index"></a>Create an index<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/quickstart.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>Ok, now that we are starting fresh, let’s add a new index with some custom settings:</p><pre class="programlisting prettyprint lang-php">$indexParams['index'] = 'my_index';
-$indexParams['body']['settings']['number_of_shards'] = 2;
-$indexParams['body']['settings']['number_of_replicas'] = 0;
-$client-&gt;indices()-&gt;create($indexParams);</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_wrap_up"></a>Wrap up<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/quickstart.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>That was just a crash-course overview of the client and it’s syntax.  If you are familiar with elasticsearch, you’ll notice that the methods are named just like REST endpoints.</p><p>You’ll also notice that the client is configured in a manner that facilitates easy discovery via your IDE.  All core actions are available under the <code class="literal">$client</code> object (indexing, searching, getting, etc).  Index and cluster management are located under the <code class="literal">$client-&gt;indices()</code> and <code class="literal">$client-&gt;cluster()</code> objects, respectively.</p><p>Check out the rest of the Documentation to see how the entire client works.</p></div></div><div class="navfooter"><span class="prev"><a href="_overview.html">
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO3-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+This empty JSON object is what causes problems.
+</p></td></tr></table></div><p>The problem is that PHP will automatically convert <code class="literal">"content" : {}</code> into <code class="literal">"content" : []</code>, which is no longer valid
+Elasticsearch DSL.  We need to tell PHP that the empty object is explicitly an object, not an array.  To define this
+query in PHP, you would do:</p><pre class="programlisting prettyprint lang-json">$params['body'] = array(
+    'query' =&gt; array(
+        'match' =&gt; array(
+            'content' =&gt; 'quick brown fox'
+        )
+    ),
+    'highlight' =&gt; array(
+        'fields' =&gt; array(
+            'content' =&gt; new \stdClass() <a id="CO4-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+        )
+    )
+);
+$results = $client-&gt;search($params);</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO4-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+We use the generic PHP stdClass object to represent an empty object.  The JSON will now encode correctly.
+</p></td></tr></table></div><p>By using an explicit stdClass object, we can force the <code class="literal">json_encode</code> parser to correctly output an empty object, instead
+of an empty array.  Sadly, this verbose solution is the only way to acomplish the goal in PHP…there is no "short"
+version of an empty object.</p></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_arrays_of_objects"></a>Arrays of Objects<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/php_json_objects.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>Another common pattern in Elasticsearch DSL is an array of objects.  For example, consider adding a sort to your query:</p><pre class="programlisting prettyprint lang-json">{
+    "query" : {
+        "match" : { "content" : "quick brown fox" }
+    },
+    "sort" : [  <a id="CO5-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+        {"time" : {"order" : "desc"}},
+        {"popularity" : {"order" : "desc"}}
+    ]
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO5-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+"sort" contains an array of JSON objects
+</p></td></tr></table></div><p>This arrangement is <span class="strong"><strong>very</strong></span> common, but the construction in PHP can be tricky since it requires nesting arrays.  The
+verbosity of PHP tends to obscure what is actually going on.  To construct an array of objects, you actually need
+an array of arrays:</p><pre class="programlisting prettyprint lang-json">$params['body'] = array(
+    'query' =&gt; array(
+        'match' =&gt; array(
+            'content' =&gt; 'quick brown fox'
+        )
+    ),
+    'sort' =&gt; array(    <a id="CO6-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+        array('time' =&gt; array('order' =&gt; 'desc')),  <a id="CO6-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+        array('popularity' =&gt; array('order' =&gt; 'desc')) <a id="CO6-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+    )
+);
+$results = $client-&gt;search($params);</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO6-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+This array encodes the <code class="literal">"sort" : []</code> array
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO6-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+This array encodes the <code class="literal">{"time" : {"order" : "desc"}}</code> object
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO6-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+This array encodes the <code class="literal">{"popularity" : {"order" : "desc"}}</code> object
+</p></td></tr></table></div><p>If you are on PHP 5.4+, I would strongly encourage you to use the short array syntax.  It makes these nested arrays
+much simpler to read:</p><pre class="programlisting prettyprint lang-json">$params['body'] = [
+    'query' =&gt; [
+        'match' =&gt; [
+            'content' =&gt; 'quick brown fox'
+        ]
+    ],
+    'sort' =&gt; [
+        ['time' =&gt; ['order' =&gt; 'desc']],
+        ['popularity' =&gt; ['order' =&gt; 'desc']]
+    ]
+];
+$results = $client-&gt;search($params);</pre></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_arrays_of_empty_objects"></a>Arrays of empty objects<a href="https://github.com/elasticsearch/elasticsearch-php/edit/1.0/docs/php_json_objects.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><p>Occasionally, you’ll encounter DSL that requires both of the previous patterns.  The function score query is a good
+example, it sometimes requires an array of objects, and some of those objects might be empty JSON objects.</p><p>Given this query:</p><pre class="programlisting prettyprint lang-json">{
+   "query":{
+      "function_score":{
+         "functions":[
+            {
+               "random_score":{}
+            }
+         ],
+         "boost_mode":"replace"
+      }
+   }
+}</pre><p>We can build it using the following PHP code:</p><pre class="programlisting prettyprint lang-json">$params['body'] = array(
+    'query' =&gt; array(
+        'function_score' =&gt; array(
+            'functions' =&gt; array(  <a id="CO7-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+                array(  <a id="CO7-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+                    'random_score' =&gt; new \stdClass() <a id="CO7-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+                )
+            )
+        )
+    )
+);
+$results = $client-&gt;search($params);</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO7-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+This encodes the array of objects: <code class="literal">"functions" : []</code>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO7-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+This encodes an object inside the array: <code class="literal">{ "random_score": {} }</code>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO7-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+This encodes the empty JSON object: <code class="literal">"random_score": {}</code>
+</p></td></tr></table></div></div></div><div class="navfooter"><span class="prev"><a href="_configuration.html">
               « 
-              Overview</a>
+              Configuration</a>
            
         </span><span class="next">
            
-          <a href="_installation_2.html">Installation
+          <a href="_index_operations.html">Index Operations
                »
             </a></span></div></article></section></div></div></div><footer><div id="footer_container" class="full_wrapper"><div class="container"><nav role="navigation"><ul id="footer_nav" class="menu"><li id="menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36"><a target="_blank" href="http://elasticsearch.com">Company</a></li><li id="menu-item-74980" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74980"><a href="/resources/">Resources</a></li><li id="menu-item-3106" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3106"><a href="/terms-of-use/">Terms</a></li><li id="menu-item-3107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3107"><a href="/privacy-and-cookie-policy/">Privacy</a></li><li id="menu-item-3105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3105"><a href="/contact/">Contact</a></li><li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="/blog/">Blog</a></li></ul></nav><div id="social"><a href="https://twitter.com/elasticsearch" class="social_icons" target="_blank"><i class="twitter"></i></a><a href="https://www.facebook.com/elasticsearch" class="social_icons" target="_blank"><i class="facebook"></i></a></div><div id="footer_form"><label class="form_label">Sign up for updates!</label><div class="gf_browser_chrome gform_wrapper" id="gform_wrapper_4"><a id="gf_4" name="gf_4" class="gform_anchor"></a><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_4" id="gform_4" action="/empty-template/#gf_4"><div class="gform_body"><ul id="gform_fields_4" class="gform_fields top_label description_below"><li id="field_4_6" class="gfield               gfield_contains_required"><label class="gfield_label" for="input_4_6">enter you email<span class="gfield_required">*</span></label><div class="ginput_container"><input name="input_6" id="input_4_6" type="email" value="" class="medium" tabindex="50" /></div></li><li id="field_4_2" class="gfield     gform_hidden"><input name="input_2" id="input_4_2" type="hidden" class="gform_hidden" value="813-MAM-392" /></li><li id="field_4_3" class="gfield     gform_hidden"><input name="input_3" id="input_4_3" type="hidden" class="gform_hidden" value="WEB.org" /></li><li id="field_4_4" class="gfield     gform_hidden"><input name="input_4" id="input_4_4" type="hidden" class="gform_hidden" value="WEB.org - Footer - Updates" /></li></ul></div><script type="text/javascript">//<![CDATA[
             jQuery(function(){
