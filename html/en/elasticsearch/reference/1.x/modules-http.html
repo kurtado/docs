@@ -45,7 +45,10 @@ Accept-Encoding). Defaults to <code class="literal">false</code>.</p></td></tr><
 Defaults to <code class="literal">6</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">http.cors.enabled</code></p></td><td align="left" valign="top"><p>Enable or disable cross-origin resource sharing,
 i.e. whether a browser on another origin can do requests to
 Elasticsearch. Defaults to <code class="literal">true</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">http.cors.allow-origin</code></p></td><td align="left" valign="top"><p>Which origins to allow. Defaults to <code class="literal">*</code>,
-i.e. any origin.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">http.cors.max-age</code></p></td><td align="left" valign="top"><p>Browsers send a "preflight" OPTIONS-request to
+i.e. any origin. If you prepend and append a <code class="literal">/</code> to the value, this will
+be treated as a regular expression, allowing you to support HTTP and HTTPs.
+for example using <code class="literal">/https?:\/\/localhost(:[0-9]+)?/</code> would return the
+request header appropriately in both cases.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">http.cors.max-age</code></p></td><td align="left" valign="top"><p>Browsers send a "preflight" OPTIONS-request to
 determine CORS settings. <code class="literal">max-age</code> defines how long the result should
 be cached for. Defaults to <code class="literal">1728000</code> (20 days)</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">http.cors.allow-methods</code></p></td><td align="left" valign="top"><p>Which methods to allow. Defaults to
 <code class="literal">OPTIONS, HEAD, GET, POST, PUT, DELETE</code>.</p></td></tr><tr><td align="left" valign="top"><p><code class="literal">http.cors.allow-headers</code></p></td><td align="left" valign="top"><p>Which headers to allow. Defaults to
