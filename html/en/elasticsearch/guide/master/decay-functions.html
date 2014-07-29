@@ -138,10 +138,9 @@ Locations more than <code class="literal">5km</code> (<code class="literal">offs
 </li></ul></div><p>The <code class="literal">price</code> clause is a little trickier.  The user’s preferred price is
 anything up to £100, but this example sets the origin to £50.  Prices can’t be
 negative, but the lower they are the better.  Really, any price between £0 and
-£100 should be considered optimal.  If we were to set the <code class="literal">origin</code> to £100,
-then prices below £100 would receive a lower score. Instead, we set both the
-<code class="literal">origin</code> and the <code class="literal">offset</code> to £50.  That way, the score only decays for any
-prices above £100 (<code class="literal">origin + offset</code>).</p></div><div class="navfooter"><span class="prev"><a href="random-scoring.html">
+£100 should be considered optimal.</p><p>If we were to set the <code class="literal">origin</code> to £100, then prices below £100 would receive a
+lower score. Instead, we set both the <code class="literal">origin</code> and the <code class="literal">offset</code> to £50.  That
+way, the score only decays for any prices above £100 (<code class="literal">origin + offset</code>).</p></div><div class="navfooter"><span class="prev"><a href="random-scoring.html">
               « 
               Random scoring</a>
            
