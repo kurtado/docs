@@ -82,7 +82,7 @@ in an internal index known as <code class="literal">.scripts</code> and referenc
 REST endpoints to manage indexed scripts as follows:</p><p>Requests to the scripts endpoint look like :</p><pre class="programlisting prettyprint lang-js">/_scripts/{lang}/{id}</pre><p>Where the <code class="literal">lang</code> part is the language the script is in and the <code class="literal">id</code> part is the id
 of the script. In the <code class="literal">.scripts</code> index the type of the document will be set to the <code class="literal">lang</code>.</p><pre class="programlisting prettyprint lang-js">curl -XPOST localhost:9200/_scripts/groovy/indexedCalculateScore -d '{
      "script": "log(_score * 2) + my_modifier"
-}'</pre><p>This will create a document with id: <code class="literal">indexedCalculateScore</code> and type: <code class="literal">mvel</code> in the
+}'</pre><p>This will create a document with id: <code class="literal">indexedCalculateScore</code> and type: <code class="literal">groovy</code> in the
 <code class="literal">.scripts</code> index. The type of the document is the language used by the script.</p><p>This script can be accessed at query time by appending <code class="literal">_id</code> to
 the script parameter and passing the script id. So <code class="literal">script</code> becomes <code class="literal">script_id</code>.:</p><pre class="programlisting prettyprint lang-js">curl -XPOST localhost:9200/_search -d '{
   "query": {
