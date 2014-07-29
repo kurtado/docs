@@ -129,6 +129,15 @@ contents:
             abbr:       groovy
 
           -
+            title:      .NET API
+            prefix:     en/elasticsearch/client/net-api
+            repo:       elasticsearch-net
+            index:      docs/asciidocs/index.asciidoc
+            branches:   [develop]
+            current:    develop
+            abbr:       net
+
+          -
             title:      PHP API
             prefix:     en/elasticsearch/client/php-api
             repo:       elasticsearch-php
@@ -167,15 +176,6 @@ contents:
             branches:   [master]
             current:    master
             abbr:       ruby
-
-          -
-            title:      .NET API
-            prefix:     en/elasticsearch/client/net-api
-            repo:       elasticsearch-net
-            index:      docs/asciidocs/index.asciidoc
-            branches:   [develop]
-            current:    develop
-            abbr:       net
 
           -
             title:      Rivers
