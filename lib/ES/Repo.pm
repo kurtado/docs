@@ -109,7 +109,7 @@ sub checkout {
     local $ENV{GIT_WORK_TREE} = $self->dir;
 
     run qw( git reset --hard );
-    run qw( git clean --force );
+    run qw( git clean --force -d);
     run qw( git checkout -B _build_docs ), "origin/$branch";
     return 1;
 }
