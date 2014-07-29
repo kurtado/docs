@@ -39,6 +39,11 @@ repos:
             - 1.5
             - 1.4
 
+    elasticsearch-net:
+        url:        https://github.com/elasticsearch/elasticsearch-net.git
+        current:    master
+        branches:   [master]
+
     marvel:
         url:        https://github.com/elasticsearch/elasticsearch-marvel.git
         current:    1.2
@@ -162,6 +167,15 @@ contents:
             branches:   [master]
             current:    master
             abbr:       ruby
+
+          -
+            title:      .NET API
+            prefix:     en/elasticsearch/client/net-api
+            repo:       elasticsearch-net
+            index:      docs/asciidocs/index.asciidoc
+            branches:   [master]
+            current:    master
+            abbr:       net
 
           -
             title:      Rivers
