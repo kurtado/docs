@@ -106,9 +106,9 @@ the script parameter and passing the script id. So <code class="literal">script<
     }
   }
 }'</pre><p>Note that you must have dynamic scripting enabled to use indexed scripts
-at query time.</p><p>The script can be viewed by:</p><pre class="programlisting prettyprint lang-js">curl -XGET localhost:9200/_scripts/mvel/indexedCalculateScore</pre><p>This is rendered as:</p><pre class="programlisting prettyprint lang-js">'{
+at query time.</p><p>The script can be viewed by:</p><pre class="programlisting prettyprint lang-js">curl -XGET localhost:9200/_scripts/groovy/indexedCalculateScore</pre><p>This is rendered as:</p><pre class="programlisting prettyprint lang-js">'{
      "script": "log(_score * 2) + my_modifier"
-}'</pre><p>Indexed scripts can be deleted by:</p><pre class="programlisting prettyprint lang-js">curl -XDELETE localhost:9200/_scripts/mvel/indexedCalculateScore</pre><h3><a id="_enabling_dynamic_scripting"></a>Enabling dynamic scripting<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>We recommend running Elasticsearch behind an application or proxy, which
+}'</pre><p>Indexed scripts can be deleted by:</p><pre class="programlisting prettyprint lang-js">curl -XDELETE localhost:9200/_scripts/groovy/indexedCalculateScore</pre><h3><a id="_enabling_dynamic_scripting"></a>Enabling dynamic scripting<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>We recommend running Elasticsearch behind an application or proxy, which
 protects Elasticsearch from the outside world. If users are allowed to run
 dynamic scripts (even in a search request), then they have the same access to
 your box as the user that Elasticsearch is running as. For this reason dynamic
