@@ -41,8 +41,8 @@ repos:
 
     elasticsearch-net:
         url:        https://github.com/elasticsearch/elasticsearch-net.git
-        current:    master
-        branches:   [master]
+        current:    develop
+        branches:   [develop]
 
     marvel:
         url:        https://github.com/elasticsearch/elasticsearch-marvel.git
@@ -173,8 +173,8 @@ contents:
             prefix:     en/elasticsearch/client/net-api
             repo:       elasticsearch-net
             index:      docs/asciidocs/index.asciidoc
-            branches:   [master]
-            current:    master
+            branches:   [develop]
+            current:    develop
             abbr:       net
 
           -
