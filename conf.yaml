@@ -32,8 +32,10 @@ repos:
 
     elasticsearch-js:
         url:        https://github.com/elasticsearch/elasticsearch-js.git
-        current:    2.2
+        current:    2.4
         branches:
+            - 2.4
+            - 2.3
             - 2.2
             - 2.1
             - 1.5
@@ -116,6 +118,8 @@ contents:
             index:      docs/index.asciidoc
             abbr:       js
             branches:
+                - 2.4
+                - 2.3
                 - 2.2
                 - 2.1
                 - 1.5
