@@ -316,7 +316,7 @@ with the <a class="xref" href="analysis-standard-analyzer.html" title="Standard 
         "cjk": {
           "tokenizer":  "standard",
           "filter": [
-            "cjk_width"
+            "cjk_width",
             "lowercase",
             "cjk_bigram",
             "english_stop"
@@ -935,7 +935,7 @@ This filter should be removed unless there are words which should
       "analyzer": {
         "persian": {
           "tokenizer":     "standard",
-          "char_filter": [ "zero_width_spaces" ]
+          "char_filter": [ "zero_width_spaces" ],
           "filter": [
             "lowercase",
             "arabic_normalization",
