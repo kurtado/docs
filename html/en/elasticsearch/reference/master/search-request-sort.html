@@ -216,7 +216,10 @@ conform with <a class="ulink" href="http://geojson.org/" target="_top">GeoJSON</
     "query" : {
         "term" : { "user" : "kimchy" }
     }
-}</pre></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_script_based_sorting"></a>Script Based Sorting<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/request/sort.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Allow to sort based on custom scripts, here is an example:</p><pre class="programlisting prettyprint lang-js">{
+}</pre></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_multiple_reference_points"></a>Multiple reference points<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/request/sort.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Multiple geo points can be passed as an array containing any <code class="literal">geo_point</code> format, for example</p><p>```
+"pin.location" : [[-70, 40], [-71, 42]]
+"pin.location" : [{"lat": -70, "lon": 40}, {"lat": -71, "lon": 42}]</p><p>```
+and so forth.</p><p>The final distance for a document will then be <code class="literal">min</code>/<code class="literal">max</code> distance of all points contained in the document to all points given in the sort request.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_script_based_sorting"></a>Script Based Sorting<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/request/sort.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Allow to sort based on custom scripts, here is an example:</p><pre class="programlisting prettyprint lang-js">{
     "query" : {
         ....
     },
