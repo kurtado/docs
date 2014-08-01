@@ -61,7 +61,7 @@ in the percolate api.</p><h3><a id="_sample_usage"></a>Sample usage<a href="http
         }
     ]
 }</pre><p>The percolate api returns matches that refer to percolate queries that have matched with the document defined in the percolate api.</p><h3><a id="_indexing_percolator_queries"></a>Indexing percolator queries<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/percolate.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Percolate queries are stored as documents in a specific format and in an arbitrary index under a reserved type with the
-name <code class="literal">.percolator</code>. The query itself is placed as is in a json objects under the top level field <code class="literal">query</code>.</p><pre class="programlisting prettyprint lang-js">{
+name <code class="literal">.percolator</code>. The query itself is placed as is in a json object under the top level field <code class="literal">query</code>.</p><pre class="programlisting prettyprint lang-js">{
     "query" : {
                 "match" : {
                         "field" : "value"
