@@ -46,7 +46,7 @@ field.</p><p>These four fields would all be considered to be empty, and would no
 indexed:</p><pre class="programlisting prettyprint lang-js">"empty_string":             "",
 "null_value":               null,
 "empty_array":              [],
-"array_with_null_value":    [ null ]</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_multi_level_objects"></a>Multi-level objects<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/052_Mapping_Analysis/50_Complex_datatypes.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The last native JSON datatype that we need to discuss is the <span class="emphasis"><em>object</em></span> — known in other languages as hashes, hashmaps, dictionaries or
+"array_with_null_value":    [ null ]</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="inner-objects"></a>Multi-level objects<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/052_Mapping_Analysis/50_Complex_datatypes.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The last native JSON datatype that we need to discuss is the <span class="emphasis"><em>object</em></span> — known in other languages as hashes, hashmaps, dictionaries or
 associative arrays.</p><p><span class="emphasis"><em>Inner objects</em></span> are often used to embed one entity or object inside
 another. For instance, instead of having fields called <code class="literal">user_name</code>
 and <code class="literal">user_id</code> inside our <code class="literal">tweet</code> document, we could write it as:</p><pre class="programlisting prettyprint lang-js">{
@@ -110,7 +110,7 @@ between two fields that have the same name we can use the full <span class="emph
 eg <code class="literal">"user.name.first"</code> or even the <code class="literal">type</code> name plus
 the path: <code class="literal">"tweet.user.name.first"</code>.</p><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>In the simple flattened document above, there is no field called <code class="literal">user</code>
 and no field called <code class="literal">user.name</code>.  Lucene only indexes scalar or simple values,
-not complex datastructures.</p></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_arrays_of_inner_objects"></a>Arrays of inner objects<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/052_Mapping_Analysis/50_Complex_datatypes.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Finally, consider how an array containing inner objects would be indexed.
+not complex datastructures.</p></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="object-arrays"></a>Arrays of inner objects<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/052_Mapping_Analysis/50_Complex_datatypes.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Finally, consider how an array containing inner objects would be indexed.
 Let’s say we have a <code class="literal">followers</code> array which looks like this:</p><pre class="programlisting prettyprint lang-js">{
     "followers": [
         { "age": 35, "name": "Mary White"},
@@ -129,7 +129,7 @@ sufficient for us to ask:</p><div class="itemizedlist"><ul class="itemizedlist" 
 <span class="emphasis"><em>Is there a follower who is 26 years old <span class="strong"><strong>and who is called Alex Jones?</strong></span></em></span>
 </li></ul></div><p>Correlated inner objects, which are able to answer queries like these,
 are called <span class="emphasis"><em>nested</em></span> objects, and we will discuss them later on in
-<a class="xref" href="relations.html" title="Related Documents (TODO)"><em>Related Documents (TODO)</em></a>.</p></div></div><div class="navfooter"><span class="prev"><a href="mapping-intro.html">
+<a class="xref" href="nested-objects.html" title="Nested objects">Nested objects</a>.</p></div></div><div class="navfooter"><span class="prev"><a href="mapping-intro.html">
               « 
               Mapping</a>
            
