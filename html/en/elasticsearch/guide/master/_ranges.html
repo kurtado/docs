@@ -110,13 +110,13 @@ now. Just add a double pipe || after the date and follow it with a date
 math expression:</p><pre class="programlisting prettyprint lang-js">"range" : {
     "timestamp" : {
         "gt" : "2014-01-01 00:00:00",
-        "lt" : "2014-01-01 00:00:00||+1M" <a id="CO46-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+        "lt" : "2014-01-01 00:00:00||+1M" <a id="CO51-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
     }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO46-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO51-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Less than January 1 2014 plus one month.
 </p></td></tr></table></div><p>Date math is "calendar aware", so it knows how many days are in each month,
 days in a year, etc.  More details about working with dates can be found in
-the <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current//mapping-date-format.html" target="_top">date format reference documentation</a>.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_ranges_on_strings"></a>Ranges on strings<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/080_Structured_Search/25_ranges.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The range filter can also operate on string fields.  String ranges are
+the <a class="ulink" href="http://foo.com//mapping-date-format.html" target="_top">date format reference documentation</a>.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_ranges_on_strings"></a>Ranges on strings<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/080_Structured_Search/25_ranges.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The range filter can also operate on string fields.  String ranges are
 calculated <span class="emphasis"><em>lexicographically</em></span>  or alphabetically.  For example, these values
 are sorted in lexicographic order:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 5, 50, 6, B, C, a, ab, abb, abc, b

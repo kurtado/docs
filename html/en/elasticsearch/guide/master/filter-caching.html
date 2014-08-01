@@ -47,20 +47,20 @@ or are <span class="strong"><strong>not</strong></span> in the inbox but have be
    "should": [
       { "bool": {
             "must": [
-               { "term": { "folder": "inbox" }}, <a id="CO49-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+               { "term": { "folder": "inbox" }}, <a id="CO54-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
                { "term": { "read": false }}
             ]
       }},
       { "bool": {
             "must_not": {
-               "term": { "folder": "inbox" } <a id="CO49-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+               "term": { "folder": "inbox" } <a id="CO54-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
             },
             "must": {
                "term": { "important": true }
             }
       }}
    ]
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO49-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> <a href="#CO49-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO54-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> <a href="#CO54-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 These two filters are identical and will use the same bitset.
 </p></td></tr></table></div><p>Even though one of the inbox clauses is a <code class="literal">must</code> clause and the other is a
 <code class="literal">must_not</code> clause, the two clauses themselves are identical.  This means that
@@ -78,7 +78,7 @@ recalculate them every time.</p></div><p>Certain leaf filters, however, are not 
 doesn’t make sense to do so:</p><div class="variablelist"><dl class="variablelist"><dt><span class="term">
 Script filters
 </span></dt><dd>
-The results from <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current//query-dsl-script-filter.html" target="_top"><code class="literal">script</code> filters</a> cannot
+The results from <a class="ulink" href="http://foo.com//query-dsl-script-filter.html" target="_top"><code class="literal">script</code> filters</a> cannot
 be cached because the meaning of the script is opaque to Elasticsearch.
 </dd><dt><span class="term">
 Geo filters
@@ -102,13 +102,13 @@ caching strategy can be overridden on almost any filter by setting the
 <code class="literal">_cache</code> flag:</p><pre class="programlisting prettyprint lang-js">{
     "range" : {
         "timestamp" : {
-            "gt" : "2014-01-02 16:15:14" <a id="CO50-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+            "gt" : "2014-01-02 16:15:14" <a id="CO55-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         },
-        "_cache": false <a id="CO50-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+        "_cache": false <a id="CO55-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
     }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO50-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO55-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 It is unlikely that we will reuse this exact timestamp.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO50-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO55-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Disable caching of this filter.
 </p></td></tr></table></div><p>In later chapters we will provide examples of when it can make sense to
 override the default caching strategy.</p></div></div><div class="navfooter"><span class="prev"><a href="_dealing_with_null_values.html">

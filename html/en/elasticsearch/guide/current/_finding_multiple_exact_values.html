@@ -43,13 +43,13 @@ actually use it:</p><pre class="programlisting prettyprint lang-js">GET /my_stor
     "query" : {
         "filtered" : {
             "filter" : {
-                "terms" : { <a id="CO43-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+                "terms" : { <a id="CO48-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
                     "price" : [20, 30]
                 }
             }
         }
     }
-}</pre><a class="sense_widget" href="sense_widget.html?snippets/080_Structured_Search/15_Terms_filter.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO43-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/080_Structured_Search/15_Terms_filter.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO48-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">terms</code> filter as seen above, but placed inside the <code class="literal">filtered</code> query
 </p></td></tr></table></div><p>The query will return the second and third documents:</p><pre class="programlisting prettyprint lang-json">"hits" : [
     {
@@ -71,7 +71,7 @@ The <code class="literal">terms</code> filter as seen above, but placed inside t
 ]</pre><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_contains_but_does_not_equal"></a>Contains, but does not equal<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/080_Structured_Search/20_contains.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>It is important to understand that <code class="literal">term</code> and <code class="literal">terms</code> are "contains" operations,
 not "equals".  What does that mean?</p><p>If you have a term filter for <code class="literal">{ "term" : { "tags" : "search" } }</code>, it will match
 <span class="emphasis"><em>both</em></span> of the following documents:</p><pre class="programlisting prettyprint lang-js">{ "tags" : ["search"] }
-{ "tags" : ["search", "open_source"] } <a id="CO44-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span></pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO44-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+{ "tags" : ["search", "open_source"] } <a id="CO49-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span></pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO49-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 This document is returned, even though it has terms other than <code class="literal">"search"</code>
 </p></td></tr></table></div><p>Recall how the <code class="literal">term</code> filter works: it checks the inverted index for all
 documents which contain a term, then constructs a bitset.  In our simple
@@ -96,16 +96,16 @@ that enforces the appropriate number of terms:</p><pre class="programlisting pre
             "filter" : {
                  "bool" : {
                     "must" : [
-                        { "term" : { "tags" : "search" } }, <a id="CO45-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
-                        { "term" : { "tag_count" : 1 } } <a id="CO45-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+                        { "term" : { "tags" : "search" } }, <a id="CO50-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+                        { "term" : { "tag_count" : 1 } } <a id="CO50-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
                     ]
                 }
             }
         }
     }
-}</pre><a class="sense_widget" href="sense_widget.html?snippets/080_Structured_Search/20_Exact.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO45-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/080_Structured_Search/20_Exact.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO50-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Find all documents that have the term <code class="literal">"search"</code>.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO45-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO50-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 But make sure the document only has one tag.
 </p></td></tr></table></div><p>This query will now match only the document that has a single tag which is
 <code class="literal">search</code>, rather than any document which contains <code class="literal">search</code>.</p></div></div><div class="navfooter"><span class="prev"><a href="combining-filters.html">

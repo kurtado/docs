@@ -39,22 +39,22 @@ another.  For instance:</p><pre class="programlisting prettyprint lang-json">GET
           "match": {
             "title": {
               "query": "quick brown fox",
-              "boost": 2 <a id="CO104-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+              "boost": 2 <a id="CO109-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
             }
           }
         },
         {
-          "match": { <a id="CO104-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+          "match": { <a id="CO109-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
             "content": "quick brown fox"
           }
         }
       ]
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO104-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO109-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">title</code> query clause is twice as important as the <code class="literal">content</code> query
     clause, because it has been boosted by a factor of 2.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO104-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO109-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 A query clause without a <code class="literal">boost</code> value has a neutral boost of 1.
 </p></td></tr></table></div><p>Query-time boosting is the main tool that you can use to tune relevance. Any
 type of query accepts a <code class="literal">boost</code> parameter.  Setting a <code class="literal">boost</code> of 2 doesn’t
@@ -71,9 +71,9 @@ are usually shorter than the related content — so don’t blindly boost fi
 just because you think they should be boosted.  Apply a boost and check the
 results. Change the boost and check again.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_boosting_an_index"></a>Boosting an index<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/170_Relevance/20_Query_time_boosting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>When searching across multipled indices, you can boost an entire index over
 the others with the <code class="literal">indices_boost</code> parameter.  This could be used, as in the
-next example, to give more weight to documents from a more recent index:</p><pre class="programlisting prettyprint lang-json">GET /docs_2014_*/_search <a id="CO105-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+next example, to give more weight to documents from a more recent index:</p><pre class="programlisting prettyprint lang-json">GET /docs_2014_*/_search <a id="CO110-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
 {
-  "indices_boost": { <a id="CO105-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+  "indices_boost": { <a id="CO110-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
     "docs_2014_10": 3,
     "docs_2014_09": 2
   },
@@ -82,10 +82,10 @@ next example, to give more weight to documents from a more recent index:</p><pre
       "text": "quick brown fox"
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO105-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO110-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 This multi-index search covers all indices beginning with
     <code class="literal">docs_2014_</code>.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO105-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO110-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Documents in the <code class="literal">docs_2014_10</code> index will be boosted by <code class="literal">3</code>, those
     in <code class="literal">docs_2014_09</code> by <code class="literal">2</code>, and any other matching indices will have
     a neutral boost of <code class="literal">1</code>.

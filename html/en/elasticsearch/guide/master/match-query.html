@@ -33,10 +33,10 @@ reach for whenever you need to query any field. It is a high-level <span class="
 query</em></span> meaning that it knows how to deal with both full-text fields and exact-
 value fields.</p><p>That said, the main use case for the <code class="literal">match</code> query is for full text search. So
 let’s take a look at how full text search works with a simple example.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="match-test-data"></a>Index some data<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/100_Full_Text_Search/05_Match_query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>First, we’ll create a new index and index some documents using the
-<a class="link" href="bulk.html" title="Cheaper in bulk"><code class="literal">bulk</code> API</a>:</p><pre class="programlisting prettyprint lang-js">DELETE /my_index <a id="CO52-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+<a class="link" href="bulk.html" title="Cheaper in bulk"><code class="literal">bulk</code> API</a>:</p><pre class="programlisting prettyprint lang-js">DELETE /my_index <a id="CO57-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
 
 PUT /my_index
-{ "settings": { "number_of_shards": 1 }} <a id="CO52-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+{ "settings": { "number_of_shards": 1 }} <a id="CO57-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
 
 POST /my_index/my_type/_bulk
 { "index": { "_id": 1 }}
@@ -46,9 +46,9 @@ POST /my_index/my_type/_bulk
 { "index": { "_id": 3 }}
 { "title": "The quick brown fox jumps over the quick dog" }
 { "index": { "_id": 4 }}
-{ "title": "Brown fox brown dog" }</pre><a class="sense_widget" href="sense_widget.html?snippets/100_Full_Text_Search/05_Match_query.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO52-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+{ "title": "Brown fox brown dog" }</pre><a class="sense_widget" href="sense_widget.html?snippets/100_Full_Text_Search/05_Match_query.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO57-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Delete the index in case it already exists.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO52-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO57-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Later on, in <a class="xref" href="relevance-is-broken.html" title="Relevance is broken!">Relevance is broken!</a>, we will explain why
     we created this index with only one primary shard.
 </p></td></tr></table></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_a_single_word_query"></a>A single word query<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/100_Full_Text_Search/05_Match_query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Our first example explains what happens when we use the <code class="literal">match</code> query to
@@ -80,28 +80,28 @@ length of each field (shorter fields are considered more relevant).
 See <a class="xref" href="relevance-intro.html" title="What is relevance?">What is relevance?</a>.</p></li></ol></div><p>This process gives us the following (abbreviated) results:</p><pre class="programlisting prettyprint lang-js">"hits": [
  {
     "_id":      "3",
-    "_score":   0.53033006, <a id="CO53-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+    "_score":   0.53033006, <a id="CO58-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
     "_source": {
        "title": "The quick brown fox jumps over the quick dog"
     }
  },
  {
     "_id":      "1",
-    "_score":   0.5, <a id="CO53-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+    "_score":   0.5, <a id="CO58-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
     "_source": {
        "title": "The quick brown fox"
     }
  },
  {
     "_id":      "2",
-    "_score":   0.375, <a id="CO53-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+    "_score":   0.375, <a id="CO58-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
     "_source": {
        "title": "The quick brown fox jumps over the lazy dog"
     }
  }
-]</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO53-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+]</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO58-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Doc <code class="literal">3</code> is most relevant because it contains the term <code class="literal">"quick"</code> twice.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO53-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> <a href="#CO53-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO58-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> <a href="#CO58-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Doc <code class="literal">1</code> is more relevant than doc <code class="literal">2</code> because its <code class="literal">title</code> field is shorter.
 </p></td></tr></table></div></div></div><div class="navfooter"><span class="prev"><a href="term-vs-full-text.html">
               « 

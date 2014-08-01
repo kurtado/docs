@@ -42,21 +42,21 @@ results.</p><p>A simple <code class="literal">bool</code> query allows us to wri
         "bool": {
             "must": {
                 "match": {
-                    "content": { <a id="CO59-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+                    "content": { <a id="CO64-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
                         "query":    "full text search",
                         "operator": "and"
                     }
                 }
             },
-            "should": [ <a id="CO59-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+            "should": [ <a id="CO64-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
                 { "match": { "content": "Elasticsearch" }},
                 { "match": { "content": "Lucene"        }}
             ]
         }
     }
-}</pre><a class="sense_widget" href="sense_widget.html?snippets/100_Full_Text_Search/25_Boost.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO59-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/100_Full_Text_Search/25_Boost.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO64-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">content</code> field must contain all of the words <code class="literal">full</code>, <code class="literal">text</code> and <code class="literal">search</code>.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO59-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO64-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 If the <code class="literal">content</code> field also contains <code class="literal">Elasticsearch</code> or <code class="literal">Lucene</code> then
     the document will receive a higher <code class="literal">_score</code>.
 </p></td></tr></table></div><p>The more <code class="literal">should</code> clauses that match, the more relevant the document.  So far
@@ -69,7 +69,7 @@ follows:</p><pre class="programlisting prettyprint lang-js">GET /_search
     "query": {
         "bool": {
             "must": {
-                "match": {  <a id="CO60-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+                "match": {  <a id="CO65-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
                     "content": {
                         "query":    "full text search",
                         "operator": "and"
@@ -80,23 +80,23 @@ follows:</p><pre class="programlisting prettyprint lang-js">GET /_search
                 { "match": {
                     "content": {
                         "query": "Elasticsearch",
-                        "boost": 3 <a id="CO60-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+                        "boost": 3 <a id="CO65-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
                     }
                 }},
                 { "match": {
                     "content": {
                         "query": "Lucene",
-                        "boost": 2 <a id="CO60-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+                        "boost": 2 <a id="CO65-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
                     }
                 }}
             ]
         }
     }
-}</pre><a class="sense_widget" href="sense_widget.html?snippets/100_Full_Text_Search/25_Boost.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO60-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/100_Full_Text_Search/25_Boost.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO65-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 This clauses use the default <code class="literal">boost</code> of <code class="literal">1</code>.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO60-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO65-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 This clause is the most important, as it has the highest <code class="literal">boost</code>.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO60-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO65-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 This clause is more important than the default, but not as important
     as the "Elasticsearch" clause.
 </p></td></tr></table></div><div class="sidebar"><a id="boost-normalization"></a><div class="titlepage"></div><p>The <code class="literal">boost</code> parameter is used to increase the relative weight of a clause
@@ -107,7 +107,7 @@ type of query has its own normalization algorithm and the details are beyond
 the scope of this book. Suffice to say that a higher <code class="literal">boost</code> value results in
 a higher <code class="literal">_score</code>.</p><p>If you are implementing your own scoring model not based on TF/IDF and you
 need more control over the boosting process, you can use the
-<a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current//query-dsl-function-score-query.html#_boost_factor" target="_top"><code class="literal">boost_factor</code></a>
+<a class="ulink" href="http://foo.com//query-dsl-function-score-query.html#_boost_factor" target="_top"><code class="literal">boost_factor</code></a>
 parameter in the <code class="literal">function_score</code> query to perform simple multiplication
 without the normalization step.</p></div><p>We will discuss other ways of combining queries in the next chapter:
 <a class="xref" href="multi-field-search.html" title="Multi-field search"><em>Multi-field search</em></a>. But first, let’s take a look at the other important

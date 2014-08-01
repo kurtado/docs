@@ -103,7 +103,7 @@ than £100 a night.  We could write this query as:</p><pre class="programlisting
       "functions": [
         {
           "gauss": {
-            "location": { <a id="CO114-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+            "location": { <a id="CO119-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
               "origin": { "lat": 51.5, "lon": 0.12 },
               "offset": "2km",
               "scale":  "3km"
@@ -112,8 +112,8 @@ than £100 a night.  We could write this query as:</p><pre class="programlisting
         },
         {
           "gauss": {
-            "price": { <a id="CO114-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
-              "origin": "50", <a id="CO114-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+            "price": { <a id="CO119-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+              "origin": "50", <a id="CO119-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
               "offset": "50",
               "scale":  "20"
             }
@@ -122,11 +122,11 @@ than £100 a night.  We could write this query as:</p><pre class="programlisting
       ]
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO114-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO119-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">location</code> field is mapped as a <code class="literal">geo_point</code>.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO114-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO119-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">price</code> field is numeric.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO114-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO119-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 See below for the reason why <code class="literal">origin</code> is <code class="literal">50</code> instead of <code class="literal">100</code>.
 </p></td></tr></table></div><p>The <code class="literal">location</code> clause is easy to understand:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 We have specified an <code class="literal">origin</code> which corresponds to the centre of London.
