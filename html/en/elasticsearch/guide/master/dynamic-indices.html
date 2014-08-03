@@ -58,7 +58,7 @@ The in-memory buffer is cleared, and is ready to accept new documents.
 </li></ol></div><p>When a query is issued, all known segments are queried in turn. Term
 statistics are aggregated across all segments to ensure that the relevance of
 each term and each document is calculated accurately. In this way, new
-documents can be added to the index relatively cheaply.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_deletes_and_updates"></a>Deletes and updates<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/075_Inside_a_shard/30_Dynamic_indices.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Segments are immutable, so documents cannot be removed from older segments,
+documents can be added to the index relatively cheaply.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="deletes-and-updates"></a>Deletes and updates<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/075_Inside_a_shard/30_Dynamic_indices.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Segments are immutable, so documents cannot be removed from older segments,
 nor can older segments be updated to reflect a newer version of a document.
 Instead, every commit point includes a <code class="literal">.del</code> file which lists which documents
 in which segments have been deleted.</p><p>When a document is “deleted”, it is actually just <span class="strong"><strong>marked</strong></span> as deleted in the
