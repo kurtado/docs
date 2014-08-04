@@ -37,9 +37,11 @@ produce multiple terms.</p><p>By implication, this means that <span class="stron
 of the same datatype</strong></span>.  You can’t mix dates with strings. If you create
 a new field by indexing an array, Elasticsearch will use the
 datatype of the first value in the array to determine the <code class="literal">type</code> of the
-new field.</p><div class="sidebar"><div class="titlepage"></div><p>The elements inside an array are not ordered. You cannot refer to “the first
-element” or “the last element”.  Rather think of an array as a <span class="emphasis"><em>bag of
-values</em></span>.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_empty_fields"></a>Empty fields<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/052_Mapping_Analysis/50_Complex_datatypes.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Arrays can, of course, be empty. This is the equivalent of having zero
+new field.</p><div class="sidebar"><div class="titlepage"></div><p>When you get a document back from Elasticsearch, any arrays will be in the
+same order as when you indexed the document.  The <code class="literal">_source</code> field that you get
+back contains exactly the same JSON document that you indexed.</p><p>However, arrays are <span class="emphasis"><em>indexed</em></span> — made searchable — as multi-value fields,
+which are unordered.  At search time you can’t refer to “the first element”
+or “the last element”.  Rather think of an array as a <span class="emphasis"><em>bag of values</em></span>.</p></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_empty_fields"></a>Empty fields<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/052_Mapping_Analysis/50_Complex_datatypes.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Arrays can, of course, be empty. This is the equivalent of having zero
 values. In fact, there is no way of storing a <code class="literal">null</code> value in Lucene, so
 a field with a <code class="literal">null</code> value is also considered to be an empty
 field.</p><p>These four fields would all be considered to be empty, and would not be
@@ -117,8 +119,8 @@ Let’s say we have a <code class="literal">followers</code> array which looks l
         { "age": 26, "name": "Alex Jones"},
         { "age": 19, "name": "Lisa Smith"}
     ]
-}</pre><p>This document will be flattened as we described above, but the
-result will look like this:</p><pre class="programlisting prettyprint lang-js">{
+}</pre><p>This document will be flattened as we described above, but the result will
+look like this:</p><pre class="programlisting prettyprint lang-js">{
     "followers.age":    [19, 26, 35],
     "followers.name":   [alex, jones, lisa, smith, mary, white]
 }</pre><p>The correlation between <code class="literal">{age: 35}</code> and <code class="literal">{name: Mary White}</code> has been lost as
