@@ -44,9 +44,42 @@ Every line must end with a newline character <code class="literal">"\n"</code>, 
 The lines cannot contain unescaped newline characters, as they would
   interfere with parsing — that means that the JSON must <span class="strong"><strong>not</strong></span> be
   pretty-printed.
-</li></ul></div><div class="tip admon"><div class="icon"><img alt="Tip" src="images/icons/tip.png" /></div><div class="admon_content"><p>In <a class="xref" href="distrib-multi-doc.html#bulk-format" title="Why the funny format?">Why the funny format?</a> we explain why the <code class="literal">bulk</code> API uses this format.</p></div></div><p>The <span class="emphasis"><em>action/metadata</em></span> line specifies <span class="strong"><strong>what action</strong></span> to do to <span class="strong"><strong>which document</strong></span>.</p><p>The <span class="emphasis"><em>action</em></span> must be one of <code class="literal">index</code>, <code class="literal">create</code>, <code class="literal">update</code> or <code class="literal">delete</code>. The
-<span class="emphasis"><em>metadata</em></span> should specify the <code class="literal">_index</code>, <code class="literal">_type</code> and <code class="literal">_id</code> of the document to
-be indexed, created, updated or deleted.</p><p>For instance, a <code class="literal">delete</code> request could look like this:</p><pre class="programlisting prettyprint lang-js">{ "delete": { "_index": "website", "_type": "blog", "_id": "123" }}</pre><p>The <span class="emphasis"><em>request body</em></span> line consists of the document <code class="literal">_source</code> itself — the fields
+</li></ul></div><div class="tip admon"><div class="icon"><img alt="Tip" src="images/icons/tip.png" /></div><div class="admon_content"><p>In <a class="xref" href="distrib-multi-doc.html#bulk-format" title="Why the funny format?">Why the funny format?</a> we explain why the <code class="literal">bulk</code> API uses this format.</p></div></div><p>The <span class="emphasis"><em>action/metadata</em></span> line specifies <span class="strong"><strong>what action</strong></span> to do to <span class="strong"><strong>which document</strong></span>.</p><p>The <span class="emphasis"><em>action</em></span> must be one of the following:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
+<p>
+<code class="literal">create</code>
+</p>
+</td><td valign="top">
+<p>
+Create a document only if the document not already exist.
+           See <a class="xref" href="create-doc.html" title="Creating a new document">Creating a new document</a>.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">index</code>
+</p>
+</td><td valign="top">
+<p>
+Create a new document or replace an existing document.
+           See <a class="xref" href="index-doc.html" title="Indexing a document">Indexing a document</a> and <a class="xref" href="update-doc.html" title="Updating a whole document">Updating a whole document</a>.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">update</code>
+</p>
+</td><td valign="top">
+<p>
+Do a partial update on a document. See <a class="xref" href="partial-updates.html" title="Partial updates to documents">Partial updates to documents</a>.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">delete</code>
+</p>
+</td><td valign="top">
+<p>
+Delete a document. See <a class="xref" href="delete-doc.html" title="Deleting a document">Deleting a document</a>.
+</p>
+</td></tr></tbody></table></div><p>The <span class="emphasis"><em>metadata</em></span> should specify the <code class="literal">_index</code>, <code class="literal">_type</code> and <code class="literal">_id</code> of the document
+to be indexed, created, updated or deleted.</p><p>For instance, a <code class="literal">delete</code> request could look like this:</p><pre class="programlisting prettyprint lang-js">{ "delete": { "_index": "website", "_type": "blog", "_id": "123" }}</pre><p>The <span class="emphasis"><em>request body</em></span> line consists of the document <code class="literal">_source</code> itself — the fields
 and values that the document contains.  It is required for <code class="literal">index</code> and
 <code class="literal">create</code> operations, which makes sense: you must supply the document to index.</p><p>It is also required for <code class="literal">update</code> operations and should consist of the same
 request body that you would pass to the <code class="literal">update</code> API: <code class="literal">doc</code>, <code class="literal">upsert</code>,
