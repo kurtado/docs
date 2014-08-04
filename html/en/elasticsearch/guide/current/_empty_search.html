@@ -38,13 +38,19 @@ indices, and one, many or all types:</p><pre class="programlisting prettyprint l
 {
     "from": 30,
     "size": 10
-}</pre><div class="tip admon"><div class="icon"><img alt="Tip" src="images/icons/tip.png" /></div><div class="admon_content"><p>Some languages, such as JavaScript, don’t allow request bodies with a <code class="literal">GET</code>
-request. For this reason, the <code class="literal">search</code> API can also be used as a <code class="literal">POST</code>
-request:</p><pre class="programlisting prettyprint lang-js">POST /_search
+}</pre><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>A <code class="literal">GET</code> request with a body?</strong></p></div></div></div><p>The HTTP libraries of certain languages (notably Javascript) don’t allow <code class="literal">GET</code>
+requests to have a request body.  In fact, some users are suprised that <code class="literal">GET</code>
+requests are ever allowed to have a body.</p><p>The truth is that <a class="ulink" href="http://tools.ietf.org/html/rfc7231#page-24" target="_top">RFC 7231</a> — the
+RFC which deals with HTTP semantics and content — does not define what should
+happen to a <code class="literal">GET</code> request with a body!  As a result, some HTTP servers allow
+it, and some — especially caching proxies — don’t.</p><p>The authors of Elasticsearch prefer using <code class="literal">GET</code> for a search request because
+they feel that it describes the action — retrieving information — better
+than the <code class="literal">POST</code> verb.  However, because <code class="literal">GET</code> with a request body is not
+universally supported, the <code class="literal">search</code> API also accepts <code class="literal">POST</code> requests:</p><pre class="programlisting prettyprint lang-js">POST /_search
 {
     "from": 30,
     "size": 10
-}</pre></div></div><p>We will talk about <a class="link" href="TODO.html" title="Appendix A. TODO">highlighting_matches</a>, <a class="xref" href="aggregations.html" title="Aggregations">Aggregations </a>, and
+}</pre><p>The same rule applies to any other <code class="literal">GET</code> API which requires a request body.</p></div><p>We will talk about <a class="link" href="TODO.html" title="Appendix A. TODO">highlighting_matches</a>, <a class="xref" href="aggregations.html" title="Aggregations">Aggregations </a>, and
 <a class="link" href="TODO.html" title="Appendix A. TODO">did_you_mean</a> suggestions in later chapters. For now, we’re going to
 focus just on the query.</p><p>Instead of the cryptic query-string approach, request body search allows us
 to write queries using the <span class="emphasis"><em>Query Domain Specific Language</em></span>, or Query DSL.</p></div><div class="navfooter"><span class="prev"><a href="full-body-search.html">
