@@ -35,9 +35,11 @@ for those cars, we can simply use a <code class="literal">filtered</code> query:
 {
     "query" : {
         "filtered": {
-            "range": {
-                "price": {
-                    "gte": 10000
+            "filter": {
+                "range": {
+                    "price": {
+                        "gte": 10000
+                    }
                 }
             }
         }
