@@ -69,14 +69,15 @@ of the <code class="literal">index</code> request:</p><pre class="programlisting
    }
 }</pre><a class="sense_widget" href="sense_widget.html?snippets/030_Data/45_Partial_update.json" target="sense">View in Sense</a><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO10-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> <a href="#CO10-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Our new fields have been added to the <code class="literal">_source</code>.
-</p></td></tr></table></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_using_scripts_to_make_partial_updates"></a>Using scripts to make partial updates<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/030_Data/45_Partial_update.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><div class="sidebar"><div class="titlepage"></div><p>We will discuss scripting in more detail in <a class="xref" href="scripting.html" title="Scripting – when you need more (TODO)"><em>Scripting – when you need more (TODO)</em></a>, but for now it is
-enough to know that scripts can be used in several places in Elasticsearch to
-achieve custom actions that are not directly supported by the API. The
-default scripting language is called MVEL, but Elasticsearch also supports
-JavaScript, Groovy and Python.</p><p>MVEL is a simple fast Java-based dynamic scripting language with a syntax
-similar to Javascript. You can read more about MVEL in the
-<a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html" target="_top">Elasticsearch scripting docs</a>
-and on the <a class="ulink" href="http://mvel.codehaus.org/Getting+Started+for+2.0" target="_top">MVEL website</a>.</p></div><p>Scripts can be used in the <code class="literal">update</code> API to change the contents of the <code class="literal">_source</code>
+</p></td></tr></table></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_using_scripts_to_make_partial_updates"></a>Using scripts to make partial updates<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/030_Data/45_Partial_update.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Scripting with Groovy</strong></p></div></div></div><p>For those moments when the API just isn’t enough, Elasticsearch allows you to
+write your own custom logic in a script. Scripting is supported in many APIs
+like search, sorting, aggregations, and document updates. Scripts can be
+passed in as part of the  request, retrieved from the special <code class="literal">.scripts</code>
+index, or loaded from disk.</p><p>The default scripting language is a <a class="ulink" href="http://groovy.codehaus.org/" target="_top">Groovy</a>, a
+fast and expressive scripting language, similar in syntax to Javascript.  It
+runs in a <span class="emphasis"><em>sandbox</em></span> to prevent malicious users from breaking out of
+Elasticsearch and attacking the server.</p><p>You can read more about scripting in the
+<a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html" target="_top">scripting reference documentation</a>.</p></div><p>Scripts can be used in the <code class="literal">update</code> API to change the contents of the <code class="literal">_source</code>
 field, which is referred to inside an update script as <code class="literal">ctx._source</code>. For
 instance, we could use a script to increment the number of <code class="literal">views</code> that our
 blog post has had:</p><pre class="programlisting prettyprint lang-js">POST /website/blog/1/_update
