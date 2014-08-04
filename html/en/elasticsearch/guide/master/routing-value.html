@@ -40,7 +40,10 @@ will always be in the range <code class="literal">0</code> to <code class="liter
 us the number of the shard where a particular document lives.</p><p>This explains why the number of primary shards can only be set when an index
 is created and never changed:  if the number of primary shards ever changed in
 the future, all previous routing values would be invalid and documents would
-never be found.</p><p>All document APIs (<code class="literal">get</code>, <code class="literal">index</code>, <code class="literal">delete</code>, <code class="literal">bulk</code>, <code class="literal">update</code> and <code class="literal">mget</code>)
+never be found.</p><div class="sidebar"><div class="titlepage"></div><p>Users sometimes think that having a fixed number of primary shards makes it
+difficult to scale out an index later on.  In reality, there are techniques
+that make it easy to scale out as and when you need. We talk more about these
+in <a class="xref" href="scale.html" title="Designing for scale"><em>Designing for scale</em></a>.</p></div><p>All document APIs (<code class="literal">get</code>, <code class="literal">index</code>, <code class="literal">delete</code>, <code class="literal">bulk</code>, <code class="literal">update</code> and <code class="literal">mget</code>)
 accept a <code class="literal">routing</code> parameter that can be used to customize the document-to-
 shard mapping. A custom routing value could be used to ensure that all related
 documents — for instance all the documents belonging to the same user — are

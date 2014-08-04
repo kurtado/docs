@@ -44,7 +44,11 @@ shards, but we specified that we wanted two replicas of each primary and
 currently only one replica is assigned. This prevents us from reaching
 <code class="literal">green</code>, but we’re not too worried here: were we to kill <code class="literal">Node 2</code> as well, our
 application could <span class="strong"><strong>still</strong></span> keep running without data loss because <code class="literal">Node 3</code>
-contains a copy of every shard.</p><p>By now you should have a reasonable idea of how shards allow Elasticsearch to
+contains a copy of every shard.</p><p>If we restart <code class="literal">Node 1</code>, the cluster would be able to allocate the missing
+replica shards, resulting in a state similar to the one described in
+<a class="xref" href="_scale_horizontally.html#cluster-three-nodes-two-replicas" title="Figure 5. Increasing the number_of_replicas to 2">Figure 5, “Increasing the <code class="literal">number_of_replicas</code> to 2”</a>.  If <code class="literal">Node 1</code> still has copies of the old
+shards, it will try to reuse them, only copying over from the primary shard
+the files that have changed in the meantime.</p><p>By now you should have a reasonable idea of how shards allow Elasticsearch to
 scale horizontally and to ensure that your data is safe. Later we will examine
 the life-cycle of a shard in more detail.</p></div><div class="navfooter"><span class="prev"><a href="_scale_horizontally.html">
               « 
