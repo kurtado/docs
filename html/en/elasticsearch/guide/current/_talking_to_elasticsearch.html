@@ -50,9 +50,10 @@ otherwise they may not be able to understand each other.</p></div></div><p>More 
 of the <a class="ulink" href="http://www.elasticsearch.org/guide/" target="_top">Guide</a>.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_restful_api_with_json_over_http"></a>RESTful API with JSON over HTTP<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/010_Intro/15_API.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>All other languages can communicate with Elasticsearch over <span class="strong"><strong>port 9200</strong></span> using
 a RESTful API, accessible with your favorite web client. In fact, as you have
 seen above, you can even talk to Elasticsearch from the command line using the
-<code class="literal">curl</code> command.</p><div class="sidebar"><div class="titlepage"></div><p>Elasticsearch provides official clients for several languages, and there are
-numerous community-provided clients and integrations, all of which can be
-found in the <a class="ulink" href="http://www.elasticsearch.org/guide/" target="_top">Guide</a>.</p></div><p>A request to Elasticsearch consists of the same parts as any HTTP request. For
+<code class="literal">curl</code> command.</p><div class="sidebar"><div class="titlepage"></div><p>Elasticsearch provides official clients for several languages — Groovy,
+Javascript, .NET, PHP, Perl, Python, and Ruby —  and there are numerous
+community-provided clients and integrations, all of which can be found in the
+<a class="ulink" href="http://www.elasticsearch.org/guide/" target="_top">Guide</a>.</p></div><p>A request to Elasticsearch consists of the same parts as any HTTP request. For
 instance, to count the number of documents in the cluster, we could use:</p><pre class="programlisting prettyprint lang-js">      <a id="CO1-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>     <a id="CO1-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>                     <a id="CO1-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>    <a id="CO1-4"></a><span><img src="images/icons/callouts/4.png" alt="" /></span>
 curl -XGET 'http://localhost:9200/_count?pretty' -d '
 {  <a id="CO1-5"></a><span><img src="images/icons/callouts/5.png" alt="" /></span>

@@ -41,7 +41,12 @@ with:</p><pre class="programlisting prettyprint lang-sh">./bin/elasticsearch</pr
 start experimenting with it.</p><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Clusters and nodes</strong></p></div></div></div><p>A <span class="emphasis"><em>node</em></span> is a running instance of Elasticsearch. A <span class="emphasis"><em>cluster</em></span> is a group of
 nodes with the same <code class="literal">cluster.name</code> that are working together to share data
 and to provide failover and scale, although a single node can form a cluster
-all by itself.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_viewing_marvel_and_sense"></a>Viewing Marvel and Sense<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/010_Intro/10_Installing_ES.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>If you installed the <a class="link" href="_installing_elasticsearch.html#marvel" title="Installing Marvel">Marvel</a> management and monitoring tool you can
+all by itself.</p></div><p>You should change the default <code class="literal">cluster.name</code> to something appropriate to you,
+like your own name, to stop your nodes from trying to join another cluster on
+the same network with the same name!</p><p>You can do this by editing the <code class="literal">elasticsearch.yml</code> file in the <code class="literal">config/</code>
+directory, then restarting Elasticsearch.  When Elasticsearch is running in
+the foreground, you can stop it by pressing <code class="literal">Ctrl-C</code>, otherwise you can shut
+it down with the <code class="literal">shutdown</code> API:</p><pre class="programlisting prettyprint lang-sh">curl -XPOST 'http://localhost:9200/_shutdown'</pre><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_viewing_marvel_and_sense"></a>Viewing Marvel and Sense<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/010_Intro/10_Installing_ES.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>If you installed the <a class="link" href="_installing_elasticsearch.html#marvel" title="Installing Marvel">Marvel</a> management and monitoring tool you can
 view it in a web browser by visiting:
 <a class="ulink" href="http://localhost:9200/_plugin/marvel/" target="_top">http://localhost:9200/_plugin/marvel/</a>.</p><p>You can reach the <span class="strong"><strong>Sense</strong></span> developer console either by clicking on the “Marvel
 dashboards” dropdown in Marvel, or by visiting:
