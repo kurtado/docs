@@ -54,7 +54,7 @@ may want to know which color car sells the best.  This is easily accomplished
 using a simple aggregation.  We will do this using a <code class="literal">terms</code> bucket:</p><pre class="programlisting prettyprint lang-js">GET /cars/transactions/_search?search_type=count <a id="CO181-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
 {
     "aggs" : { <a id="CO181-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
-        "popular_colors" : { <a id="CO181-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+        "colors" : { <a id="CO181-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
             "terms" : {
               "field" : "color" <a id="CO181-4"></a><span><img src="images/icons/callouts/4.png" alt="" /></span>
             }
@@ -67,7 +67,7 @@ Because we don’t care about search results, we are going to use the <code clas
 Aggregations are placed under the top-level <code class="literal">"aggs"</code> parameter (the longer <code class="literal">"aggregations"</code>
 will also work if you prefer that)
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO181-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-We then name the aggregation whatever we want — "popular_colors" in this example
+We then name the aggregation whatever we want — "colors" in this example
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO181-4"><span><img src="images/icons/callouts/4.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 Finally, we define a single bucket of type <code class="literal">terms</code>
 </p></td></tr></table></div><p>Aggregations are executed in the context of search results, which means it is
