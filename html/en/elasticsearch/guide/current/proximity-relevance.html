@@ -32,7 +32,7 @@
 present can make them overly strict. It’s the same issue that we discussed in
 <a class="xref" href="match-multi-word.html#match-precision" title="Controlling precision">Controlling precision</a> in <a class="xref" href="full-text-search.html" title="Full text search"><em>Full text search</em></a>: if six out of seven terms match,
 a document is probably relevant enough to be worth showing to the user, but
-the <code class="literal">match_phrase</code> query would exclude it.</p><p>Instead of using using proximity matching as an absolute requirement, we can
+the <code class="literal">match_phrase</code> query would exclude it.</p><p>Instead of using proximity matching as an absolute requirement, we can
 use it as a <span class="emphasis"><em>signal</em></span> — as one of potentially many queries, each of which
 contributes to the overall score for each document (see <a class="xref" href="most-fields.html" title="Most fields">Most fields</a>).</p><p>The fact that we want to add together the scores from multiple queries implies
 that we should combine them using the <code class="literal">bool</code> query.</p><p>We can use a simple <code class="literal">match</code> query as a <code class="literal">must</code> clause. This is the query that
