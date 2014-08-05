@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Multi Get API</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Reference [1.x]" /><link rel="up" href="docs.html" title="Document APIs" /><link rel="prev" href="_parameters_3.html" title="Parameters" /><link rel="next" href="docs-bulk.html" title="Bulk API" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Upserts</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /><link rel="home" href="index.html" title="Reference [1.x]" /><link rel="up" href="docs-update.html" title="Update API" /><link rel="prev" href="docs-update.html" title="Update API" /><link rel="next" href="_parameters_3.html" title="Parameters" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><link rel="shortcut icon" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/favicon.ico" /><link rel="stylesheet" id="prettify-gc-syntax-highlighter-css" href="http://www.elasticsearch.org/content/plugins/prettify-gc-syntax-highlighter/prettify.css?ver=3.5.2" type="text/css" media="all" /><link rel="stylesheet" id="appStyles-css" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/css/main.css?ver=1395693666" type="text/css" media="all" /><script type="text/javascript" src="http://www.elasticsearch.org/wp-includes/js/jquery/jquery.js?ver=1.8.3"></script><link rel="stylesheet" href="http://www.elasticsearch.org/content/themes/elasticsearch-org/style.css" type="text/css" media="all" /><script src="//cdn.optimizely.com/js/281975433.js"></script><script src="//fast.wistia.com/static/iframe-api-v1.js"></script><script type="text/javascript">
       jQuery(function() {
         jQuery('div.navheader+div').css('minHeight',jQuery('div.toc').height()+'px');
         jQuery('article.guide_content a[id]').each(function() { this.href='#'+this.id });
@@ -22,138 +22,59 @@
         <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
       <![endif]--><header><nav role="navigation" id="mobile-nav-container" class="off-canvas-nav"><ul id="mobile-nav" class="menu"><li id="menu-item-75892" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75892"><a href="/overview/">Overview</a><ul class="sub-menu"><li id="menu-item-75895" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75895"><a href="/overview/">Overview</a></li><li id="menu-item-68760" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68760"><a href="/overview/elasticsearch/">Elasticsearch</a></li><li id="menu-item-75894" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75894"><a href="/overview/marvel/">Marvel</a></li><li id="menu-item-68758" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68758"><a href="/overview/kibana/">Kibana</a></li><li id="menu-item-68756" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68756"><a href="/overview/kibana/installation/">Kibana Installation</a></li><li id="menu-item-68757" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68757"><a href="/overview/kibana/support/">Kibana Support</a></li><li id="menu-item-68759" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68759"><a href="/overview/logstash/">Logstash</a></li><li id="menu-item-74019" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74019"><a href="/overview/hadoop/">Hadoop</a></li><li id="menu-item-75893" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75893"><a href="/overview/elkdownloads/">ELK Downloads</a></li></ul></li><li id="menu-item-55" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55"><a href="/resources/">Resources</a><ul class="sub-menu"><li id="menu-item-76342" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-76342"><a href="/guide/">Guide</a></li><li id="menu-item-4843" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4843"><a href="/videos/">Videos</a></li></ul></li><li id="menu-item-657" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-657"><a href="/community/">Community</a></li><li id="menu-item-68802" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68802"><a href="/case-studies/">Case Studies</a></li><li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="/blog/">Blog</a></li><li id="menu-item-12" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12"><a target="_blank" href="http://elasticsearch.com">Company</a></li></ul><ul class="add-on"><li><a href="/overview/elkdownloads/">Download</a></li></ul></nav><div class="container"><div id="header-inner"><h1 id="header-logo"><a class="faux" href="http://www.elasticsearch.org">Elasticsearch</a></h1><nav role="navigation" id="main-nav-container" class="main-nav"><ul id="top-nav" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75892"><a href="/overview/">Overview</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-53 current_page_item menu-item-55"><a href="/resources/">Resources</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-657"><a href="/community/">Community</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-68802"><a href="/case-studies/">Case Studies</a></li><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="/blog/">Blog</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-12"><a target="_blank" href="http://elasticsearch.com">Company</a></li></ul><ul class="add-on"><li><a class="btn btn-primary" href="/overview/elkdownloads/">Download</a></li></ul></nav><div class="slide-trigger navigation" id="nav-trigger" aria-hidden="true"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div><hr /><ul id="sub_nav"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-76342"><a href="/guide/">Guide</a></li><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4843"><a href="/videos/">Videos</a></li></ul></div></div></header><div class="global_wrapper"><div class="page_content"><div class="container"><section id="search_container" class="active"><form id="blog_search" role="search" action="/" method="get"><div class="blog_search_wrapper"><input id="s" name="s" class="search_term" type="text" placeholder="search" autocomplete="off" tabindex="1" /><input type="submit" class="search_submit" value=" " /><ul id="results"></ul></div></form></section><section class="full_width guide"><article class="guide_content"><div class="breadcrumbs"><span class="breadcrumb-link"><a href="index.html">Reference
       [1.x]
-    </a></span> » <span class="breadcrumb-link"><a href="docs.html">Document APIs </a></span> » <span class="breadcrumb-node">Multi Get API</span></div><div class="navheader"><span class="prev"><a href="_parameters_3.html">
+    </a></span> » <span class="breadcrumb-link"><a href="docs.html">Document APIs </a></span> » <span class="breadcrumb-link"><a href="docs-update.html">Update API</a></span> » <span class="breadcrumb-node">Upserts</span></div><div class="navheader"><span class="prev"><a href="docs-update.html">
               « 
-              Parameters</a>
+              Update API</a>
            
         </span><span class="next">
            
-          <a href="docs-bulk.html">Bulk API
+          <a href="_parameters_3.html">Parameters
                »
-            </a></span></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a id="docs-multi-get"></a>Multi Get API<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/docs/multi-get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="chapter"><a href="docs-index_.html">Index API</a></span></dt><dt><span class="chapter"><a href="docs-get.html">Get API</a></span></dt><dt><span class="chapter"><a href="docs-delete.html">Delete API</a></span></dt><dt><span class="chapter"><a href="docs-update.html">Update API</a></span></dt><dt><span class="chapter"><a href="docs-multi-get.html">Multi Get API</a></span></dt><dt><span class="chapter"><a href="docs-bulk.html">Bulk API</a></span></dt><dt><span class="chapter"><a href="docs-delete-by-query.html">Delete By Query API</a></span></dt><dt><span class="chapter"><a href="docs-bulk-udp.html">Bulk UDP API</a></span></dt><dt><span class="chapter"><a href="docs-termvectors.html">Term Vectors</a></span></dt><dt><span class="chapter"><a href="docs-multi-termvectors.html">Multi termvectors API</a></span></dt></dl></div><p>Multi GET API allows to get multiple documents based on an index, type
-(optional) and id (and possibly routing). The response includes a <code class="literal">docs</code>
-array with all the fetched documents, each element similar in structure
-to a document provided by the <a class="link" href="docs-get.html" title="Get API">get</a>
-API. Here is an example:</p><pre class="programlisting prettyprint lang-js">curl 'localhost:9200/_mget' -d '{
-    "docs" : [
-        {
-            "_index" : "test",
-            "_type" : "type",
-            "_id" : "1"
-        },
-        {
-            "_index" : "test",
-            "_type" : "type",
-            "_id" : "2"
+            </a></span></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_upserts"></a>Upserts<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/docs/update.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="_upserts.html">Upserts</a></span></dt><dt><span class="section"><a href="_parameters_3.html">Parameters</a></span></dt></dl></div><p>There is also support for <code class="literal">upsert</code>. If the document does
+not already exists, the content of the <code class="literal">upsert</code> element will be used to
+index the fresh doc:</p><pre class="programlisting prettyprint lang-js">curl -XPOST 'localhost:9200/test/type1/1/_update' -d '{
+    "script" : "ctx._source.counter += count",
+    "params" : {
+        "count" : 4
+    },
+    "upsert" : {
+        "counter" : 1
+    }
+}'</pre><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Added in 1.4.0.</p></div></div><p>If the document does not exist you may want your update script to
+run anyway in order to initialize the document contents using
+business logic unknown to the client. In this case pass the
+new <code class="literal">scripted_upsert</code> parameter with the value <code class="literal">true</code>.</p><pre class="programlisting prettyprint lang-js">curl -XPOST 'localhost:9200/sessions/session/dh3sgudg8gsrgl/_update' -d '{
+    "script_id" : "my_web_session_summariser",
+    "scripted_upsert":true,
+    "params" : {
+        "pageViewEvent" : {
+                "url":"foo.com/bar",
+                "response":404,
+                "time":"2014-01-01 12:32"
         }
-    ]
-}'</pre><p>The <code class="literal">mget</code> endpoint can also be used against an index (in which case it
-is not required in the body):</p><pre class="programlisting prettyprint lang-js">curl 'localhost:9200/test/_mget' -d '{
-    "docs" : [
-        {
-            "_type" : "type",
-            "_id" : "1"
-        },
-        {
-            "_type" : "type",
-            "_id" : "2"
-        }
-    ]
-}'</pre><p>And type:</p><pre class="programlisting prettyprint lang-js">curl 'localhost:9200/test/type/_mget' -d '{
-    "docs" : [
-        {
-            "_id" : "1"
-        },
-        {
-            "_id" : "2"
-        }
-    ]
-}'</pre><p>In which case, the <code class="literal">ids</code> element can directly be used to simplify the
-request:</p><pre class="programlisting prettyprint lang-js">curl 'localhost:9200/test/type/_mget' -d '{
-    "ids" : ["1", "2"]
-}'</pre><h3><a id="mget-type"></a>Optional Type<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/docs/multi-get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The mget API allows for <code class="literal">_type</code> to be optional. Set it to <code class="literal">_all</code> or leave it empty in order
-to fetch the first document matching the id across all types.</p><p>If you don’t set the type and have many documents sharing the same <code class="literal">_id</code>, you will end up
-getting only the first matching document.</p><p>For example, if you have a document 1 within typeA and typeB then following request
-will give you back only the same document twice:</p><pre class="programlisting prettyprint lang-js">curl 'localhost:9200/test/_mget' -d '{
-    "ids" : ["1", "1"]
-}'</pre><p>You need in that case to explicitly set the <code class="literal">_type</code>:</p><pre class="programlisting prettyprint lang-js">GET /test/_mget/
-{
-  "docs" : [
-        {
-            "_type":"typeA",
-            "_id" : "1"
-        },
-        {
-            "_type":"typeB",
-            "_id" : "1"
-        }
-    ]
-}</pre><h3><a id="mget-source-filtering"></a>Source filtering<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/docs/multi-get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Added in 1.0.0.Beta1.</p></div></div><p>By default, the <code class="literal">_source</code> field will be returned for every document (if stored).
-Similar to the <a class="link" href="docs-get.html#get-source-filtering" title="Source filteringedit">get</a> API, you can retrieve only parts of
-the <code class="literal">_source</code> (or not at all) by using the <code class="literal">_source</code> parameter. You can also use
-the url parameters <code class="literal">_source</code>,<code class="literal">_source_include</code> &amp; <code class="literal">_source_exclude</code> to specify defaults,
-which will be used when there are no per-document instructions.</p><p>For example:</p><pre class="programlisting prettyprint lang-js">curl 'localhost:9200/_mget' -d '{
-    "docs" : [
-        {
-            "_index" : "test",
-            "_type" : "type",
-            "_id" : "1",
-            "_source" : false
-        },
-        {
-            "_index" : "test",
-            "_type" : "type",
-            "_id" : "2",
-            "_source" : ["field3", "field4"]
-        },
-        {
-            "_index" : "test",
-            "_type" : "type",
-            "_id" : "3",
-            "_source" : {
-                "include": ["user"],
-                "exclude": ["user.location"]
-            }
-        }
-    ]
-}'</pre><h3><a id="mget-fields"></a>Fields<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/docs/multi-get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>Specific stored fields can be specified to be retrieved per document to get, similar to the <a class="link" href="docs-get.html#get-fields" title="Fieldsedit">fields</a> parameter of the Get API.
-For example:</p><pre class="programlisting prettyprint lang-js">curl 'localhost:9200/_mget' -d '{
-    "docs" : [
-        {
-            "_index" : "test",
-            "_type" : "type",
-            "_id" : "1",
-            "fields" : ["field1", "field2"]
-        },
-        {
-            "_index" : "test",
-            "_type" : "type",
-            "_id" : "2",
-            "fields" : ["field3", "field4"]
-        }
-    ]
-}'</pre><h3><a id="_generated_fields"></a>Generated fields<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/docs/multi-get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Added in 1.4.0.</p></div></div><p>See <a class="xref" href="docs-get.html#generated-fields" title="Generated fieldsedit">the section called “Generated fields<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/docs/get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a>”</a> for fields are generated only when indexing.</p><h3><a id="mget-routing"></a>Routing<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/docs/multi-get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>You can specify also specify routing value as a parameter:</p><pre class="programlisting prettyprint lang-js">curl 'localhost:9200/_mget?routing=key1' -d '{
-    "docs" : [
-        {
-            "_index" : "test",
-            "_type" : "type",
-            "_id" : "1",
-            "_routing" : "key2"
-        },
-        {
-            "_index" : "test",
-            "_type" : "type",
-            "_id" : "2"
-        }
-    ]
-}'</pre><p>In this example, document <code class="literal">test/type/2</code> will be fetch from shard corresponding to routing key <code class="literal">key1</code> but
-document <code class="literal">test/type/1</code> will be fetch from shard corresponding to routing key <code class="literal">key2</code>.</p><h3><a id="mget-security"></a>Security<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/docs/multi-get.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>See <a class="xref" href="url-access-control.html" title="URL-based access control"><em>URL-based access control</em></a></p></div><div class="navfooter"><span class="prev"><a href="_parameters_3.html">
+    },
+    "upsert" : {
+    }
+}'</pre><p>The default <code class="literal">scripted_upsert</code> setting is <code class="literal">false</code> meaning the script is not executed for inserts.
+However, in scenarios like the one above we may be using a non-trivial script stored
+using the new "indexed scripts" feature. The script may be deriving properties
+like the duration of our web session based on observing multiple page view events so the
+client can supply a blank "upsert" document and allow the script to fill in most of the details
+using the events passed in the <code class="literal">params</code> element.</p><p>Last, the upsert facility also supports <code class="literal">doc_as_upsert</code>. So that the
+provided document will be inserted if the document does not already
+exist. This will reduce the amount of data that needs to be sent to
+elasticsearch.</p><pre class="programlisting prettyprint lang-js">curl -XPOST 'localhost:9200/test/type1/1/_update' -d '{
+    "doc" : {
+        "name" : "new_name"
+    },
+    "doc_as_upsert" : true
+}'</pre></div><div class="navfooter"><span class="prev"><a href="docs-update.html">
               « 
-              Parameters</a>
+              Update API</a>
            
         </span><span class="next">
            
-          <a href="docs-bulk.html">Bulk API
+          <a href="_parameters_3.html">Parameters
                »
             </a></span></div></article></section></div></div></div><footer><div id="footer_container" class="full_wrapper"><div class="container"><nav role="navigation"><ul id="footer_nav" class="menu"><li id="menu-item-36" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-36"><a target="_blank" href="http://elasticsearch.com">Company</a></li><li id="menu-item-74980" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-74980"><a href="/resources/">Resources</a></li><li id="menu-item-3106" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3106"><a href="/terms-of-use/">Terms</a></li><li id="menu-item-3107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3107"><a href="/privacy-and-cookie-policy/">Privacy</a></li><li id="menu-item-3105" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3105"><a href="/contact/">Contact</a></li><li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-39"><a href="/blog/">Blog</a></li></ul></nav><div id="social"><a href="https://twitter.com/elasticsearch" class="social_icons" target="_blank"><i class="twitter"></i></a><a href="https://www.facebook.com/elasticsearch" class="social_icons" target="_blank"><i class="facebook"></i></a></div><div id="footer_form"><label class="form_label">Sign up for updates!</label><div class="gf_browser_chrome gform_wrapper" id="gform_wrapper_4"><a id="gf_4" name="gf_4" class="gform_anchor"></a><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_4" id="gform_4" action="/empty-template/#gf_4"><div class="gform_body"><ul id="gform_fields_4" class="gform_fields top_label description_below"><li id="field_4_6" class="gfield               gfield_contains_required"><label class="gfield_label" for="input_4_6">enter you email<span class="gfield_required">*</span></label><div class="ginput_container"><input name="input_6" id="input_4_6" type="email" value="" class="medium" tabindex="50" /></div></li><li id="field_4_2" class="gfield     gform_hidden"><input name="input_2" id="input_4_2" type="hidden" class="gform_hidden" value="813-MAM-392" /></li><li id="field_4_3" class="gfield     gform_hidden"><input name="input_3" id="input_4_3" type="hidden" class="gform_hidden" value="WEB.org" /></li><li id="field_4_4" class="gfield     gform_hidden"><input name="input_4" id="input_4_4" type="hidden" class="gform_hidden" value="WEB.org - Footer - Updates" /></li></ul></div><script type="text/javascript">//<![CDATA[
             jQuery(function(){
