@@ -55,7 +55,7 @@ margin above our target will have a positive score — greater than <code cl
   profit = price * (1 - discount) * margin
 }
 return profit / target</pre><p>The default scripting language in Elasticsearch is
-<a class="ulink" href="http://groovy.codehaus.org/" target="_top">Groovy</a> which, for the most past, looks a lot like
+<a class="ulink" href="http://groovy.codehaus.org/" target="_top">Groovy</a> which, for the most part, looks a lot like
 Javascript. The above algorithm as a Groovy script would look like this:</p><pre class="programlisting prettyprint lang-groovy">price  = doc['price'].value <a id="CO120-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
 margin = doc['margin'].value <a id="CO120-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
 

@@ -38,7 +38,7 @@ night, we might exclude results that the user would consider to be a good
 compromise.</p><p>The <code class="literal">function_score</code> query gives us the ability to trade off one sliding scale
 (like location) against another sliding scale (like price), with a group of
 functions known as the <span class="emphasis"><em>decay functions</em></span>.</p><p>There are three decay functions, called <code class="literal">linear</code>, <code class="literal">exp</code> and <code class="literal">gauss</code>, which
-operate on numeric fields, date fields or lat-lon geo-points.  Allthree take
+operate on numeric fields, date fields or lat-lon geo-points.  All three take
 the same parameters:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
 <p>
 <code class="literal">origin</code>
@@ -91,7 +91,7 @@ The <code class="literal">linear</code> funtion is just a straight line. Once th
 </li><li class="listitem">
 The <code class="literal">exp</code> (exponential) function decays rapidly, then slows down.
 </li><li class="listitem">
-The <code class="literal">gauss</code> (Gaussian) function is bell-shaped — it decayd slowly, then
+The <code class="literal">gauss</code> (Gaussian) function is bell-shaped — it decays slowly, then
   rapidly, then slowing down again.
 </li></ul></div><p>Which curve you choose depends entirely on how quickly you want the <code class="literal">_score</code>
 to decay, the further a value is from the <code class="literal">origin</code>.</p><p>To return to our example: our user would prefer to rent a holiday home close
@@ -134,7 +134,7 @@ We have specified an <code class="literal">origin</code> which corresponds to th
 Any location within <code class="literal">2km</code> of the <code class="literal">origin</code> receives the full score of <code class="literal">1.0</code>.
 </li><li class="listitem">
 Locations more than <code class="literal">5km</code> (<code class="literal">offset + scale</code>) from the centre receive a score
-  <code class="literal">0.5</code>.
+of <code class="literal">0.5</code>.
 </li></ul></div><p>The <code class="literal">price</code> clause is a little trickier.  The user’s preferred price is
 anything up to £100, but this example sets the origin to £50.  Prices can’t be
 negative, but the lower they are the better.  Really, any price between £0 and

@@ -94,11 +94,11 @@ The blogposts that we are interested in are returned under the
     <code class="literal">blogposts</code> aggregation, so we can disable the usual search <code class="literal">hits</code> by
     setting the <code class="literal">search_type=count</code>.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO218-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-The <code class="literal">query</code> returns blogposts about “relevance” by users named “John”.
+The <code class="literal">query</code> returns blogposts about “relationships” by users named “John”.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO218-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">terms</code> aggregation creates a bucket for each <code class="literal">user.name.raw</code> value.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO218-4"><span><img src="images/icons/callouts/4.png" alt="" /></span></a> <a href="#CO218-5"><span><img src="images/icons/callouts/5.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-The <code class="literal">top_score</code> aggregation orders the terms in the the <code class="literal">users</code> aggregation
+The <code class="literal">top_score</code> aggregation orders the terms in the <code class="literal">users</code> aggregation
     by the top scoring document in each bucket.
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO218-6"><span><img src="images/icons/callouts/6.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">top_hits</code> aggregation returns just the <code class="literal">title</code> field of the 5 most

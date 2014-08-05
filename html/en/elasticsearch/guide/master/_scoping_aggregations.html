@@ -42,7 +42,7 @@ documents that match your query.</p><p>If we look at one of our first aggregatio
             }
         }
     }
-}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/40_scope.json" target="sense">View in Sense</a><p>…you can see that that the aggregation is in isolation.  In reality, Elasticsearch
+}</pre><a class="sense_widget" href="sense_widget.html?snippets/300_Aggregations/40_scope.json" target="sense">View in Sense</a><p>…you can see that the aggregation is in isolation.  In reality, Elasticsearch
 assumes "no query specified" is equivalent to "query all documents". The above
 query is internally translated into:</p><pre class="programlisting prettyprint lang-js">GET /cars/transactions/_search?search_type=count
 {

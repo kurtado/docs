@@ -33,7 +33,7 @@ apply a series of rules to a word in order to reduce it to its root form, such
 as stripping the final <code class="literal">s</code> or <code class="literal">es</code> from plurals.   They don’t have to know
 anything about individual words in order to stem them.</p><p>These algorithmic stemmers have the advantage that they are available out of
 the box, are fast, use little memory, and work well for regular words.  The
-downside is that they don’t cope well with irrgular words like <code class="literal">be</code>, <code class="literal">are</code>,
+downside is that they don’t cope well with irregular words like <code class="literal">be</code>, <code class="literal">are</code>,
 and <code class="literal">am</code>, or <code class="literal">mice</code> and <code class="literal">mouse</code>.</p><p>One of the earliest stemming algorithms is the Porter stemmer for English,
 which is still the recommended English stemmer today.  Martin Porter
 subsequently went on to create the
@@ -105,7 +105,7 @@ Change the <code class="literal">english_stemmer</code> from <code class="litera
     <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/analysis-kstem-tokenfilter.html" target="_top"><code class="literal">kstem</code></a> token filter).
 </li><li class="listitem">
 Add the <a class="link" href="asciifolding-token-filter.html" title="You have an accent"><code class="literal">asciifolding</code></a> token filter to
-    remove any diacritcs from foreign words.
+    remove any diacritics from foreign words.
 </li><li class="listitem">
 Remove the <code class="literal">keyword_marker</code> token filter as we don’t need it.
     (We will discuss this in more detail in <a class="xref" href="controlling-stemming.html" title="Controlling stemming">Controlling stemming</a>.)

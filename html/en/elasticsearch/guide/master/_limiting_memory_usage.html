@@ -50,7 +50,7 @@ associated with evictions, and would prefer long query times rather than adding
 more nodes.</p><p>If you land in this camp, the setting is changed via the <code class="literal">elasticsearch.yml</code>
 file and can either be a hard value (<code class="literal">5gb</code>) or a percentage of the heap (<code class="literal">30%</code>).
 Once the size becomes bounded, you are subject to potential load/unload
-thrashing and heavy Disk IO costs.  You’ve been warned!</p><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><p>There is another setting which you may see online:  <code class="literal">indices.fielddata.cache.expire</code></p><p>We beg that you <span class="strong"><strong>never</strong></span> use this setting!  It will likely be depreciated in the
+thrashing and heavy Disk IO costs.  You’ve been warned!</p><div class="warning admon"><div class="icon"><img alt="Warning" src="images/icons/warning.png" /></div><div class="admon_content"><p>There is another setting which you may see online:  <code class="literal">indices.fielddata.cache.expire</code></p><p>We beg that you <span class="strong"><strong>never</strong></span> use this setting!  It will likely be deprecated in the
 future.</p><p>This setting tells Elasticsearch to evict values from field data if they are older
 than <code class="literal">expire</code>, whether the values are being used or not.</p><p>This is <span class="strong"><strong>terrible</strong></span> for performance.  Evictions are costly, and this effectively
 <span class="emphasis"><em>schedules</em></span> evictions on purpose, for no real gain.</p><p>There isn’t a good reason to use this setting; we literally cannot theory-craft

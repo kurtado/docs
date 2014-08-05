@@ -250,7 +250,7 @@ specific value(s) that you are interested in.</p></div><div class="section"><div
 The naive implementation would maintain a sorted list of all values…but this
 clearly is not possible when you have billions of values distributed across
 dozens of nodes.</p><p>Instead, percentiles uses an algorithm called TDigest (introduced by Ted Dunning
-in <a class="ulink" href="https://github.com/tdunning/t-digest/blob/master/docs/t-digest-paper/histo.pdf:" target="_top">Computing Accurate Quantiles using T-Digests</a>). Like HyperLogLog, it isn’t
+in <a class="ulink" href="https://github.com/tdunning/t-digest/blob/master/docs/t-digest-paper/histo.pdf" target="_top">Computing Accurate Quantiles using T-Digests</a>). Like HyperLogLog, it isn’t
 necessary to understand the full technical details, but it is good to know
 the properties of the algorithm:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Percentile accuracy is proportional to how "extreme" the percentile is. This

@@ -93,10 +93,10 @@ languages are highly inflected and need extra work in order to achieve
 high quality search results.</p><p><span class="emphasis"><em>Stemming</em></span> attempts to remove the difference between inflected forms of a
 word, in order to reduce each word to its root form. For instance <code class="literal">foxes</code> may
 be reduced to the root <code class="literal">fox</code>, to remove the difference between singular and
-plural in the same way that we removed the difference betwen lower case and
+plural in the same way that we removed the difference between lower case and
 upper case.</p><p>The root form of a word may not even be a real word. The words <code class="literal">jumping</code> and
 <code class="literal">jumpiness</code> may both be stemmed to <code class="literal">jumpi</code>. It doesn’t matter — as long as
-the same terms are prodced at index time and at search time, search will just
+the same terms are produced at index time and at search time, search will just
 work.</p><p>If stemming were easy, there would be only one implementation. Unfortunately,
 stemming is an inexact science which suffers from two issues: <span class="emphasis"><em>understemming</em></span>
 and <span class="emphasis"><em>overstemming</em></span>.</p><p>Understemming is the failure to reduce words with the same meaning to the same
@@ -112,7 +112,7 @@ step further than stemming in that it tries to group words by their <span class=
 sense</em></span> or meaning.  The same word may represent two different meanings — “wake” can mean “to wake up” or “a funeral”.  While lemmatisation would
 try to distinguish these two word senses, stemming would incorrectly conflate
 them.</p><p>Lemmatisation is a much more complicated and expensive process that needs to
-understand the context in which words to appear in order to make decisions
+understand the context in which words appear in order to make decisions
 about what they mean. In practice, stemming appears to be just as effective
 as lemmatisation, but with a much lower cost.</p></div><p>First we will discuss the two classes of stemmers available in Elasticsearch — <a class="xref" href="algorithmic-stemmers.html" title="Algorithmic stemmers">Algorithmic stemmers</a> and <a class="xref" href="dictionary-stemmers.html" title="Dictionary stemmers">Dictionary stemmers</a> — then look at how to
 choose the right stemmer for your needs in <a class="xref" href="choosing-a-stemmer.html" title="Choosing a stemmer">Choosing a stemmer</a>.  Finally,

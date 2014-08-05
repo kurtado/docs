@@ -75,7 +75,7 @@ just another top-level parameter in a search request (e.g. using the <code class
 endpoint).  Aggregations can be paired with queries, but we’ll tackle that later
 in <a class="xref" href="_scoping_aggregations.html" title="Scoping Aggregations"><em>Scoping Aggregations</em></a>.</p><p>Next we define a name for our aggregation.  Naming is up to you…
 the response will be labeled with the name you provide so that your application
-can parse the results later</p><p>Next we define the aggregation itself.  For this example, we are defining
+can parse the results later.</p><p>Next we define the aggregation itself.  For this example, we are defining
 a single <code class="literal">terms</code> bucket.  The <code class="literal">terms</code> bucket will dynamically create a new
 bucket for every unique term it encounters.  Since we are telling it to use the
 "color" field, the <code class="literal">terms</code> bucket will dynamically create a new bucket for each color.</p><p>Let’s execute that aggregation and take a look at the results:</p><pre class="programlisting prettyprint lang-js">{
@@ -111,7 +111,7 @@ It also always includes <code class="literal">doc_count</code> which tells us ho
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO182-4"><span><img src="images/icons/callouts/4.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The count of each bucket represents the number of documents with this color
 </p></td></tr></table></div><p>The response contains a list of buckets, each corresponding to a unique color
-(red, green, etc). Each bucket also includes a count of how many documents
+(red, green, etc.). Each bucket also includes a count of how many documents
 "fell into" that particular bucket.  For example, there are four red cars.</p><p>The above example is operating entirely in real-time: if the documents are searchable,
 they can be aggregated.  This means you can take the aggregation results and
 pipe them straight into a graphing library to generate real-time dashboards.
