@@ -40,11 +40,11 @@ copied over to the new bigger segment.</p><p>There is nothing you need to do to 
 while you are indexing and searching. The process works like this:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 While indexing, the refresh process creates new segments and opens them for
    search.
-</li><li class="listitem">
+</li><li class="listitem"><p class="simpara">
 The merge process selects a few segments of similar size and merges them
    into a new bigger segment in the background. This does not interrupt
    indexing and searching.
-</li><li class="listitem"><p class="simpara">
+</p><div class="figure"><a id="img-merge"></a><p class="title"><strong>Figure 25. Two commited segments and one uncommited segment in the process of being merged into a bigger segment</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/075_60_merge.png" alt="Two commited segments and one uncommited segment in the process of being merged into a bigger segment" /></div></div></div><br class="figure-break" /></li><li class="listitem"><p class="simpara">
 When the merge completes:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 The new segment is flushed to disk.
@@ -55,7 +55,7 @@ A new commit point is written which includes the new segment and
 The new segment is opened for search.
 </li><li class="listitem">
 The old segments are deleted.
-</li></ul></div></li></ol></div><p>The merging of big segments can use a lot of I/O and CPU, which can hurt
+</li></ul></div><div class="figure"><a id="img-post-merge"></a><p class="title"><strong>Figure 26. Once merging has finished, the old segments are deleted</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/075_60_post_merge.png" alt="Once merging has finished, the old segments are deleted" /></div></div></div><br class="figure-break" /></li></ol></div><p>The merging of big segments can use a lot of I/O and CPU, which can hurt
 search performance if left unchecked.  By default, Elasticsearch throttles the
 merge process so that search still has enough resources available to perform
 well.</p><div class="tip admon"><div class="icon"><img alt="Tip" src="images/icons/tip.png" /></div><div class="admon_content"><p>See the <a class="xref" href="TODO.html" title="Appendix A. TODO">Appendix A, <em>TODO</em></a> section for advice about tuning merging for your use

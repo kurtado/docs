@@ -39,10 +39,10 @@ need to do full commits regularly to make sure that we can recover from
 failure.  But what about the document changes that happen between commits?  We
 don’t want to lose those either.</p><p>Elasticsearch added a <span class="emphasis"><em>translog</em></span> or transaction log, which records every
 operation in Elasticsearch as it happens.  With the translog, the process now
-looks like this:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+looks like this:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 When a document is indexed, it is added to the in-memory buffer AND
    appended to the translog.
-</li><li class="listitem"><p class="simpara">
+</p><div class="figure"><a id="img-xlog-pre-refresh"></a><p class="title"><strong>Figure 21. New documents are added to the in-memory buffer and appended to the transaction log</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/075_50_pre_refresh.png" alt="New documents are added to the in-memory buffer and appended to the transaction log" /></div></div></div><br class="figure-break" /></li><li class="listitem"><p class="simpara">
 Once every second, the shard is refreshed:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 The docs in the in-memory buffer are written to a new segment,
@@ -51,8 +51,12 @@ The docs in the in-memory buffer are written to a new segment,
 The segment is opened to make it visible to search.
 </li><li class="listitem">
 The in-memory buffer is cleared.
-</li></ul></div></li><li class="listitem"><p class="simpara">
-Every so often — such as when the translog is getting too big —    a new translog is created and a full commit is performed:
+</li></ul></div><div class="figure"><a id="img-xlog-post-refresh"></a><p class="title"><strong>Figure 22. After a refresh, the buffer is cleared but the transaction log is not</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/075_50_post_refresh.png" alt="After a refresh, the buffer is cleared but the transaction log is not" /></div></div></div><br class="figure-break" /></li><li class="listitem"><p class="simpara">
+This process continues with more documents being added to the in-memory
+    buffer and appended to the transaction log.
+</p><div class="figure"><a id="img-xlog-pre-flush"></a><p class="title"><strong>Figure 23. The transaction log keeps accumulating documents</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/075_50_pre_flush.png" alt="The transaction log keeps accumulating documents" /></div></div></div><br class="figure-break" /></li><li class="listitem"><p class="simpara">
+Every so often — such as when the translog is getting too big — the index
+   is flushed: a new translog is created and a full commit is performed:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Any docs in the in-memory buffer are written to a new segment.
 </li><li class="listitem">
@@ -61,9 +65,9 @@ The buffer is cleared.
 A commit point is written to disk.
 </li><li class="listitem">
 The file-system cache is flushed with an <code class="literal">fsync</code>.
-</li></ul></div></li><li class="listitem">
-Once the commit has completed successfully, the old translog is deleted.
-</li></ol></div><p>The translog provides a persistent record of all operations that have not yet
+</li><li class="listitem">
+The old translog is deleted.
+</li></ul></div><div class="figure"><a id="img-xlog-post-flush"></a><p class="title"><strong>Figure 24. After a flush, the segments are fully commited and the transaction log is cleared</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/075_50_post_flush.png" alt="After a flush, the segments are fully commited and the transaction log is cleared" /></div></div></div><br class="figure-break" /></li></ol></div><p>The translog provides a persistent record of all operations that have not yet
 been flushed to disk. When starting up, Elasticsearch will use the last commit
 point to recover known segments from disk, and will then replay all operations
 in the translog to add the changes that happened after the last commit.</p><p>The translog is also used to provide real-time CRUD.  When you try to

@@ -34,13 +34,14 @@ to be: use more than one index.</p><p>Instead of rewriting the whole inverted in
 to reflect more recent changes. Each inverted index can be queried in turn — starting with the oldest — and the results combined.</p><p>Lucene, the Java libraries on which Elasticsearch is based, introduced  the
 concept of <span class="emphasis"><em>per-segment search</em></span>.  A <span class="emphasis"><em>segment</em></span> is an inverted index in its own
 right,  but now the word <span class="emphasis"><em>index</em></span> in Lucene came to mean a “collection of
-segments” plus a <span class="emphasis"><em>commit point</em></span> — a file which lists all known segments.</p><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Index vs. Shard</strong></p></div></div></div><p>To add to the confusion, a <span class="emphasis"><em>Lucene index</em></span> is what we call a <span class="emphasis"><em>shard</em></span> in
+segments” plus a <span class="emphasis"><em>commit point</em></span> — a file which lists all known segments.</p><div class="figure"><a id="img-index-segments"></a><p class="title"><strong>Figure 16. A Lucene index with a commit point and three segments</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/075_30_index.png" alt="A Lucene index with a commit point and three segments" /></div></div></div><br class="figure-break" /><div class="sidebar"><div class="titlepage"><div><div><p class="title"><strong>Index vs. Shard</strong></p></div></div></div><p>To add to the confusion, a <span class="emphasis"><em>Lucene index</em></span> is what we call a <span class="emphasis"><em>shard</em></span> in
 Elasticsearch, while an <span class="emphasis"><em>index</em></span> in Elasticsearch is a collection of shards.
 When Elasticsearch searches an “index”, it sends the query out to a copy of
 every shard (Lucene index) that belongs to the index, then reduces the
 per-shards results to a global result set, as described in
-<a class="xref" href="distributed-search.html" title="Distributed search execution"><em>Distributed search execution</em></a>.</p></div><p>The way that per-segment search works is as follows:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<a class="xref" href="distributed-search.html" title="Distributed search execution"><em>Distributed search execution</em></a>.</p></div><div class="figure"><a id="img-memory-buffer"></a><p class="title"><strong>Figure 17. A Lucene index with new documents in the in-memory buffer, ready to commit</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/075_30_pre_commit.png" alt="A Lucene index with new documents in the in-memory buffer, ready to commit" /></div></div></div><br class="figure-break" /><p>The way that per-segment search works is as follows:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 New documents are collected in an in-memory indexing buffer.
+   See <a class="xref" href="dynamic-indices.html#img-memory-buffer" title="Figure 17. A Lucene index with new documents in the in-memory buffer, ready to commit">Figure 17, “A Lucene index with new documents in the in-memory buffer, ready to commit”</a>.
 </li><li class="listitem"><p class="simpara">
 Every so often, the buffer is <span class="emphasis"><em>commited</em></span>:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
@@ -55,7 +56,7 @@ The disk is <span class="emphasis"><em>fsync’ed</em></span> — all writes
 The new segment is opened, making the documents it contains visible to search.
 </li><li class="listitem">
 The in-memory buffer is cleared, and is ready to accept new documents.
-</li></ol></div><p>When a query is issued, all known segments are queried in turn. Term
+</li></ol></div><div class="figure"><a id="img-post-commit"></a><p class="title"><strong>Figure 18. After a commit, a new segment is added to the commit point and the buffer is cleared</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/075_30_post_commit.png" alt="After a commit, a new segment is added to the index and the buffer is cleared" /></div></div></div><br class="figure-break" /><p>When a query is issued, all known segments are queried in turn. Term
 statistics are aggregated across all segments to ensure that the relevance of
 each term and each document is calculated accurately. In this way, new
 documents can be added to the index relatively cheaply.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="deletes-and-updates"></a>Deletes and updates<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/075_Inside_a_shard/30_Dynamic_indices.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Segments are immutable, so documents cannot be removed from older segments,
