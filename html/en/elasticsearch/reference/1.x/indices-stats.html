@@ -81,19 +81,11 @@ Search statistics. You can include statistics for custom groups by adding
 </p>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">warmer</code>
+<code class="literal">completion</code>
 </p>
 </td><td valign="top">
 <p>
-Warmer statistics.
-</p>
-</td></tr><tr><td valign="top">
-<p>
-<code class="literal">merge</code>
-</p>
-</td><td valign="top">
-<p>
-Merge statistics.
+Completion suggest statistics.
 </p>
 </td></tr><tr><td valign="top">
 <p>
@@ -113,11 +105,21 @@ Flush statistics.
 </p>
 </td></tr><tr><td valign="top">
 <p>
-<code class="literal">completion</code>
+<code class="literal">merge</code>
 </p>
 </td><td valign="top">
 <p>
-Completion suggest statistics.
+Merge statistics.
+</p>
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">query_cache</code>
+</p>
+</td><td valign="top">
+<p>
+<a class="link" href="index-modules-shard-query-cache.html" title="Shard query cache">Shard query cache</a> statistics. <span class="coming">
+      [<span class="version">coming in 1.4.0</span>]
+      <span class="detail">Coming in 1.4.0.</span></span>
 </p>
 </td></tr><tr><td valign="top">
 <p>
@@ -135,13 +137,23 @@ Refresh statistics.
 <p>
 Suggest statistics.
 </p>
-</td></tr></tbody></table></div><p>Some statistics allow per field granularity which accepts a list comma-separated list of included fields. By default all fields are included:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
+</td></tr><tr><td valign="top">
+<p>
+<code class="literal">warmer</code>
+</p>
+</td><td valign="top">
+<p>
+Warmer statistics.
+</p>
+</td></tr></tbody></table></div><p>Some statistics allow per field granularity which accepts a list
+comma-separated list of included fields. By default all fields are included:</p><div class="horizontal"><table cellpadding="4px" border="0"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td valign="top">
 <p>
 <code class="literal">fields</code>
 </p>
 </td><td valign="top">
 <p>
-List of fields to be included in the statistics. This is used as the default list unless a more specific field list is provided (see below).
+    List of fields to be included in the statistics. This is used as the
+    default list unless a more specific field list is provided (see below).
 </p>
 </td></tr><tr><td valign="top">
 <p>
@@ -149,7 +161,7 @@ List of fields to be included in the statistics. This is used as the default lis
 </p>
 </td><td valign="top">
 <p>
-List of fields to be included in the Completion Suggest statistics
+    List of fields to be included in the Completion Suggest statistics.
 </p>
 </td></tr><tr><td valign="top">
 <p>
@@ -157,7 +169,7 @@ List of fields to be included in the Completion Suggest statistics
 </p>
 </td><td valign="top">
 <p>
-List of fields to be included in the Fielddata statistics
+    List of fields to be included in the Fielddata statistics.
 </p>
 </td></tr></tbody></table></div><p>Here are some samples:</p><pre class="programlisting prettyprint lang-js"># Get back stats for merge and refresh only for all indices
 curl 'localhost:9200/_stats/merge,refresh'
