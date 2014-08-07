@@ -40,7 +40,7 @@ Create an index with two primary shards and zero replica shards.
 </p></td></tr></table></div><p>With a single node, both shards would be assigned to the same node. From the
 point of view of our application, everything functions as it did before.  The
 application communicates with the index, not the shards, and there is still
-only one index.</p><p>This time, when we add a second node, Elasticsearch will automatically move
+only one index.</p><div class="figure"><a id="img-two-shard"></a><p class="title"><strong>Figure 34. An index with two shards can take advantage of a second node</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/410_20_two_shards.png" alt="An index with two shards can take advantage of a second node" /></div></div></div><br class="figure-break" /><p>This time, when we add a second node, Elasticsearch will automatically move
 one shard from the first node to the second node and, once the relocation has
 finished, each shard will have access to twice the computing power that it had
 before.</p><p>We have been able to double our capacity by simply copying a shard across the
