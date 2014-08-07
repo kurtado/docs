@@ -72,7 +72,7 @@ Doc_2 | Quick, brown, dogs, foxes, in, lazy, leap, over, summer
 Doc_3 | Quick, dog, dogs, fox, jumped, over, the
 -----------------------------------------------------------------</pre><p>You may have thought this wasn’t terribly efficient memory layout, and you would
 be right.  For example, the term <code class="literal">"jumped"</code> appears twice, taking up 12 bytes total
-(six bytes * two documents).  This inefficiency is increases as more documents
+(six bytes * two documents).  This inefficiency is increased as more documents
 share the same terms, and as terms get larger.  Ordinals fix this inefficiency
 by replacing string representations with an integer and using that to look up the
 value in the ordinal map later.  For example, the data structure looks more like
@@ -107,7 +107,7 @@ across many segments.  Since it needs to decode the ordinal map, aggregations
 perform a process which merges individual segment-level ordinal maps into a
 single <span class="emphasis"><em>global</em></span> ordinal.</p><p>This global ordinal represents the unique mapping of every term in your index
 to a unique numeric ID.  By default, this happens every time you execute an
-aggregation.</p><p>It isn’t a fairly fast process, but it does add execution time to your query.
+aggregation.</p><p>It is a fairly fast process, but it does add execution time to your query.
 Similar to field data, the global ordinal map can be pre-built and loaded into
 memory.  Queries will use the pre-loaded version instead of recomputing on
 each execution.</p><p>Eagerly loading global ordinals is enabled on a per-field basis:</p><pre class="programlisting prettyprint lang-js">PUT /fielddata/eager/_mapping
@@ -178,7 +178,7 @@ thousands of warmers to make sure every cache is populated…but that will
 drastically slow down how long it takes for new segments to be made searchable.</p><p>In practice, select a handful of queries which represent the majority of your
 user’s queries and register those.</p></div></div><p>There are a number of administrative details (getting existing warmers,
 deleting warmers, etc) which have been omitted from this explanation.  Refer
-to the indices-warmers.html#warmer-adding[warmers documentation] for the rest
+to the <a class="ulink" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html#warmer-adding" target="_top">warmers documentation</a> for the rest
 of the details.</p></div></div><div class="navfooter"><span class="prev"><a href="_doc_values.html">
               « 
               Doc Values</a>

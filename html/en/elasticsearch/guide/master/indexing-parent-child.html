@@ -55,7 +55,7 @@ when retrieving a child document with a <code class="literal">GET</code> request
 updating, or deleting a child document.  Unlike a search request, which is
 forwarded to all shards in an index, these single-document requests are
 forwarded only to the shard which holds the document — if the <code class="literal">parent</code> ID is
-not specified, the request will be forwarded to the wrong shard.</p><p>The <code class="literal">parent</code> ID should also be specified when using the <code class="literal">bulk</code> API:</p><pre class="programlisting prettyprint lang-json">POST /company/employee/_bulk
+not specified, the request will probably be forwarded to the wrong shard.</p><p>The <code class="literal">parent</code> ID should also be specified when using the <code class="literal">bulk</code> API:</p><pre class="programlisting prettyprint lang-json">POST /company/employee/_bulk
 { "index": { "_id": 2, "parent": "london" }}
 { "name": "Mark Thomas", "dob": "1982-05-16", "hobby": "diving" }
 { "index": { "_id": 3, "parent": "liverpool" }}
