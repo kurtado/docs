@@ -102,7 +102,18 @@ aggregated for the buckets created by their "parent" bucket aggregation.</p><p>T
 define fixed number of multiple buckets, and others dynamically create the buckets during the aggregation process.</p><h3><a id="_caching_heavy_aggregations"></a>Caching heavy aggregations<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/aggregations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Coming in 1.4.0.</p></div></div><p>Frequently used aggregations (e.g. for display on the home page of a website)
 can be cached for faster responses. These cached results are the same results
 that would be returned by an uncached aggregation — you will never get stale
-results.</p><p>See <a class="xref" href="index-modules-shard-query-cache.html" title="Shard query cache"><em>Shard query cache</em></a> for more details.</p></div><div class="navfooter"><span class="prev"><a href="search-shards.html">
+results.</p><p>See <a class="xref" href="index-modules-shard-query-cache.html" title="Shard query cache"><em>Shard query cache</em></a> for more details.</p><h3><a id="_returning_only_aggregation_results"></a>Returning only aggregation results<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/aggregations.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>There are many occasions when aggregations are required but search hits are not.  For these cases the hits can be ignored by
+adding <code class="literal">search_type=count</code> to the request URL parameters. For example:</p><pre class="programlisting prettyprint lang-js">$ curl -XGET 'http://localhost:9200/twitter/tweet/_search?search_type=count' -d '{
+  "aggregations": {
+    "my_agg": {
+      "terms": {
+        "field": "text"
+      }
+    }
+  }
+}
+'</pre><p>Setting <code class="literal">search_type</code> to <code class="literal">count</code> avoids executing the fetch phase of the search making the request more efficient.  See
+<a class="xref" href="search-request-search-type.html" title="Search Type">Search Type</a> for more information on the <code class="literal">search_type</code> parameter.</p></div><div class="navfooter"><span class="prev"><a href="search-shards.html">
               « 
               Search Shards API</a>
            
