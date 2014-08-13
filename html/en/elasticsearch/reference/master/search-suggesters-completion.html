@@ -112,9 +112,10 @@ curl -X PUT localhost:9200/music/song/_mapping -d '{
 </span></dt><dd>
     The string to return, if a suggestion matches. This is very
     useful to normalize outputs (i.e. have them always in the format
-    <code class="literal">artist - songname</code>). The result is de-duplicated if several documents
+    <code class="literal">artist - songname</code>). This is optional.
+    <span class="strong"><strong>Note</strong></span>: The result is de-duplicated if several documents
     have the same output, i.e. only one is returned as part of the
-    suggest result. This is optional.
+    suggest result.
 </dd><dt><span class="term">
 <code class="literal">payload</code>
 </span></dt><dd>
