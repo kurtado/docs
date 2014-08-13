@@ -149,7 +149,8 @@ that can be used for configuring this sandbox:</p><div class="variablelist"><dl 
 </span></dt><dd>
     Flag to disable the sandbox (defaults to <code class="literal">true</code> meaning the sandbox is
     enabled).
-</dd></dl></div><h3><a id="_automatic_script_reloading"></a>Automatic Script Reloading<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">config/scripts</code> directory is scanned periodically for changes.
+</dd></dl></div><p>When specifying whitelist or blacklist settings for the groovy sandbox, all
+options replace the current whitelist, they are not additive.</p><h3><a id="_automatic_script_reloading"></a>Automatic Script Reloading<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/scripting.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3><p>The <code class="literal">config/scripts</code> directory is scanned periodically for changes.
 New and changed scripts are reloaded and deleted script are removed
 from preloaded scripts cache. The reload frequency can be specified
 using <code class="literal">watcher.interval</code> setting, which defaults to <code class="literal">60s</code>.
