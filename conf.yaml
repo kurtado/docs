@@ -19,10 +19,10 @@ repos:
 
     elasticsearch-hadoop:
         url:        https://github.com/elasticsearch/elasticsearch-hadoop.git
-        current:    2.1.Beta
+        current:    2.0
         branches:
-            - 2.1.Beta
             - 2.0
+            - 2.1.Beta
             - master
 
     elasticsearch-php:
