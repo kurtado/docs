@@ -23,6 +23,7 @@ repos:
         branches:
             - 2.1.Beta
             - 2.0
+            - master
 
     elasticsearch-php:
         url:        https://github.com/elasticsearch/elasticsearch-php
