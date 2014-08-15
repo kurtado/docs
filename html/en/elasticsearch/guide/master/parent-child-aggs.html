@@ -35,17 +35,17 @@ employees by country:</p><pre class="programlisting prettyprint lang-json">GET /
 {
   "aggs": {
     "country": {
-      "terms": { <a id="CO248-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+      "terms": { <a id="CO273-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         "field": "country"
       },
       "aggs": {
         "employees": {
-          "children": { <a id="CO248-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+          "children": { <a id="CO273-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
             "type": "employee"
           },
           "aggs": {
             "hobby": {
-              "terms": { <a id="CO248-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+              "terms": { <a id="CO273-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
                 "field": "hobby"
               }
             }
@@ -54,12 +54,12 @@ employees by country:</p><pre class="programlisting prettyprint lang-json">GET /
       }
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO248-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO273-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">country</code> field in the <code class="literal">branch</code> documents.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO248-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO273-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">children</code> aggregation joins the parent documents with
     their associated children of type <code class="literal">employee</code>.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO248-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO273-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">hobby</code> field from the <code class="literal">employee</code> child documents.
 </p></td></tr></table></div><p>The <code class="literal">parent</code> aggregation can be used to turn the previous example on its head.
 This example shows how to find out in which country each hobby is most
@@ -67,17 +67,17 @@ popular:</p><pre class="programlisting prettyprint lang-json">GET /company/emplo
 {
   "aggs": {
     "hobby": {
-      "terms": { <a id="CO249-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
+      "terms": { <a id="CO274-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
         "field": "hobby"
       },
       "aggs": {
         "branches": {
-          "parent": { <a id="CO249-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
+          "parent": { <a id="CO274-2"></a><span><img src="images/icons/callouts/2.png" alt="" /></span>
             "type": "branch"
           },
           "aggs": {
             "country": {
-              "terms": { <a id="CO249-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
+              "terms": { <a id="CO274-3"></a><span><img src="images/icons/callouts/3.png" alt="" /></span>
                 "field": "country"
               }
             }
@@ -86,12 +86,12 @@ popular:</p><pre class="programlisting prettyprint lang-json">GET /company/emplo
       }
     }
   }
-}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO249-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+}</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO274-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">hobby</code> field in the <code class="literal">employee</code> documents.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO249-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO274-2"><span><img src="images/icons/callouts/2.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">parent</code> aggregation joins the child documents with
     their associated parent of type <code class="literal">branch</code>.
-</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO249-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO274-3"><span><img src="images/icons/callouts/3.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
 The <code class="literal">country</code> field from the <code class="literal">branch</code> parent documents.
 </p></td></tr></table></div></div><div class="navfooter"><span class="prev"><a href="has-parent.html">
               « 
