@@ -40,10 +40,14 @@ bounding box that is needed to encapsulate all of the geo-points:</p><pre class=
       "filter": {
         "geo_bounding_box": {
           "location": {
-            "top":    40.8,
-            "bottom": 40.7,
-            "left":  -74.1,
-            "right": -73.9
+            "top_left": {
+              "lat":  40,8,
+              "lon": -74.1
+            },
+            "bottom_right": {
+              "lat":  40.4,
+              "lon": -73.9
+            }
           }
         }
       }
@@ -67,11 +71,11 @@ bounding box that is needed to encapsulate all of the geo-points:</p><pre class=
   "map_zoom": {
      "bounds": {
         "top_left": {
-           "lat": 40.722,
+           "lat":  40.722,
            "lon": -74.011
         },
         "bottom_right": {
-           "lat": 40.715,
+           "lat":  40.715,
            "lon": -73.983
         }
      }
@@ -85,10 +89,14 @@ cell:</p><pre class="programlisting prettyprint lang-json">GET /attractions/rest
       "filter": {
         "geo_bounding_box": {
           "location": {
-            "top":    40.8,
-            "bottom": 40.7,
-            "left":  -74.1,
-            "right": -73.9
+            "top_left": {
+              "lat":  40,8,
+              "lon": -74.1
+            },
+            "bottom_right": {
+              "lat":  40.4,
+              "lon": -73.9
+            }
           }
         }
       }

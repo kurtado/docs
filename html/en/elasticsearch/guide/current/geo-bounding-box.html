@@ -39,18 +39,21 @@ coordinates.</p><pre class="programlisting prettyprint lang-json">GET /attractio
       "filter": {
         "geo_bounding_box": {
           "location": { <a id="CO215-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
-            "top":     40.8,
-            "bottom":  40.7,
-            "left":   -74.0,
-            "right":  -73.0
+            "top_left": {
+              "lat":  40,8,
+              "lon": -74.0
+            },
+            "bottom_right": {
+              "lat":  40.7,
+              "lon": -73.0
+            }
           }
         }
       }
     }
   }
 }</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO215-1"><span><img src="images/icons/callouts/1.png" alt="" /></span></a> </p></td><td valign="top" align="left"><p>
-These coordinates can also be specified as <code class="literal">top_left</code> and <code class="literal">bottom_right</code>
-    pairs, or <code class="literal">bottom_left</code> and <code class="literal">top_right</code> pairs.
+These coordinates can also be specified as <code class="literal">bottom_left</code> and <code class="literal">top_right</code>.
 </p></td></tr></table></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="optimize-bounding-box"></a>Optimizing bounding boxes<a href="https://github.com/elasticsearch/elasticsearch-definitive-guide/edit/master/310_Geolocation/32_Bounding_box.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The <code class="literal">geo_bounding_box</code> is the one geo-filter which doesn’t require all
 geo-points to be loaded into memory.  Because all it has to do is to check
 whether the <code class="literal">lat</code> and <code class="literal">lon</code> values fall within the specified ranges, it can
@@ -82,10 +85,14 @@ The <code class="literal">location.lat</code> and <code class="literal">location
         "geo_bounding_box": {
           "type":    "indexed", <a id="CO217-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
           "location": {
-            "top":     40.8,
-            "bottom":  40.7,
-            "left":   -74.0,
-            "right":  -73.0
+            "top_left": {
+              "lat":  40,8,
+              "lon": -74.0
+            },
+            "bottom_right": {
+              "lat":  40.7,
+              "lon":  -73.0
+            }
           }
         }
       }
