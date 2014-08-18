@@ -55,8 +55,8 @@ One or more bucket aggregators determines by which properties a result set get s
 </li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_example"></a>Example<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/aggregations/metrics/tophits-aggregation.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>In the following example we group the questions by tag and per tag we show the last active question. For each question
 only the title field is being included in the source.</p><pre class="programlisting prettyprint lang-js">{
     "aggs": {
-        "terms": {
-            "top-tags": {
+        "top-tags": {
+            "terms": {
                 "field": "tags",
                 "size": 3
             },
@@ -191,7 +191,7 @@ relevancy order of the most relevant document in a bucket.</p><pre class="progra
   }
 }</pre><p>At the moment the <code class="literal">max</code> (or <code class="literal">min</code>) aggregator is needed to make sure the buckets from the <code class="literal">terms</code> aggregator are
 ordered according to the score of the most relevant webpage per domain. The <code class="literal">top_hits</code> aggregator isn’t a metric aggregator
-and therefor can’t be used in the <code class="literal">order</code> option of the <code class="literal">terms</code> aggregator.</p></div></div><div class="navfooter"><span class="prev"><a href="search-aggregations-metrics-geobounds-aggregation.html">
+and therefore can’t be used in the <code class="literal">order</code> option of the <code class="literal">terms</code> aggregator.</p></div></div><div class="navfooter"><span class="prev"><a href="search-aggregations-metrics-geobounds-aggregation.html">
               « 
               Geo Bounds Aggregation</a>
            

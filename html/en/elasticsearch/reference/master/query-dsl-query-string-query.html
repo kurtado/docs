@@ -65,13 +65,21 @@ rewritten using the
 parameter.</p><h4><a id="_default_field"></a>Default Field<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/query-dsl/queries/query-string-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>When not explicitly specifying the field to search on in the query
 string syntax, the <code class="literal">index.query.default_field</code> will be used to derive
 which field to search on. It defaults to <code class="literal">_all</code> field.</p><p>So, if <code class="literal">_all</code> field is disabled, it might make sense to change it to set
-a different default field.</p><h4><a id="_multi_field_2"></a>Multi Field<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/query-dsl/queries/query-string-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">query_string</code> query can also run against multiple fields. The idea
-of running the <code class="literal">query_string</code> query against multiple fields is by
-internally creating several queries for the same query string, each with
-<code class="literal">default_field</code> that match the fields provided. Since several queries
-are generated, combining them can be automatically done either using a
-<code class="literal">dis_max</code> query or a simple <code class="literal">bool</code> query. For example (the <code class="literal">name</code> is
-boosted by 5 using <code class="literal">^5</code> notation):</p><pre class="programlisting prettyprint lang-js">{
+a different default field.</p><h4><a id="_multi_field_2"></a>Multi Field<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/query-dsl/queries/query-string-query.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>The <code class="literal">query_string</code> query can also run against multiple fields. Fields can be
+provided via the <code class="literal">"fields"</code> parameter (example below).</p><p>The idea of running the <code class="literal">query_string</code> query against multiple fields is to
+expand each query term to an OR clause like this:</p><pre class="literallayout">field1:query_term OR field2:query_term | ...</pre><p>For example, the following query</p><pre class="programlisting prettyprint lang-js">{
+    "query_string" : {
+        "fields" : ["content", "name"],
+        "query" : "this AND that"
+    }
+}</pre><p>matches the same words as</p><pre class="programlisting prettyprint lang-js">{
+    "query_string": {
+      "query": "(content:this OR content:thus) AND (name:this OR name:thus)"
+    }
+}</pre><p>Since several queries are generated from the individual search terms,
+combining them can be automatically done using either a <code class="literal">dis_max</code> query or a
+simple <code class="literal">bool</code> query. For example (the <code class="literal">name</code> is boosted by 5 using <code class="literal">^5</code>
+notation):</p><pre class="programlisting prettyprint lang-js">{
     "query_string" : {
         "fields" : ["content", "name^5"],
         "query" : "this AND that OR thus",

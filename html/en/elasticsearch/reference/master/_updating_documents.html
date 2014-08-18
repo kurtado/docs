@@ -39,7 +39,7 @@
 }'</pre><p>Updates can also be performed by using simple scripts. This example uses a script to increment the age by 5:</p><pre class="programlisting prettyprint lang-sh">curl -XPOST 'localhost:9200/customer/external/1/_update?pretty' -d '
 {
   "script" : "ctx._source.age += 5"
-}'</pre><p>In the above example, <code class="literal">ctx._source</code> refers to the current source document that is about to be updated.</p><p>Note that as if this writing, updates can only be performed on a single document at a time. In the future, Elasticsearch will provide the ability to update multiple documents given a query condition (like an <code class="literal">SQL UPDATE-WHERE</code> statement).</p></div><div class="navfooter"><span class="prev"><a href="_modifying_your_data.html">
+}'</pre><p>In the above example, <code class="literal">ctx._source</code> refers to the current source document that is about to be updated.</p><p>Note that as of this writing, updates can only be performed on a single document at a time. In the future, Elasticsearch will provide the ability to update multiple documents given a query condition (like an <code class="literal">SQL UPDATE-WHERE</code> statement).</p></div><div class="navfooter"><span class="prev"><a href="_modifying_your_data.html">
               « 
               Modifying Your Data</a>
            

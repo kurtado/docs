@@ -73,7 +73,7 @@ are consistent in the results, returning the rounded value in UTC.</p><p><code c
 <code class="literal">pre_zone_adjust_large_interval</code> to <code class="literal">true</code>, which will apply the same
 conversion done for <code class="literal">hour</code> interval in the example, to <code class="literal">day</code> and above
 intervals (it can be set regardless of the interval, but only kick in
-when using <code class="literal">day</code> and higher intervals).</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_factor_2"></a>Factor<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/facets/date-histogram-facet.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The date histogram works on numeric values (since time is stored in
+when using <code class="literal">day</code> and higher intervals).</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_factor"></a>Factor<a href="https://github.com/elasticsearch/elasticsearch/edit/master/docs/reference/search/facets/date-histogram-facet.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>The date histogram works on numeric values (since time is stored in
 milliseconds since the epoch in UTC). But, sometimes, systems will store
 a different resolution (like seconds since UTC) in a numeric field. The
 <code class="literal">factor</code> parameter can be used to change the value in the field to

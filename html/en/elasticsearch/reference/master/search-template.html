@@ -161,7 +161,7 @@ can only be written as a string.</p><h5><a id="_pre_registered_template"></a>Pre
 In order to execute the stored template, reference it by it’s name under the <code class="literal">template</code> key:</p><pre class="programlisting prettyprint lang-js">GET /_search/template
 {
     "template": {
-        "file": "storedTemplate" <a id="CO8-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>,
+        "file": "storedTemplate" <a id="CO8-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
     },
     "params": {
         "query_string": "search for these words"
@@ -189,7 +189,7 @@ There are REST APIs to manage these indexed templates.</p><pre class="programlis
 }</pre><p>This template can be deleted by</p><pre class="programlisting prettyprint lang-js">DELETE /_search/template/&lt;templatename&gt;</pre><p>To use an indexed template at search time use:</p><pre class="programlisting prettyprint lang-js">GET /_search/template
 {
     "template": {
-        "id": "templateName" <a id="CO9-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>,
+        "id": "templateName" <a id="CO9-1"></a><span><img src="images/icons/callouts/1.png" alt="" /></span>
     },
     "params": {
         "query_string": "search for these words"
