@@ -61,8 +61,9 @@ with a timeout defaulting at 20 times the ping timeout.
 <code class="literal">true</code>), it will not be allowed to become a master (<code class="literal">node.master</code> is
 automatically set to <code class="literal">false</code>).</p><p>The <code class="literal">discovery.zen.minimum_master_nodes</code> allows to control the minimum
 number of master eligible nodes a node should "see" in order to operate
-within the cluster. Its recommended to set it to a higher value than 1
-when running more than 2 nodes in the cluster.</p><h4><a id="fault-detection"></a>Fault Detection<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/discovery/zen.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>There are two fault detection processes running. The first is by the
+within the cluster. Its recommended to set it to (N/2)+1, rounding down to
+the nearest integer, when running more than 2 nodes in the cluster (where N is
+the number of master eligible nodes in the cluster).</p><h4><a id="fault-detection"></a>Fault Detection<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/modules/discovery/zen.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4><p>There are two fault detection processes running. The first is by the
 master, to ping all the other nodes in the cluster and verify that they
 are alive. And on the other end, each node pings to master to verify if
 its still alive or an election process needs to be initiated.</p><p>The following settings control the fault detection process using the
