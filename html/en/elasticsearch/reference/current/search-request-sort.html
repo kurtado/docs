@@ -161,14 +161,20 @@ then Elasticsearch will handle it as if there was a mapping of type
             "_geo_distance" : {
                 "pin.location" : [-70, 40],
                 "order" : "asc",
-                "unit" : "km"
+                "unit" : "km",
+                "mode" : "min",
+                "distance_type" : "sloppy_arc"
             }
         }
     ],
     "query" : {
         "term" : { "user" : "kimchy" }
     }
-}</pre><p>Note: the geo distance sorting supports <code class="literal">sort_mode</code> options: <code class="literal">min</code>,
+}</pre><div class="variablelist"><dl class="variablelist"><dt><span class="term">
+<code class="literal">distance_type</code>
+</span></dt><dd>
+    How to compute the distance. Can either be <code class="literal">sloppy_arc</code> (default), <code class="literal">arc</code> (slighly more precise but significantly slower) or <code class="literal">plane</code> (faster, but inaccurate on long distances and close to the poles).
+</dd></dl></div><p>Note: the geo distance sorting supports <code class="literal">sort_mode</code> options: <code class="literal">min</code>,
 <code class="literal">max</code> and <code class="literal">avg</code>.</p><p>The following formats are supported in providing the coordinates:</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="_lat_lon_as_properties"></a>Lat Lon as Properties<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/search/request/sort.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h4></div></div></div><pre class="programlisting prettyprint lang-js">{
     "sort" : [
         {
@@ -226,7 +232,7 @@ conform with <a class="ulink" href="http://geojson.org/" target="_top">GeoJSON</
         "term" : { "user" : "kimchy" }
     }
 }</pre></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_multiple_reference_points"></a>Multiple reference points<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/search/request/sort.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><div class="note admon"><div class="icon"><img alt="Note" src="images/icons/note.png" /></div><div class="admon_content"><p>Added in 1.4.0.</p></div></div><p>Multiple geo points can be passed as an array containing any <code class="literal">geo_point</code> format, for example</p><pre class="programlisting prettyprint lang-js">"pin.location" : [[-70, 40], [-71, 42]]
-"pin.location" : [{"lat": -70, "lon": 40}, {"lat": -71, "lon": 42}]</pre><p>and so forth.</p><p>The final distance for a document will then be <code class="literal">min</code>/<code class="literal">max</code> distance of all points contained in the document to all points given in the sort request.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_script_based_sorting"></a>Script Based Sorting<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/search/request/sort.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Allow to sort based on custom scripts, here is an example:</p><pre class="programlisting prettyprint lang-js">{
+"pin.location" : [{"lat": -70, "lon": 40}, {"lat": -71, "lon": 42}]</pre><p>and so forth.</p><p>The final distance for a document will then be <code class="literal">min</code>/<code class="literal">max</code>/<code class="literal">avg</code> (defined via <code class="literal">mode</code>) distance of all points contained in the document to all points given in the sort request.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_script_based_sorting"></a>Script Based Sorting<a href="https://github.com/elasticsearch/elasticsearch/edit/1.x/docs/reference/search/request/sort.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h3></div></div></div><p>Allow to sort based on custom scripts, here is an example:</p><pre class="programlisting prettyprint lang-js">{
     "query" : {
         ....
     },

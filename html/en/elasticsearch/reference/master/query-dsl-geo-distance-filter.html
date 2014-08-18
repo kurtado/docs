@@ -123,9 +123,7 @@ conform with <a class="ulink" href="http://geojson.org/" target="_top">GeoJSON</
 </p>
 </td><td valign="top">
 <p>
-    How to compute the distance. Can either be <code class="literal">arc</code> (better precision),
-    <code class="literal">sloppy_arc</code> (faster but less precise) or <code class="literal">plane</code> (fastest). Defaults
-    to <code class="literal">sloppy_arc</code>.
+    How to compute the distance. Can either be <code class="literal">sloppy_arc</code> (default), <code class="literal">arc</code> (slighly more precise but significantly slower) or <code class="literal">plane</code> (faster, but inaccurate on long distances and close to the poles).
 </p>
 </td></tr><tr><td valign="top">
 <p>
