@@ -11,21 +11,21 @@ Pretty self-explanatory, really
 * https://github.com/elasticsearch/puppet-logstash[Puppet Module]
 
 === Plugins
-* contrib plugins
-* writing your own plugins
-* Inputs / Filters / Outputs
-* Codecs
-* (more)
+* http://elasticsearch.org/#[contrib plugins]
+* http://elasticsearch.org/#[writing your own plugins]
+* http://elasticsearch.org/#[Inputs] / http://elasticsearch.org/#[Filters] / http://elasticsearch.org/#[Outputs]
+* http://elasticsearch.org/#[Codecs]
+* http://elasticsearch.org/#[(more)]
 
 === HOWTOs, References, Information
-* Getting Started with Logstash
-* Configuration file overview
-* Command-line flags 
-* The life of an event in logstash
-* Using conditional logic
-* Glossary
-* (more)
+* http://elasticsearch.org/#[Getting Started with Logstash]
+* http://elasticsearch.org/#[Configuration file overview]
+* http://elasticsearch.org/#[Command-line flags]
+* http://elasticsearch.org/#[The life of an event in logstash]
+* http://elasticsearch.org/#[Using conditional logic]
+* http://elasticsearch.org/#[Glossary]
+* http://elasticsearch.org/#[(more)]
 
 === About / Videos / Blogs
-* Videos
-* Blogs
+* http://elasticsearch.org/#[Videos]
+* http://elasticsearch.org/#[Blogs]
