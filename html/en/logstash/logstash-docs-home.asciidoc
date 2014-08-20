@@ -1,0 +1,31 @@
+= Logstash Documentation
+
+== Logstash Documentations
+Pretty self-explanatory, really
+
+=== Downloads and Releases
+* http://www.elasticsearch.org/overview/logstash/download/[Download logstash 1.4.2]
+* http://www.elasticsearch.org/blog/apt-and-yum-repositories/[package repositories]
+* http://www.elasticsearch.org/blog/logstash-1-4-2/[release notes]
+* https://github.com/elasticsearch/logstash/blob/master/CHANGELOG[view changelog]
+* https://github.com/elasticsearch/puppet-logstash[Puppet Module]
+
+=== Plugins
+* contrib plugins
+* writing your own plugins
+* Inputs / Filters / Outputs
+* Codecs
+* (more)
+
+=== HOWTOs, References, Information
+* Getting Started with Logstash
+* Configuration file overview
+* Command-line flags 
+* The life of an event in logstash
+* Using conditional logic
+* Glossary
+* (more)
+
+=== About / Videos / Blogs
+* Videos
+* Blogs
