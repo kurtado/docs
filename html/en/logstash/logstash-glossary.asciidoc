@@ -1,0 +1,136 @@
+== bar 
+bar bar
+
+apache ::
+	A very common open source web server application, which produces logs easily consumed by Logstash.
+
+agent ::
+	An invocation of Logstash with a particular configuration, allowing it to operate as a "shipper", a "collector", or a combination of functionalities.
+
+
+broker ::
+	Breaks stuff	
+
+buffer::
+	Within Logstash, a temporary storage area where events can queue up, waiting to be processed.
+
+centralized::
+	A configuration of Logstash in which the Logstash agent, input and output sources live on multiple machines, and the pipeline passes through these tiers.
+
+codec::
+	foo
+
+collector::
+	An instance of Logstash which receives external events from another instance of Logstash, or perhaps some other application, either remote or local.
+
+conditional::
+	In a computer programming context, a control flow which executes certain actions based on true/false values of a statement (called the condition). Often expressed in the form of "if ... then ... (elseif ...) else".
+
+elasticsearch::
+	An open-source, Lucene-based, RESTful search engine written in Java, with supported clients in various languages such as Perl, Python, Ruby, Java, etc. 
+
+event::
+	In Logstash parlance, a single text log which arrives via an input, and is subsequently parsed, timestamped, and passed through the Logstash pipeline.
+
+field::
+	A data point (often a key-value pair) within a Logstash event, e.g. "timestamp", "message", "hostname", "ipaddress". Also, a 
+
+file::
+	A resource storing binary data (which might be text) on a physicial storage media. In the Logstash context, a common input source 
+which logs are written to by a software application.
+
+fluentd::
+	Like Logstash, another open-source tool for collecting logs and events, with plugins to extend functionality.
+
+ganglia::
+	foo
+graphite::
+	foo
+
+heka::
+	foo
+
+indexer::
+	foo
+
+index::
+	foo
+
+input::
+	foo
+
+jar / jarfile::
+	foo
+
+java::
+	foo
+
+kibana::
+	foo
+
+log::
+	a snippet of textual information emitted by a device, ostensibly with some pertinent information about the status of said device.
+
+logger::
+	foo
+
+Logstash::
+	foo
+
+lumberjack::
+	foo
+
+output::
+	foo
+
+perl::
+	foo
+
+php::
+	foo
+
+pipeline::
+	foo
+
+plugin::
+	foo
+
+python::
+	foo
+
+redis::
+	foo
+
+ruby::
+	foo
+
+shell::
+	foo
+
+shipper::
+	An instance of Logstash which send events to another instance of Logstash, or some other application.
+
+statsd::
+	foo
+
+stdin::
+	foo
+
+stdout::
+	foo
+
+syslog::
+	foo
+
+standalone::
+	A configuration of Logstash in which the Logstash agent, input and output sources typically live on the same host machine.
+
+thread::
+	foo
+
+type::
+	foo
+
+worker::
+	foo
+
